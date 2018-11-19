@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from 'components/HelloWorld'
 const index = r => require.ensure([],() => r(require('packages/index/index')),'index');
+const recommend = r => require.ensure([],() => r(require('packages/recommend/recommend')),'recommend');
+const search = r => require.ensure([],() => r(require('packages/search/search')),'search');
 
 
 Vue.use(Router)
@@ -30,6 +32,14 @@ export default new Router({
     		requireAuth:false,
     	},
     	component:HelloWorld
-    }
+    },
+    {
+      path: "/recommend",
+      component: recommend
+    },
+    {
+      path: "/search",
+      component: search
+    },
   ]
 })
