@@ -5,6 +5,7 @@ import App from './App'
 import fastClick from "fastclick"
 import router from './../router/index'
 import install from 'utils/install'
+import 'utils/validate.js'
 import Vant from 'vant';
 import {ToastPlugin,LoadingPlugin,AlertPlugin} from 'vux'
 import VueLazyLoad from 'vue-lazyload'

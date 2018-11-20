@@ -19,6 +19,9 @@ input[type="search"]::-webkit-search-decoration,input[type="search"]::-webkit-se
 textarea{overflow:auto;vertical-align:top;outline:none;}
 em,i{font-style:normal}
 table{border-collapse:collapse;border-spacing:0;}
+/*::-webkit-input-placeholder{color:#A6A0A0}
+::-moz-placeholder{color:#A6A0A0}
+:-moz-placeholder{color:#A6A0A0}*/
 .clearfix{zoom:1;}
 .clearfix:after{
   content:"";
@@ -51,8 +54,13 @@ table{border-collapse:collapse;border-spacing:0;}
 }
 /*kkfff*/
 .vux-header .vux-header-left .left-arrow:before{
-  border-top:1px solid #fff!important;
-  border-left:1px solid #fff!important;
+  border-top:1px solid #aaa!important;
+  border-left:1px solid #aaa!important;
+}
+.vux-header .vux-header-title{
+  color: #333!important;
+  font-size: .36rem!important;
+  font-weight: 700!important;
 }
 /*.icon-more{
   display: block;
@@ -61,3 +69,67 @@ table{border-collapse:collapse;border-spacing:0;}
   background: url(../images/more_btn.png);
   background-size: cover
 }*/
+.nav-icon{
+  display: block;
+  width: .41rem;
+  height: .41rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.icon-home{
+  background-image: url(../images/home.png);
+}
+.icon-home-on{
+  background-image: url(../images/home_s.png);
+}
+.icon-visitors{
+  background-image: url(../images/visitors.png);
+}
+.icon-visitors-on{
+  background-image: url(../images/visitors_s.png);
+}
+.icon-audit{
+  background-image: url(../images/audit.png);
+}
+.icon-audit-on{
+  background-image: url(../images/audit_s.png);
+}
+.icon-my{
+  background-image: url(../images/my.png);
+}
+.icon-my-on{
+  background-image: url(../images/my_s.png);
+}
+.login-icon{
+  display: block;
+  width: .28rem;
+  height: .34rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.icon-phone{
+  background-image: url(../images/phone.png);
+}
+.icon-code{
+  background-image: url(../images/code.png);
+}
+.icon-house{
+  background-image: url(../images/hourse_number.png);
+}
+.icon-address{
+  background-image: url(../images/address.png);
+}
+
+.icon-search{
+  width: .3rem;
+  height: .28rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-image: url(../images/audit.png);
+}
+
+
+

@@ -1,14 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from 'components/HelloWorld'
+const login = r => require.ensure([],() => r(require('packages/login/login')),'login');
 const index = r => require.ensure([],() => r(require('packages/index/index')),'index');
 const recommend = r => require.ensure([],() => r(require('packages/recommend/recommend')),'recommend');
 const search = r => require.ensure([],() => r(require('packages/search/search')),'search');
+const mine = r => require.ensure([],() => r(require('packages/mine/mine')),'mine');
 
 
 Vue.use(Router)
 
 export default new Router({
+  mode:'history',
   routes: [
     {
       path: '/',
@@ -26,20 +28,20 @@ export default new Router({
       component:index
     },
     {
-    	path:'/HelloWorld',
-    	name:'HelloWorld',
-    	meta:{
-    		requireAuth:false,
-    	},
-    	component:HelloWorld
-    },
-    {
       path: "/recommend",
       component: recommend
     },
     {
       path: "/search",
       component: search
+    },
+    {
+      path: "/mine",
+      component: mine
+    },
+    {
+      path: "/login",
+      component: login
     },
   ]
 })

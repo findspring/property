@@ -1,20 +1,23 @@
 <template>
   <div id="app">
-    <!-- <img v-lazy="src"> -->
-    <!-- <img src="./../assets/logo.png"> -->
     <router-view/>
-    <div class="bottom-tab">
+    <div class="bottom-tab" v-if="'/login' != $route.path">
       <div class="tab-item" @click="switchTo('/index')">
-        <img :src="'/index' === $route.path ? tabBarImgArr[0].selected : tabBarImgArr[0].normal" alt="首页">
+        <!-- <img :src="'/index' === $route.path ? tabBarImgArr[0].selected : tabBarImgArr[0].normal" alt="首页"> -->
+        <i class="nav-icon " :class="'/index' === $route.path ?'icon-home-on':'icon-home'"></i>
         <span :class="{on: '/index' === $route.path}">首页</span>
       </div>
       <div class="tab-item" @click="switchTo('/recommend')">
-        <img :src="'/recommend' === $route.path ? tabBarImgArr[1].selected : tabBarImgArr[1].normal" alt="推荐">
-        <span :class="{on: '/recommend' === $route.path}">推荐</span>
+        <i class="nav-icon " :class="'/recommend' === $route.path ?'icon-visitors-on':'icon-visitors'"></i>
+        <span :class="{on: '/recommend' === $route.path}">访客</span>
       </div>
       <div class="tab-item" @click="switchTo('/search')">
-        <img :src="'/search' === $route.path ? tabBarImgArr[2].selected : tabBarImgArr[2].normal" alt="搜索">
-        <span :class="{on: '/search' === $route.path}">搜索</span>
+        <i class="nav-icon " :class="'/search' === $route.path ?'icon-audit-on':'icon-audit'"></i>
+        <span :class="{on: '/search' === $route.path}">审核</span>
+      </div>
+      <div class="tab-item" @click="switchTo('/mine')">
+        <i class="nav-icon " :class="'/mine' === $route.path ?'icon-my-on':'icon-my'"></i>
+        <span :class="{on: '/mine' === $route.path}">我的</span>
       </div>
     </div>
   </div>
@@ -44,7 +47,8 @@ export default {
 <style lang="stylus" type="text/stylus" scoped>
 .bottom-tab
   width 100%
-  height 50px
+  height 1rem
+  border-top 1px solid #ccc
   background-color #fff
   position fixed
   left 0px
@@ -57,11 +61,10 @@ export default {
     flex-direction column
     align-items center
     justify-content center
-    font-size 14px
-    color #666
-    img
-       width 35%
-       margin-bottom 2px
+    font-size .2rem
+    color #9B9B9B
+    span
+      margin-top .1rem
     .on
-      color red
+      color #D45855
 </style>
