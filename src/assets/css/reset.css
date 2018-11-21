@@ -31,6 +31,15 @@ table{border-collapse:collapse;border-spacing:0;}
   clear:both;
   visibility:hidden;
 }
+/*超出部分省略号*/
+.line-ellipsis01{overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+.line-ellipsis02{ display: -webkit-box;
+    overflow: hidden;
+    white-space: normal !important;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;//限制行数
+    -webkit-box-orient: vertical;}
 .text-left{
   text-align: left;
 }
@@ -52,6 +61,27 @@ table{border-collapse:collapse;border-spacing:0;}
 .inline-block{
   display: inline-block;
 }
+.common-btn{
+  width:2.4rem;
+  height:.94rem;
+  background:rgba(206,61,58,1);
+  border-radius:.47rem;
+  line-height: .94rem;
+  text-align:center;
+  color: #fff;
+  font-size: .3rem
+}
+/*去除头部下划线*/
+.van-hairline--bottom::after{
+  border-bottom:none!important;
+}
+.van-nav-bar__title{
+  font-size: .36rem!important;
+  color: #333!important;
+}
+.van-nav-bar .van-icon{
+  color: #aaa!important
+}
 /*kkfff*/
 .vux-header .vux-header-left .left-arrow:before{
   border-top:1px solid #aaa!important;
@@ -67,13 +97,37 @@ table{border-collapse:collapse;border-spacing:0;}
   height: .16rem;
   background: #efefef;
 }
-/*.icon-more{
+.common-icon{
   display: block;
-  width: .44rem;
-  height: .44rem;
-  background: url(../images/more_btn.png);
-  background-size: cover
-}*/
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.icon-more{
+  width: .29rem;
+  height: .29rem;
+  background-image: url(../images/more.png);
+}
+.icon-edit{
+  width: .36rem;
+  height: .36rem;
+  background-image: url(../images/edit.png);
+}
+.icon-search{
+  width: .36rem;
+  height: .31rem;
+  background-image: url(../images/search.png);
+}
+.icon-back{
+  width: .36rem;
+  height: .36rem;
+  background-image: url(../images/back.png);
+}
+.icon-date{
+  width: .46rem;
+  height: .46rem;
+  background-image: url(../images/date.png);
+}
 .nav-icon{
   display: block;
   width: .41rem;
@@ -83,28 +137,34 @@ table{border-collapse:collapse;border-spacing:0;}
   background-position: center;
 }
 .icon-home{
-  background-image: url(../images/home.png);
+  background-image: url(../images/home.svg);
 }
 .icon-home-on{
-  background-image: url(../images/home_s.png);
+  background-image: url(../images/home_s.svg);
 }
 .icon-visitors{
-  background-image: url(../images/visitors.png);
+  background-image: url(../images/visitors.svg);
 }
 .icon-visitors-on{
-  background-image: url(../images/visitors_s.png);
+  background-image: url(../images/visitors_s.svg);
+}
+.icon-members{
+  background-image: url(../images/members.svg);
+}
+.icon-members-on{
+  background-image: url(../images/members_s.svg);
 }
 .icon-audit{
-  background-image: url(../images/audit.png);
+  background-image: url(../images/audit.svg);
 }
 .icon-audit-on{
-  background-image: url(../images/audit_s.png);
+  background-image: url(../images/audit_s.svg);
 }
-.icon-my{
-  background-image: url(../images/my.png);
+.icon-mine{
+  background-image: url(../images/mine.svg);
 }
-.icon-my-on{
-  background-image: url(../images/my_s.png);
+.icon-mine-on{
+  background-image: url(../images/mine_s.svg);
 }
 .login-icon{
   display: block;
@@ -127,14 +187,6 @@ table{border-collapse:collapse;border-spacing:0;}
   background-image: url(../images/address.png);
 }
 
-.icon-search{
-  width: .3rem;
-  height: .28rem;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-image: url(../images/audit.png);
-}
 
 
 

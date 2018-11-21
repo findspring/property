@@ -7,7 +7,7 @@
 					<h2>我是大表姐</h2>
 					<p>爱笑的女孩运气不会差</p>
 					<div class="mine-edit">
-						<i class="icon"></i>
+						<i class="common-icon icon-more"></i>
 						<span>编辑</span>
 					</div>
 				</div>
@@ -43,7 +43,15 @@
 		<div class="pd16"></div>
 		<!-- bottom -->
 		<div class="mine-bottom">
-			
+			<div class="mine-item" @click="goLinks()">
+				<div class="mine-item-left">
+					<i class="nav-icon icon-home"></i>
+					<span>我的通知</span>
+				</div>
+				<div class="mine-item-right">
+					<i class="common-icon icon-more"></i>
+				</div>
+			</div>
 		</div>
 
 	</div>
@@ -56,6 +64,11 @@ export default {
     return {
 
     }
+  },
+  methods:{
+  	goLinks(){
+  		this.$router.push({path:'/message'})
+  	}
   }
 }
 </script>
@@ -82,14 +95,17 @@ export default {
 						line-height .37rem
 						padding-bottom .3rem
 					.mine-edit
+						display flex
+						align-items center
 						width 1.2rem
 						height .52rem
 						line-height .52rem
 						background rgba(241,242,243,1)
 						border-radius .14rem
 						i
-							display block
+							margin-left .17rem
 						span
+							margin-left .05rem
 							font-size .26rem
 							color #4A4A4A					
 				.mine-top-right
@@ -118,10 +134,32 @@ export default {
 						p
 							font-size .5rem
 							color #4A4A4A
-							line-height .7rem
+							line-height 1
+							padding-bottom .12rem
 							font-weight 700
 						span
 							font-size .26rem
 							color #9B9B9B
+		.mine-bottom
+			width 6.74rem
+			margin 0 .38rem
+			.mine-item
+				height 1.32rem
+				border-bottom 1px solid #F7EFEF
+				display flex
+				align-items center
+				justify-content space-between
+				.mine-item-left
+					
+					display flex
+					align-items center
+					i
+						margin-right .08rem
+					span
+						font-size .3rem
+						color #4A4A4A
+				.mine-item-right
+					i
+						margin-right .26rem
 			
 </style>

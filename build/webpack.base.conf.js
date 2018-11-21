@@ -31,7 +31,8 @@ const webpackConfig = {
       '@': resolve('src'),
       'components':resolve('src/components'),
       'packages':resolve('src/pages/packages'),
-      'utils':resolve('src/utils')
+      'utils':resolve('src/utils'),
+      'assets':resolve('src/assets')
     }
   },
   module: {

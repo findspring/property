@@ -1,25 +1,34 @@
 <template>
   <div id="app">
     <router-view/>
-    <div class="bottom-tab" v-if="'/login' != $route.path">
-      <div class="tab-item" @click="switchTo('/index')">
-        <!-- <img :src="'/index' === $route.path ? tabBarImgArr[0].selected : tabBarImgArr[0].normal" alt="首页"> -->
-        <i class="nav-icon " :class="'/index' === $route.path ?'icon-home-on':'icon-home'"></i>
-        <span :class="{on: '/index' === $route.path}">首页</span>
-      </div>
-      <div class="tab-item" @click="switchTo('/recommend')">
-        <i class="nav-icon " :class="'/recommend' === $route.path ?'icon-visitors-on':'icon-visitors'"></i>
-        <span :class="{on: '/recommend' === $route.path}">访客</span>
-      </div>
-      <div class="tab-item" @click="switchTo('/search')">
-        <i class="nav-icon " :class="'/search' === $route.path ?'icon-audit-on':'icon-audit'"></i>
-        <span :class="{on: '/search' === $route.path}">审核</span>
-      </div>
-      <div class="tab-item" @click="switchTo('/mine')">
-        <i class="nav-icon " :class="'/mine' === $route.path ?'icon-my-on':'icon-my'"></i>
-        <span :class="{on: '/mine' === $route.path}">我的</span>
-      </div>
-    </div>
+    <div class="nav-bar">
+      <van-tabbar v-model="active">
+        <van-tabbar-item @click="switchTo('/index')">
+          <span>首页</span>
+          <i slot="icon" slot-scope="props" class="nav-icon"
+          :class="props.active ?'icon-home-on':'icon-home' "
+          ></i>
+        </van-tabbar-item>
+        <van-tabbar-item @click="switchTo('/members')">
+          <span>成员</span>
+          <i slot="icon" slot-scope="props" class="nav-icon"
+          :class="props.active ?'icon-members-on':'icon-members' "
+          ></i>
+        </van-tabbar-item>
+        <van-tabbar-item @click="switchTo('/visitors')">
+          <span>访客</span>
+          <i slot="icon" slot-scope="props" class="nav-icon"
+          :class="props.active ?'icon-visitors-on':'icon-visitors' "
+          ></i>
+        </van-tabbar-item>
+        <van-tabbar-item @click="switchTo('/mine')">
+          <span>我的</span>
+          <i slot="icon" slot-scope="props" class="nav-icon"
+          :class="props.active ?'icon-mine-on':'icon-mine' "
+          ></i>
+        </van-tabbar-item>
+      </van-tabbar>
+    </div>    
   </div>
 </template>
 
@@ -28,12 +37,7 @@ export default {
   name: 'App',
   data(){
     return{
-      src:'assets/logo.png',
-      tabBarImgArr:[   //图片切换
-        {normal: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vvsr72j20p00gogo2.jpg', selected: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vvsr72j20p00gogo2.jpg'},
-        {normal: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg', selected: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg'},
-        {normal: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg', selected: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg'}
-        ]
+      active: 0,
     }
   },
   methods:{
@@ -45,6 +49,12 @@ export default {
 </script>
 
 <style lang="stylus" type="text/stylus" scoped>
+.nav-bar
+  .van-tabbar-item
+    color #9B9B9B
+    font-size .2rem
+  .van-tabbar-item--active
+    color #CE3D3A  
 .bottom-tab
   width 100%
   height 1rem

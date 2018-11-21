@@ -1,18 +1,28 @@
 <template>
 	<div class="index-wrapper">
-		<v-header title="阿尔法智汇" :showBack="true" class="already-record"></v-header>
+		<van-nav-bar title="阿尔法智汇" left-arrow :fixed="true" >
+			<!-- <div slot="left" @click="show">
+				aaa
+			</div> -->
+			<!-- <div slot="right" @click="show"> -->
+			<div slot="right">
+				111
+			</div>
+		</van-nav-bar>
+		<!-- <v-header title="阿尔法智汇" :showBack="true" class="already-record"></v-header> -->
 		<div class="index-main">
 			<!-- 个人信息 -->
 			<div class="index-info">
 				<h3>ALFEYE</h3>
-				<img src="https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg" alt="头像">
+				<img src="./../../../assets/images/headimg01.png" alt="头像">
 			</div>
 			<!-- 搜索 -->
 			<div class="index-search">
 	      <div class="search-info">
 	        <div ref="searchIcon" class="search-icon icon-search fl"></div>
 	        <form  @submit.prevent="formSubmit" action="javascript:return true"> 
-	          <input ref="input" class="search-input" type="search" name="" value="" placeholder="search" @click="search" @blur="searchBlur" @keyup.13="keySearch">
+	        	<!-- <input ref="input" class="search-input" type="search" name="" value="" placeholder="search" @click="search" @blur="searchBlur" @keyup.13="keySearch"> -->
+	          <input ref="input" class="search-input" type="search" name="" value="" placeholder="search" @click="search" @keyup.13="keySearch">
 	        </form>
 	      </div>    
 	    </div>
@@ -29,31 +39,31 @@
 				<ul>
 					<li>
 						<div>
-							<img src="https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg" alt="">
+							<img src="./../../../assets/images/icon01.png" alt="">
 							<p>访客通行</p>
 						</div>
 					</li>
 					<li>
 						<div>
-							<img src="https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg" alt="">
+							<img src="./../../../assets/images/icon02.png" alt="">
 							<p>一键开门</p>
 						</div>
 					</li>
 					<li>
 						<div>
-							<img src="https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg" alt="">
+							<img src="./../../../assets/images/icon03.png" alt="">
 							<p>小区头条</p>
 						</div>
 					</li>
 					<li>
 						<div>
-							<img src="https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg" alt="">
+							<img src="./../../../assets/images/icon04.png" alt="">
 							<p>我的房屋</p>
 						</div>
 					</li>
 					<li>
 						<div>
-							<img src="https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg" alt="">
+							<img src="./../../../assets/images/icon05.png" alt="">
 							<p>全部</p>
 						</div>
 					</li>
@@ -67,7 +77,7 @@
 				<div class="index-products-all">
 					<div class="index-products-item clearfix">
 						<div class="index-products-img fl">
-							<img src="https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg" alt="">
+							<img src="./../../../assets/images/icon01.png" alt="">
 						</div>
 						<div class="index-products-content fl">
 							<h5>单目闸机伴侣</h5>
@@ -92,8 +102,10 @@
 	  data () {
 	    return {
 	    	images: [
-	        'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg',
-	        'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg'
+	    		// './../../../../static/images/banner.png',
+	      //   './../../../../static/images/banner.png'
+	        require('./../../../assets/images/banner.png'),
+	        require('./../../../assets/images/banner.png'),
 	      ]
 	    }
 	  },
@@ -128,6 +140,7 @@
 	.index-wrapper
 		padding-bottom 1rem
 		.index-main
+			padding-top 46px
 			width 6.82rem
 			margin-left .35rem
 			.index-info

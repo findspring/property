@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="41px" height="41px" viewBox="0 0 41 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>成员</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="750" height="100"></rect>
+        <filter x="-0.1%" y="-0.5%" width="100.1%" height="101.0%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.898039216   0 0 0 0 0.898039216   0 0 0 0 0.898039216  0 0 0 1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="业主-成员" transform="translate(-264.000000, -15.000000)">
+            <g id="Background">
+                <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+            </g>
+            <g id="Group-5" transform="translate(264.000000, 15.000000)">
+                <g id="Group-3"></g>
+                <g id="Group-11-Copy" transform="translate(5.000000, 3.000000)" stroke="#9B9B9B" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                    <path d="M25.1287619,9.5512127 C25.1287619,14.8262603 20.8524444,19.1023238 15.5775238,19.1023238 C10.3026032,19.1023238 6.02628571,14.8262603 6.02628571,9.5512127 C6.02628571,4.27616508 10.3026032,-2.53968254e-05 15.5775238,-2.53968254e-05 C20.8524444,-2.53968254e-05 25.1287619,4.27616508 25.1287619,9.5512127 Z" id="Stroke-1"></path>
+                    <path d="M5.07936508e-05,34.7936508 C5.07936508e-05,26.1904762 6.97427302,19.216127 15.5775746,19.216127" id="Stroke-3"></path>
+                    <path d="M25.6959746,22.5007492 C23.0554667,20.4423365 19.7344508,19.2160508 16.1270857,19.2160508" id="Stroke-5"></path>
+                    <path d="M23.5140571,30.2222222 L31.8950095,30.2222222" id="Stroke-7"></path>
+                    <path d="M27.7045333,26.031746 L27.7045333,34.4126984" id="Stroke-9"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

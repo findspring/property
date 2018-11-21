@@ -13,8 +13,9 @@ import VueLazyLoad from 'vue-lazyload'
 Vue.use(Vant);
 Vue.use(install)
 Vue.use(VueLazyLoad,{
-    error:'./../../assets/logo.png',
-    loading:'assets/loading.gif'
+    error:require('assets/logo.png'),
+    loading:require('assets/loading.gif'),
+    attempt:2
 })
 Vue.use(ToastPlugin)
 Vue.use(LoadingPlugin)

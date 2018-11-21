@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="41px" height="41px" viewBox="0 0 41 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>审核</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="物业" transform="translate(-445.000000, -13.000000)" stroke="#CE3D3A" stroke-width="3">
+            <g id="Group-3" transform="translate(445.000000, 13.000000)">
+                <g id="审核" transform="translate(3.000000, 5.000000)">
+                    <path d="M26.1235807,23.1391927 C21.3484505,29.5624219 12.2703255,30.8986198 5.84709635,26.1234896 C-0.576497396,21.3483594 -1.91251302,12.2702344 2.86261719,5.84682292 C7.6377474,-0.57640625 16.7160547,-1.91260417 23.1392839,2.86252604 C29.562513,7.63765625 30.8987109,16.7157813 26.1235807,23.1391927 Z" id="Stroke-1"></path>
+                    <path d="M26.1778854,23.0660391 L34.9555938,29.5913516" id="Stroke-3"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
