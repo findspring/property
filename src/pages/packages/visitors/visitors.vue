@@ -39,8 +39,28 @@
               </div>
             </div>
           </div>
-          <div class="visitors-item visitors-none" v-if="num == 1">
-            2
+          <div class="visitors-item visitors-none" v-else-if="num == 1">
+            <div class="visitors-none-item">
+              <div class="visitors-none-img">
+                <img src="./../../../assets/images/headimg03.png" alt="">
+              </div>              
+              <div class="visitors-none-content">
+                <div class="visitors-none-top">
+                  <h4>傅小小</h4>
+                </div>
+                <p>预约电话：19766203418</p>
+                <p>预约时间：2018/08/08</p>
+                <p>拜访事由：探访</p>
+                <div class="visitors-none-btns">
+                  <div class="visitors-none-refused visitors-btn">
+                    拒绝
+                  </div>
+                  <div class="visitors-none-pass visitors-btn">
+                    通过
+                  </div>
+                </div>
+              </div>
+            </div>
           </div> 
         </div>
       </div>
@@ -117,7 +137,7 @@
               text-align center
               float left
             .active
-              transition: .5s
+              // transition: .5s
               color #D45855
               background #fff
               border-radius .33rem
@@ -132,6 +152,7 @@
             width 100%
             padding 0 .21rem
             .visitors-has-item
+              margin-bottom .2rem
               display flex
               padding .36rem .44rem .24rem .43rem
               width 100%
@@ -186,7 +207,79 @@
                   padding-bottom  .08rem
                   span
                     color #D45855
-              
+            .visitors-none-item
+              margin-bottom .2rem
+              display flex
+              padding .36rem .44rem .24rem .43rem
+              width 100%
+              height 3.71rem
+              background:rgba(254,254,254,1);
+              box-shadow:0 .02rem .17rem 0 rgba(0,0,0,0.17)
+              border-radius .14rem
+              .visitors-none-img
+                img
+                  width 1rem
+                  height 1rem
+                  border-radius 50%
+                  overflow hidden
+                  margin-right .37rem
+              .visitors-none-content
+                max-width 4.8rem
+                .visitors-none-top
+                  display flex
+                  align-items center
+                  padding-bottom .08rem
+                  h4
+                    font-size .43rem
+                    color #4A4A4A
+                    line-height .61rem
+                    font-weight 400
+                    margin-right .26rem
+                  .visitors-none-type
+                    width .87rem
+                    height .45rem
+                    line-height .45rem
+                    text-align center
+                    font-size: .2rem
+                    border:1px solid
+                    opacity 0.4648
+                    border-radius .22rem
+                  .pass
+                    color #417505
+                    border-color #417505
+                  .arrived
+                    color #D45855
+                    border-color #D45855
+                  .expire
+                    color #9B9B9B
+                    border-color #9B9B9B
+                  .refused
+                    color #D8D8D8
+                    border-color #D8D8D8
+                p
+                  font-size: .3rem
+                  color #9B9B9B
+                  line-height .42rem
+                  padding-bottom  .08rem
+                .visitors-none-btns
+                  display flex
+                  align-items center
+                  margin-top .3rem
+                  .visitors-btn
+                    width 1.65rem
+                    height .66rem
+                    line-height .66rem
+                    text-align center
+                    border-radius .33rem
+                    font-size .3rem
+                  .visitors-none-refused
+                    background #F7EFEF
+                    color #9B9B9B
+                    margin-right .45rem
+                  .visitors-none-pass
+                    background #D45855
+                    color #fff
+                    
           
           
               
