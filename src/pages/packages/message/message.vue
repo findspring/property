@@ -1,16 +1,17 @@
 <template>
 	<div class="message">
-		<van-nav-bar title="我的消息" left-arrow >
-			<div slot="left" @click="show">
-				aaa
+		<van-nav-bar title="我的消息" left-arrow :fixed="true" :z-index="100">
+			<div slot="left">
+				<i class="common-icon icon-back"></i>
 			</div>
-			<div slot="right" @click="show">
-				111
+			<!-- <div slot="right" @click="show"> -->
+			<div slot="right">
+				<i class="common-icon icon-date"></i>
 			</div>
 		</van-nav-bar>
 		<!-- <v-header title="我的消息" :showBack="true" class="already-record"></v-header> -->
 		<div class="message-box">
-			<div class="message-box-item">
+			<div class="message-box-item" @click="goMsgInfo">
 				<div class="message-headimg">
 					<img src="https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg" alt="">
 				</div>				
@@ -33,7 +34,6 @@
 	import {Badge} from 'vux'
 	export default {
 	  name: 'message',
-
 	  data () {
 	    return {
 
@@ -43,6 +43,9 @@
 	    Badge
 	  },
 	  methods:{
+	  	goMsgInfo(){
+	  		this.$router.push({path:'/msgInfo'})
+	  	},
 	  	onClickLeft(){
 	  		this.$router.go(-1);
 	  	},
@@ -57,12 +60,16 @@
 		background #fff
 		.van-nav-bar
 			background linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)!important
+			.icon-back
+				margin-bottom .3rem
+			.icon-date
+				margin-bottom .26rem
 			.van-nav-bar__title
 				color #fff!important
 				font-size .36rem!important
 				font-weight 700!important
 		.message-box
-			margin-top .34rem
+			padding-top 58px
 			width 100%
 			.message-box-item
 				display flex

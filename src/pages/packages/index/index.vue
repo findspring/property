@@ -5,8 +5,9 @@
 				aaa
 			</div> -->
 			<!-- <div slot="right" @click="show"> -->
-			<div slot="right">
-				111
+			<div slot="right" class="index-top-right">
+				<i class="common-icon icon-position02"></i>
+				<span>深圳</span>
 			</div>
 		</van-nav-bar>
 		<!-- <v-header title="阿尔法智汇" :showBack="true" class="already-record"></v-header> -->
@@ -19,7 +20,7 @@
 			<!-- 搜索 -->
 			<div class="index-search">
 	      <div class="search-info">
-	        <div ref="searchIcon" class="search-icon icon-search fl"></div>
+	        <div ref="searchIcon" class="search-icon common-icon icon-search01 fl"></div>
 	        <form  @submit.prevent="formSubmit" action="javascript:return true"> 
 	        	<!-- <input ref="input" class="search-input" type="search" name="" value="" placeholder="search" @click="search" @blur="searchBlur" @keyup.13="keySearch"> -->
 	          <input ref="input" class="search-input" type="search" name="" value="" placeholder="search" @click="search" @keyup.13="keySearch">
@@ -139,6 +140,13 @@
 <style lang="stylus" type="text/stylus" scoped>
 	.index-wrapper
 		padding-bottom 1rem
+		.index-top-right
+			display flex
+			align-items center
+			span
+				font-size .28rem
+				color #A6A0A0
+				margin-left .06rem
 		.index-main
 			padding-top 46px
 			width 6.82rem

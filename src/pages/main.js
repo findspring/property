@@ -25,6 +25,24 @@ import './../assets/css/reset.css';
 import './../assets/stylus/index.styl';
 import 'vant/lib/index.css';
 
+router.beforeEach((to, from, next) => {
+  //判断浏览器区分微信端、IOS端、安卓端
+  // let authToken = localStorage.getItem("authToken") || "";
+  // if (!authToken) {
+  //   authToken = obj.getQueryString("authToken")
+  //   if (authToken){
+  //     localStorage.setItem("authToken", authToken)
+  //   }
+  // }
+  //title变化
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  // Vue.prototype.$http.defaults.headers['common']=httpHead;
+  // Vue.prototype.$http.defaults.headers['common']['authToken']= localStorage.getItem("authToken")||"";
+  next()
+});
+
 fastClick.attach(document.body)
 Vue.config.productionTip = false
 

@@ -76,35 +76,50 @@
               </div>
             </div>
           </div> 
-          <div class="audit-item audit-none" v-else-if="num == 2">
-            <div class="audit-none-item">
-              <div class="audit-none-img">
-                <img src="./../../../assets/images/headimg05.png" alt="">
-              </div>              
-              <div class="audit-none-content">
-                <div class="audit-none-top">
-                  <h4>傅小小</h4>
+          <div class="audit-item audit-check" v-else-if="num == 2">
+            <div class="audit-check-item">
+              <div class="audit-check-box">
+                <van-checkbox v-model="checked" checked-color="#D45855"></van-checkbox>
+              </div>
+              <div class="audit-check-click">
+                <div class="audit-check-img">
+                  <img src="./../../../assets/images/headimg05.png" alt="">
+                </div>              
+                <div class="audit-check-content">
+                  <div class="audit-check-top">
+                    <h4>傅小小</h4>
+                  </div>
+                  <ul class="clearfix">
+                    <li>
+                      <small>业主电话</small>
+                      <b>19329157564</b>
+                    </li>
+                    <li>
+                      <small>门牌号</small>
+                      <b>392786A</b>
+                    </li>
+                  </ul>
                 </div>
-                <p>预约电话：19766203418</p>
-                <p>预约时间：2018/08/08</p>
-                <p>拜访事由：探访</p>
-                <div class="audit-none-btns">
-                  <div class="audit-none-refused audit-btn">
-                    拒绝
-                  </div>
-                  <div class="audit-none-pass audit-btn">
-                    通过
-                  </div>
+              </div>
+            </div>
+            <!-- all -->
+            <div class="audit-check-all">
+              <div class="audit-check-box">
+                <van-checkbox v-model="checked" checked-color="#D45855"></van-checkbox>
+                <p>全选</p>
+              </div>
+              <div class="audit-check-btns">
+                <div class="audit-check-refused audit-btn">
+                  拒绝
+                </div>
+                <div class="audit-check-pass audit-btn">
+                  通过
                 </div>
               </div>
             </div>
           </div> 
         </div>
       </div>
-    </div>
-      
-    <div>
-      
     </div>
   </div>
 </template>
@@ -114,6 +129,7 @@
     name: 'audit',
     data () {
       return {
+        checked: false,
         tabs: ["已审核", "未操作", "批量审核"],
         num: 0
       }
@@ -310,10 +326,98 @@
                   .audit-none-pass
                     background #D45855
                     color #fff
-                    
-          
-          
-              
-        
+            .audit-check-item
+              margin-bottom .2rem
+              display flex
+              align-items center
+              // padding .36rem .44rem .24rem .43rem
+              width 100%
+              height 2.01rem
+              background:rgba(254,254,254,1);
+              box-shadow:0 .02rem .17rem 0 rgba(0,0,0,0.17)
+              border-radius .14rem
+              .audit-check-box
+                margin-left .21rem
+                margin-right .24rem
+                .van-icon
+                  height .59rem
+                  width .59rem
+                  line-height .59rem
+              .audit-check-click
+                display flex
+                align-items center
+                .audit-check-img
+                  img
+                    width 1.41rem
+                    height 1.41
+                    border-radius 50%
+                    overflow hidden
+                    margin-right .37rem
+                .audit-check-content
+                  min-width 5rem
+                  .audit-check-top
+                    display flex
+                    align-items center
+                    padding-bottom .08rem
+                    h4
+                      font-size .43rem
+                      color #4A4A4A
+                      line-height .61rem
+                      font-weight 400
+                      margin-right .26rem
+                  ul
+                    overflow hidden
+                    width 100%
+                    li
+                      float left
+                      width 50%
+                      color #9B9B9B
+                      small
+                        display: block
+                        font-size: .2rem
+                        line-height .28rem
+                      b
+                        font-size: .3rem
+                        line-height .42rem     
+            .audit-check-all
+              width 100%
+              height 1.2rem
+              box-shadow 0 .02rem .17rem 0 rgba(0,0,0,0.17)
+              background #fff
+              position fixed
+              left 0
+              bottom 1rem
+              display flex
+              align-items center
+              .audit-check-box
+                text-align center
+                margin-left .43rem
+                margin-right .83rem
+                p
+                  font-size .26rem
+                  color #999999
+                  padding-top .08rem
+                  line-height 1
+                .van-icon
+                  height .59rem
+                  width .59rem
+                  line-height .59rem
+              .audit-check-btns
+                display flex
+                align-items center
+                .audit-btn
+                  width 2.57rem
+                  height .88rem
+                  line-height .88rem
+                  text-align center
+                  border-radius .44rem
+                  font-size .3rem
+                .audit-check-refused
+                  background #F7EFEF
+                  color #9B9B9B
+                  margin-right .19rem
+                .audit-check-pass
+                  background #D45855
+                  color #fff
       
 </style>

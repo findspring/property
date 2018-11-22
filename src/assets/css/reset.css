@@ -61,6 +61,16 @@ table{border-collapse:collapse;border-spacing:0;}
 .inline-block{
   display: inline-block;
 }
+
+.audit-btn{
+  width: 1.65rem;
+  height: .66rem;
+  line-height: .66rem;
+  text-align: center;
+  border-radius: .33rem;
+  font-size: .3rem;
+}
+  
 .common-btn{
   width:2.4rem;
   height:.94rem;
@@ -87,10 +97,13 @@ table{border-collapse:collapse;border-spacing:0;}
   border-top:1px solid #aaa!important;
   border-left:1px solid #aaa!important;
 }
-.vux-header .vux-header-title{
-  color: #333!important;
+.van-nav-bar__title{
+  /*color: #333!important;*/
   font-size: .36rem!important;
   font-weight: 700!important;
+}
+.van-nav-bar__left{
+  font-size: 18px!important
 }
 .pd16{
   width: 100%;
@@ -103,20 +116,55 @@ table{border-collapse:collapse;border-spacing:0;}
   background-size: cover;
   background-position: center;
 }
+/*.icon-position{
+  width: .44rem;
+  height: .44rem;
+  background-image: url(../images/position.png);
+}*/
+.icon-position01{
+  width: .4rem;
+  height: .4rem;
+  background-image: url(../images/position01.png);
+}
+.icon-position02{
+  width: .4rem;
+  height: .4rem;
+  background-image: url(../images/position02.png);
+}
+.icon-notice{
+  width: .41rem;
+  height: .41rem;
+  background-image: url(../images/notice.png);
+}
+.icon-question{
+  width: .41rem;
+  height: .41rem;
+  background-image: url(../images/question.png);
+}
+.icon-fill{
+  width: .41rem;
+  height: .41rem;
+  background-image: url(../images/fill.png);
+}
 .icon-more{
-  width: .29rem;
-  height: .29rem;
-  background-image: url(../images/more.png);
+  width: .16rem;
+  height: .3rem;
+  background-image: url(../images/right-arrow.png);
 }
 .icon-edit{
-  width: .36rem;
-  height: .36rem;
+  width: .24rem;
+  height: .3rem;
   background-image: url(../images/edit.png);
 }
 .icon-search{
   width: .36rem;
   height: .31rem;
   background-image: url(../images/search.png);
+}
+.icon-search01{
+  width: .36rem;
+  height: .31rem;
+  background-image: url(../images/search01.png);
 }
 .icon-back{
   width: .36rem;

@@ -1,12 +1,9 @@
 <template>
 	<div class="members">
-		<van-nav-bar title="阿尔法智汇" left-arrow :fixed="true" :z-index="100" >
-			<!-- <div slot="left" @click="show">
-				aaa
-			</div> -->
-			<!-- <div slot="right" @click="show"> -->
-			<div slot="right">
-				111
+		<van-nav-bar title="家庭成员添加" left-arrow :fixed="true" :z-index="100" >
+			<div slot="right" class="members-top-right">
+				<i class="common-icon icon-position02"></i>
+				<span>深圳</span>
 			</div>
 		</van-nav-bar>
 		<div class="members-tab">
@@ -91,6 +88,13 @@
 		min-height 12rem
 		background #e8e8e8
 		padding-bottom 1rem
+		.members-top-right
+			display flex
+			align-items center
+			span
+				font-size .28rem
+				color #A6A0A0
+				margin-left .06rem
 		.members-tab
 			width 100%
 			padding-top 46px

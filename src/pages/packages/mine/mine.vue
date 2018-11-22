@@ -7,12 +7,12 @@
 					<h2>我是大表姐</h2>
 					<p>爱笑的女孩运气不会差</p>
 					<div class="mine-edit">
-						<i class="common-icon icon-more"></i>
+						<i class="common-icon icon-edit"></i>
 						<span>编辑</span>
 					</div>
 				</div>
 				<div class="mine-top-right">
-					<img src="https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg" alt="">
+					<img src="./../../../assets/images/headimg01.png" alt="">
 				</div>
 			</div>
 			<!-- total -->
@@ -45,8 +45,26 @@
 		<div class="mine-bottom">
 			<div class="mine-item" @click="goLinks()">
 				<div class="mine-item-left">
-					<i class="nav-icon icon-home"></i>
+					<i class="common-icon icon-notice"></i>
 					<span>我的通知</span>
+				</div>
+				<div class="mine-item-right">
+					<i class="common-icon icon-more"></i>
+				</div>
+			</div>
+			<div class="mine-item" @click="goLinks()">
+				<div class="mine-item-left">
+					<i class="common-icon icon-question"></i>
+					<span>常见问题</span>
+				</div>
+				<div class="mine-item-right">
+					<i class="common-icon icon-more"></i>
+				</div>
+			</div>
+			<div class="mine-item" @click="goLinks()">
+				<div class="mine-item-left">
+					<i class="common-icon icon-fill"></i>
+					<span>资料完善</span>
 				</div>
 				<div class="mine-item-right">
 					<i class="common-icon icon-more"></i>
@@ -93,7 +111,7 @@ export default {
 						font-size .26rem
 						color #9B9B9B
 						line-height .37rem
-						padding-bottom .3rem
+						padding-bottom .22rem
 					.mine-edit
 						display flex
 						align-items center
@@ -104,8 +122,9 @@ export default {
 						border-radius .14rem
 						i
 							margin-left .17rem
+							margin-bottom .04rem
 						span
-							margin-left .05rem
+							margin-left .08rem
 							font-size .26rem
 							color #4A4A4A					
 				.mine-top-right
