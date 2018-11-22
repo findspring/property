@@ -7,7 +7,7 @@
 			<!-- <div slot="right" @click="show"> -->
 			<div slot="right" class="index-top-right">
 				<i class="common-icon icon-position02"></i>
-				<span>深圳</span>
+				<span>{{cityName}}</span>
 			</div>
 		</van-nav-bar>
 		<!-- <v-header title="阿尔法智汇" :showBack="true" class="already-record"></v-header> -->
@@ -102,6 +102,7 @@
 	  name:'index',
 	  data () {
 	    return {
+	    	cityName:localStorage.getItem('cityName') || '',
 	    	images: [
 	    		// './../../../../static/images/banner.png',
 	      //   './../../../../static/images/banner.png'

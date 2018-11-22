@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
     <title>vue</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=8CAxMlxMQOP1SeZobLW7w1Rqh0LwyKVK"></script>
   </head>
   <body>
     <div id="app"></div>
+    <div id="allmap" style="display:none"></div>
     <script>
     	(function (doc, win) {   
             var docEl = doc.documentElement,   
@@ -20,6 +22,34 @@
         win.addEventListener(resizeEvt, recalc, false);   
         doc.addEventListener('DOMContentLoaded', recalc, false);   
         })(document, window);  
+    </script>
+    <script>
+        // function getLocation(){ 
+        //   if (navigator.geolocation){ 
+        //     navigator.geolocation.getCurrentPosition(showPosition,showError); 
+        //   }else{ 
+        //     alert("浏览器不支持地理定位。"); 
+        //   } 
+        // } 
+        // function showPosition(position){
+        //    alert(position); 
+        //    var lat = position.coords.latitude; //纬度 
+        //    var lag = position.coords.longitude; //经度 
+        //    alert('纬度:'+lat+',经度:'+lag); 
+        // } 
+        // function showError(error){
+        //   alert(error.code)
+        // }
+        // getLocation();
+
+        function myFun(result){
+            var cityName = result.name;
+            new BMap.Map("allmap").setCenter(cityName);
+            localStorage.setItem('cityName',cityName);
+            // alert("当前定位城市:"+cityName);
+        }
+        var myCity = new BMap.LocalCity();
+        myCity.get(myFun);
     </script>
   </body>
 </html>

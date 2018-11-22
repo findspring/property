@@ -3,7 +3,7 @@
 		<van-nav-bar title="家庭成员添加" left-arrow :fixed="true" :z-index="100" >
 			<div slot="right" class="members-top-right">
 				<i class="common-icon icon-position02"></i>
-				<span>深圳</span>
+				<span>{{cityName}}</span>
 			</div>
 		</van-nav-bar>
 		<div class="members-tab">
@@ -14,28 +14,36 @@
 			  			<div class="members-add-item">
 			  				<div>
 			  					<p>姓名</p>
-				  				<input v-validate ="'required|valcode'" type="text" id="valcode" name="姓名" placeholder="请输入" v-model="name">
+			  					<div>
+			  						<input v-validate ="'required|valcode'" type="text" id="valcode" name="姓名" placeholder="请输入" v-model="name">
+			  					</div>				  				
 			  				</div>
 				  			<span v-show="errors.has('姓名')">{{ errors.first('姓名')}}</span>	
 			  			</div>
 			  			<div class="members-add-item">
 			  				<div>
 			  					<p>门牌号</p>
-				  				<input v-validate ="'required|valcode'" type="text" id="valcode" name="门牌号" placeholder="请输入" v-model="houseNum">
+			  					<div>
+			  						<input v-validate ="'required|valcode'" type="text" id="valcode" name="门牌号" placeholder="请输入" v-model="houseNum">
+			  					</div>				  				
 			  				</div>
 				  			<span v-show="errors.has('门牌号')">{{ errors.first('门牌号')}}</span>	
 			  			</div>
 			  			<div class="members-add-item">
 			  				<div>
 			  					<p>与户主关系</p>
-				  				<input v-validate ="'required|valcode'" type="text" id="valcode" name="与户主关系" placeholder="请输入" v-model="relationShip">
+			  					<div>
+			  						<input v-validate ="'required|valcode'" type="text" id="valcode" name="与户主关系" placeholder="请输入" v-model="relationShip">
+			  					</div>				  				
 			  				</div>
 				  			<span v-show="errors.has('与户主关系')">{{ errors.first('与户主关系')}}</span>	
 			  			</div>			  			
 			  			<div class="members-add-item">
 			  				<div>
 			  					<p>身份证号码</p>
-				  				<input v-validate ="'required|valcode'" type="text" id="valcode" name="身份证号码" placeholder="请输入" v-model="cdNum">
+			  					<div>
+			  						<input v-validate ="'required|valcode'" type="text" id="valcode" name="身份证号码" placeholder="请输入" v-model="cdNum">
+			  					</div>				  				
 			  				</div>
 				  			<span v-show="errors.has('身份证号码')">{{ errors.first('身份证号码')}}</span>	
 			  			</div>
@@ -72,6 +80,7 @@
 	  name: 'members',
 	  data () {
 	    return {
+	    	cityName:localStorage.getItem('cityName') || '',
 	    	active:2,
 	    	name:'',
 	    	houseNum:'',
@@ -133,18 +142,25 @@
 								padding-left .36rem
 								line-height .45rem
 								padding-bottom .12rem
-							input
-								color #333
+							div
 								width 100%
 								font-weight 400
 								height .94rem
 								line-height .94rem
-								text-indent .36rem
-								background:rgba(254,254,254,1);
-								box-shadow:0 .02rem .17rem 0 rgba(0,0,0,0.17)
+								background:rgba(250,250,250,1);
+								// box-shadow:0 .02rem .17rem 0 rgba(0,0,0,0.17)
+								border 1px solid #D8D8D8
 								border-radius .14rem
-								&::placeholder
-									color #ccc
+								input
+									color #333
+									width 100%
+									height .4rem
+									line-height .4rem
+									padding .27rem 0
+									text-indent .36rem
+									background:rgba(250,250,250,1);
+									&::placeholder
+										color #ccc
 						span
 							font-size .24rem
 							display block!important
