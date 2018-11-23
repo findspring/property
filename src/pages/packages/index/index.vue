@@ -1,10 +1,6 @@
 <template>
 	<div class="index-wrapper">
-		<van-nav-bar title="阿尔法智汇" left-arrow :fixed="true" >
-			<!-- <div slot="left" @click="show">
-				aaa
-			</div> -->
-			<!-- <div slot="right" @click="show"> -->
+		<van-nav-bar title="阿尔法智汇" left-arrow :fixed="true" @click-left="onClickLeft">
 			<div slot="right" class="index-top-right">
 				<i class="common-icon icon-position02"></i>
 				<span>{{cityName}}</span>
@@ -93,11 +89,12 @@
 				</div>
 				
 			</div>
-		</div>		
+		</div>
+		<nav-bar :page="0"></nav-bar>		
 	</div>
 </template>
 <script>
-	import vHeader from "components/header/header";
+	import navBar from "components/navBar/navBar";
 	export default {
 	  name:'index',
 	  data () {
@@ -112,15 +109,22 @@
 	    }
 	  },
 	  components:{
-	    vHeader
+	    navBar
 	  },
 	  mounted(){
+      // laydate.render({
+      //     elem: '#test1',
+      //     range: true
+      // });
 	  	this.getIndex();
 	  },
 	  methods:{
 	  	formSubmit() {
 	      return false
 	    },
+	    onClickLeft(){
+	  		this.$router.go(-1);
+	  	},
 	    search(){
 
 	    },
@@ -140,7 +144,6 @@
 
 <style lang="stylus" type="text/stylus" scoped>
 	.index-wrapper
-		padding-bottom 1rem
 		.index-top-right
 			display flex
 			align-items center

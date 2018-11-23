@@ -2,7 +2,7 @@
 	<div class="visitors">	
     <div class="visitors-top">
       <div class="visitors-header">
-        <i class="common-icon icon-back"></i>
+        <i class="common-icon icon-back" @click="goback"></i>
         <div class="search-info">
           <div ref="searchIcon" class="search-icon common-icon icon-search fl"></div>
           <form  @submit.prevent="formSubmit" action="javascript:return true"> 
@@ -10,7 +10,10 @@
             <input ref="input" class="search-input" type="search" name="" value="" placeholder="search">
           </form>
         </div>
-        <i class="common-icon icon-date"></i>
+        <div class="top-right">
+          <i class="common-icon icon-date"></i>
+          <input type="text" id="test1" v-model="date">
+        </div>          
       </div>
       <div class="visitors-tab">
         <div class="visitors-tab-top">
@@ -65,25 +68,40 @@
         </div>
       </div>
     </div>
-      
-		<div>
-      
-    </div>
+    <nav-bar :page="2"></nav-bar>
 	</div>
 </template>
 
 <script>
+  import navBar from "components/navBar/navBar";
   export default {
     name: 'visitors',
     data () {
       return {
+        date:'',
         tabs: ["已操作", "未操作"],
         num: 0
       }
     },
+    components:{
+      navBar
+    },
+    mounted(){
+      laydate.render({
+          elem: '#test1',
+          range: true,
+          done: (value) => {
+            this.date = value
+          }
+      });
+
+    },
     methods:{
-    	 tab(index) {
+    	tab(index) {
         this.num = index;
+      },
+      goback(){
+        this.$router.go(-1);
       }
     }
   }
@@ -118,8 +136,18 @@
             padding .14rem 0
             &::placeholder
               color #fff
-        .icon-date
-          margin-right .24rem
+        .top-right
+          position relative
+          input 
+            opacity 0
+            width .46rem
+            height .46rem
+            position absolute
+            left 0
+            top 0
+            z-index 10
+          .icon-date
+            margin-right .24rem
       .visitors-tab        
         margin-top .48rem
         .visitors-tab-top

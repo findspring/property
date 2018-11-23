@@ -1,10 +1,10 @@
 <template>
 	<div class="auditInfo clearfix">
-		<van-nav-bar title="审核详情" left-arrow>
+		<van-nav-bar title="审核详情" left-arrow  @click-left="onClickLeft">
 			<!-- <div slot="right" @click="show"> -->
 			<div slot="right" class="auditInfo-top-right">
 				<i class="common-icon icon-position01"></i>
-				<span>深圳</span>
+				<span>{{cityName}}</span>
 			</div>
 		</van-nav-bar>
 		<div class="auditInfo-wrapper clearfix">
@@ -33,15 +33,25 @@
 				</div>
 			</div>
 		</div>
+		<nav-bar :page="2"></nav-bar>
 	</div>
 </template>
 <script>
+	import navBar from "components/navBar/navBar";
 	export default {
 	  name: 'audit-info',
 	  data () {
 	    return {
-
+	    	cityName:localStorage.getItem('cityName') || '',
 	    }
+	  },
+	  components:{
+	    navBar
+	  },
+	  methods:{
+	  	onClickLeft(){
+	  		this.$router.go(-1);
+	  	},
 	  }
 	}
 </script>

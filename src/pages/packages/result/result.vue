@@ -1,9 +1,9 @@
 <template>
 	<div class="result clearfix">
-		<van-nav-bar title="身份认证" left-arrow :fixed="true" >
+		<van-nav-bar title="身份认证" left-arrow :fixed="true" @click-left="onClickLeft">
 			<div slot="right" class="result-top-right">
 				<i class="common-icon icon-position02"></i>
-				<span>深圳</span>
+				<span>{{cityName}}</span>
 			</div>
 		</van-nav-bar>
 		<div class="result-main">
@@ -71,9 +71,15 @@
 	  name: 'result',
 	  data () {
 	    return {
+	    	cityName:localStorage.getItem('cityName') || '',
 	    	valcode:'',
 	    	idNum:'1908231772323456789'
 	    }
+	  },
+	  methods:{
+	  	onClickLeft(){
+	  		this.$router.go(-1);
+	  	},
 	  }
 	}
 </script>

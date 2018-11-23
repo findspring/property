@@ -1,9 +1,9 @@
 <template>
 	<div class="identify clearfix">
-		<van-nav-bar title="身份认证" left-arrow :fixed="true" >
+		<van-nav-bar title="身份认证" left-arrow :fixed="true" @click-left="onClickLeft">
 			<div slot="right" class="identify-top-right">
 				<i class="common-icon icon-position02"></i>
-				<span>深圳</span>
+				<span>{{cityName}}</span>
 			</div>
 		</van-nav-bar>
 		<div class="identify-main">			
@@ -20,7 +20,7 @@
 				</div>
 			</div>
 			<div class="identify-btn">
-				<div></div>
+				<div>上传</div>
 			</div>
 		</div>
 	</div>
@@ -31,8 +31,13 @@
 	  name: 'identify',
 	  data () {
 	    return {
-
+	    	cityName:localStorage.getItem('cityName') || ''
 	    }
+	  },
+	  methods:{
+	  	onClickLeft(){
+	  		this.$router.go(-1);
+	  	},
 	  }
 	}
 </script>

@@ -1,6 +1,6 @@
 <template>
 	<div class="members">
-		<van-nav-bar title="家庭成员添加" left-arrow :fixed="true" :z-index="100" >
+		<van-nav-bar title="家庭成员添加" left-arrow :fixed="true" :z-index="100" @click-left="onClickLeft">
 			<div slot="right" class="members-top-right">
 				<i class="common-icon icon-position02"></i>
 				<span>{{cityName}}</span>
@@ -71,11 +71,11 @@
 			  </van-tab>
 			</van-tabs>
 		</div>
-			
+		<nav-bar :page="1"></nav-bar>	
 	</div>
 </template>
-
 <script>
+	import navBar from "components/navBar/navBar";
 	export default {
 	  name: 'members',
 	  data () {
@@ -86,8 +86,15 @@
 	    	houseNum:'',
 	    	relationShip:'',
 	    	cdNum:''
-
 	    }
+	  },
+	  components:{
+	  	navBar
+	  },
+	  methods:{
+	  	onClickLeft(){
+	  		this.$router.go(-1);
+	  	}
 	  }
 	}
 </script>
@@ -96,7 +103,6 @@
 	.members
 		min-height 12rem
 		background #e8e8e8
-		padding-bottom 1rem
 		.members-top-right
 			display flex
 			align-items center

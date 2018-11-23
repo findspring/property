@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <router-view/>
-    <div class="nav-bar">
+    <!-- <div class="nav-bar">
       <van-tabbar v-model="active">
         <van-tabbar-item @click="switchTo('/index')">
           <span>首页</span>
@@ -28,7 +28,7 @@
           ></i>
         </van-tabbar-item>
       </van-tabbar>
-    </div>    
+    </div>  -->   
   </div>
 </template>
 

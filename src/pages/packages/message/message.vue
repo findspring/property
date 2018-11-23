@@ -1,6 +1,6 @@
 <template>
 	<div class="message">
-		<van-nav-bar title="我的消息" left-arrow :fixed="true" :z-index="100">
+		<van-nav-bar title="我的消息" left-arrow :fixed="true" :z-index="100" @click-left="onClickLeft">
 			<div slot="left">
 				<i class="common-icon icon-back"></i>
 			</div>
@@ -27,10 +27,12 @@
 				</div>
 			</div>
 		</div>
+		<nav-bar :page="3"></nav-bar>	
 	</div>
 </template>
 
 <script>
+	import navBar from "components/navBar/navBar";
 	import {Badge} from 'vux'
 	export default {
 	  name: 'message',
@@ -40,7 +42,7 @@
 	    }
 	  },
 	  components:{
-	    Badge
+	    Badge,navBar
 	  },
 	  methods:{
 	  	goMsgInfo(){

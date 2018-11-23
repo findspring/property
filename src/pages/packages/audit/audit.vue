@@ -121,10 +121,12 @@
         </div>
       </div>
     </div>
+    <nav-bar :page="2"></nav-bar>
   </div>
 </template>
 
 <script>
+  import navBar from "components/navBar/navBar";
   export default {
     name: 'audit',
     data () {
@@ -133,6 +135,9 @@
         tabs: ["已审核", "未操作", "批量审核"],
         num: 0
       }
+    },
+    components:{
+      navBar
     },
     methods:{
        tab(index) {
@@ -386,7 +391,7 @@
               background #fff
               position fixed
               left 0
-              bottom 1rem
+              bottom .97rem
               display flex
               align-items center
               .audit-check-box

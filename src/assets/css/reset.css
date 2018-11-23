@@ -237,4 +237,34 @@ table{border-collapse:collapse;border-spacing:0;}
 
 
 
+/*重置laydate的css*/
+#test1{
+  width:100%;
+  border:1px solid #333
+}
+.layui-laydate-range{
+  left:0!important;
+  top:46px!important;
+  width:100%!important;
+}
+.layui-laydate-main{
+  width:100%!important;
+}
+.laydate-main-list-1{
+  display:none!important
+}
+.layui-laydate-range .laydate-main-list-0 .laydate-next-m, .layui-laydate-range .laydate-main-list-0 .laydate-next-y, .layui-laydate-range .laydate-main-list-1 .laydate-prev-m, .layui-laydate-range .laydate-main-list-1 .laydate-prev-y{
+  display:block!important
+}
+.layui-laydate-content table{
+  width:100%!important;
+}
+.layui-laydate-content td.laydate-selected,.layui-laydate .layui-this{
+  background-color: #D45855!important;
+  border-radius: 50%!important;
+  color: #fff!important;
+}
+.layui-laydate-content td, .layui-laydate-content th{
+  height: .96rem!important;
+}
 

@@ -71,24 +71,28 @@
 				</div>
 			</div>
 		</div>
-
+		<nav-bar :page="3"></nav-bar>	
 	</div>
 </template>
 
 <script>
-export default {
-  name: 'mine',
-  data () {
-    return {
+	import navBar from "components/navBar/navBar";
+	export default {
+	  name: 'mine',
+	  data () {
+	    return {
 
-    }
-  },
-  methods:{
-  	goLinks(){
-  		this.$router.push({path:'/message'})
-  	}
-  }
-}
+	    }
+	  },
+	  components:{
+	    navBar
+	  },
+	  methods:{
+	  	goLinks(){
+	  		this.$router.push({path:'/message'})
+	  	}
+	  }
+	}
 </script>
 
 <style lang="stylus" type="text/stylus" scoped>

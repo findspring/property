@@ -1,6 +1,6 @@
 <template>
 	<div class="msgInfo clearfix">
-		<van-nav-bar title="我的消息" left-arrow :fixed="true" :z-index="100">
+		<van-nav-bar title="我的消息" left-arrow :fixed="true" :z-index="100" @click-left="onClickLeft">
 			<div slot="left">
 				<i class="common-icon icon-back"></i>
 			</div>
@@ -25,16 +25,26 @@
 				</div>
 			</div>
 		</div>
+		<nav-bar :page="3"></nav-bar>
 	</div>
 </template>
 
 <script>
+	import navBar from "components/navBar/navBar";
 	export default {
 	  name: 'msg-info',
 	  data () {
 	    return {
 
 	    }
+	  },
+	  components:{
+	    navBar
+	  },
+	  methods:{
+	  	onClickLeft(){
+	  		this.$router.go(-1);
+	  	},
 	  }
 	}
 </script>
