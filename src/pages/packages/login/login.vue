@@ -1,12 +1,22 @@
 <template>
 	<div class="login">
 		<h2>欢迎使用智能门禁</h2>
+		<div class="login-input" v-show="addressStatus">
+			<div class="login-input-bg"></div>
+			<input type="text" v-on:input="searchCommunityList()" id="valcode" placeholder="社区地址" v-model="address">
+			<div class="login-input-content">
+				<ul v-for="(item,index) in searchArr" :key="index">
+					<li  @click="chooseCommunity(item.communityName)">{{item.communityName}}</li>
+				</ul>
+			</div>
+				
+		</div>
 		<form id="login-form">
 			<div class="login-item">
 				<div class="login-top">
 					<div class="login-phone fl">
 						<i class="icon login-icon icon-phone"></i>
-		      	<input v-validate ="'required|phone'" type="text" id="phone" name="手机号" placeholder="我的手机" v-model="phone">
+		      	<input v-validate ="'required|phone'" type="number" id="phone" name="手机号" placeholder="我的手机" v-model="phone">
 					</div>
 					<div class="login-code fr" v-if="codeStatus"  @click="sendCode">获取验证码</div>
 					<div class="login-code fr" v-else>{{time}}s后重新获取</div>		      
@@ -23,7 +33,7 @@
 			<div class="login-item">
 				<div class="login-top">
 		      <i class="icon login-icon icon-address"></i>
-		      <input v-validate ="'required|valcode'" type="text" id="valcode" name="社区地址" placeholder="社区地址" v-model="address">
+		      <input v-validate ="'required|valcode'" type="text" id="valcode" name="社区地址" placeholder="社区地址" v-model="address"  onfocus="">
 		    </div>
 		    <span v-show="errors.has('社区地址')">{{ errors.first('社区地址')}}</span>
 			</div>
@@ -52,29 +62,97 @@ export default {
     	valcode:'',
     	address:'',
     	house:'',
+    	cityCode:'0',
+    	fCityCode:'110000',
+    	addressStatus:true,
+    	searchArr:[]
 
     }
   },
+  mounted(){
+  	this.getCommunityList();
+  },
   methods:{
+  	chooseCommunity(val){
+  		console.log(val);
+  		this.address = val
+  	},
+  	searchCommunityList(){
+  		let communityName = this.address;
+  		let pageNum = 1;
+  		let pageSize = 100;
+			this.$http({
+        method: "post",
+        url: "/pub/pubBase/communityList",
+        data: this.$qs.stringify({
+        	'communityName':communityName,
+        	'pageNum':pageNum,
+        	'pageSize':pageSize
+        })
+      }).then((res) => {
+      	let result = res.data.result;
+      	this.searchArr = result.list
+    	}).catch((err) => {
+      });
+  		console.log(this.address)
+  	},
+  	getCommunityList(){
+  		let cityCode = this.cityCode;
+  		let pageNum = 1;
+  		let pageSize = 100;
+			this.$http({
+        method: "post",
+        url: "/pub/pubBase/communityList",
+        data: this.$qs.stringify({
+        	'pageNum':pageNum,
+        	'pageSize':pageSize
+        })
+      }).then((res) => {
+    	}).catch((err) => {
+      });
+  	},
+  	getCityList(){
+  		let fCityCode = this.fCityCode;
+  		let pageNum = 1;
+  		let pageSize = 100;
+			this.$http({
+        method: "post",
+        url: "/pub/pubBase/cityList",
+        data: this.$qs.stringify({
+        	'fCityCode':fCityCode,
+        	'pageNum':pageNum,
+        	'pageSize':pageSize
+        })
+      }).then((res) => {
+    	}).catch((err) => {
+      });
+  	},
   	sendCode(){
-    	this.codeStatus = false;
-    	let timer = setInterval(() => {
-    	  if (this.time > 1) {
-	        this.time--;
-	      }else{
-          this.codeStatus = true;
-          this.time = 60;
-	      	clearInterval(timer);
-	      }
-    	}, 1000)
-    	// let phoneNumber = this.phoneNumber;
-    	// this.$http({
-     //    method: "post",
-     //    url: "/tibes-userservice/user/phoneCode",
-     //    data: this.$qs.stringify({'phoneNumber':phoneNumber})
-     //  }).then((res) => {
-    	// }).catch((err) => {
-     //  });
+  		this.$validator.validate('手机号',this.phone).then((result) => {
+        if (result) {
+          this.codeStatus = false;
+		    	let timer = setInterval(() => {
+		    	  if (this.time > 1) {
+			        this.time--;
+			      }else{
+		          this.codeStatus = true;
+		          this.time = 60;
+			      	clearInterval(timer);
+			      }
+		    	}, 1000)
+		    	let phoneNumber = this.phone;
+		    	this.$http({
+		        method: "post",
+		        url: "/pub/pubBase/queryVcode",
+		        data: this.$qs.stringify({'phone':phoneNumber})
+		      }).then((res) => {
+		    	}).catch((err) => {
+		      });
+          return
+        }
+        console.log('验证失败')
+        return
+      }); 		  				    	
     },
     validateBeforeSubmit () {
       this.$validator.validateAll().then((result) => {
@@ -97,6 +175,52 @@ export default {
 			color #333
 			text-align center
 			padding 1.13rem 0 .67rem 0
+		.login-input
+			width  100%
+			height 100%
+			// background rgba(0,0,0,.3)
+			position fixed
+			left  0 
+			top 0
+			bottom 0
+			z-index 101
+			.login-input-bg
+				width  100%
+				height 100%
+				background rgba(0,0,0,.3)
+				position fixed
+				left  0 
+				top 0
+				bottom 0
+				z-index 102
+			input 
+				position absolute
+				left 0 
+				top 0
+				width 100%
+				height .3rem
+				line-height .3rem
+				padding .3rem 0
+				text-indent .2rem
+				box-sizing content-box
+				z-index 103
+			.login-input-content
+				position absolute
+				border-top 1px solid #ccc
+				left 0 
+				top .9rem
+				width 100%
+				background #fff
+				z-index 103
+				ul
+					width 100%
+					li
+						height .8rem
+						line-height .8rem
+						border-bottom 1px solid #ccc
+						text-indent .2rem
+						
+				
 		#login-form
 			margin-left .54rem
 			width 6.42rem

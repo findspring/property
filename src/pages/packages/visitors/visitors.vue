@@ -12,7 +12,7 @@
         </div>
         <div class="top-right">
           <i class="common-icon icon-date"></i>
-          <input type="text" id="test1" v-model="date">
+          <input type="text" id="test1" v-model="date" onfocus="this.blur()">
         </div>          
       </div>
       <div class="visitors-tab">

@@ -43,7 +43,7 @@
 		<div class="pd16"></div>
 		<!-- bottom -->
 		<div class="mine-bottom">
-			<div class="mine-item" @click="goLinks()">
+			<div class="mine-item" @click="goLinks('message')">
 				<div class="mine-item-left">
 					<i class="common-icon icon-notice"></i>
 					<span>我的通知</span>
@@ -52,7 +52,7 @@
 					<i class="common-icon icon-more"></i>
 				</div>
 			</div>
-			<div class="mine-item" @click="goLinks()">
+			<div class="mine-item" @click="goLinks('question')">
 				<div class="mine-item-left">
 					<i class="common-icon icon-question"></i>
 					<span>常见问题</span>
@@ -88,9 +88,9 @@
 	    navBar
 	  },
 	  methods:{
-	  	goLinks(){
-	  		this.$router.push({path:'/message'})
-	  	}
+	  	goLinks(url){
+	  		this.$router.push({path:''+url})
+	  	},
 	  }
 	}
 </script>

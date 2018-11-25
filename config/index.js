@@ -3,26 +3,34 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-const _serverUrl = "139.159.159.137:8888/mockjsdata/5/ip";
+// const _serverUrl = "139.159.159.137:8888/mockjsdata/5/ip";
+const _serverUrl = "139.159.159.137";
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
       '/wechat': {
-        target:'http://'+_serverUrl+':8082/wechat',
+        target:'http://'+_serverUrl+':8184/wechat',
         changeOrigin: true,
         pathRewrite: {
           '^/wechat': '/'
         }
       },
+      '/pub': {
+        target:'http://'+_serverUrl+':8182/pub',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/pub': '/'
+        }
+      },
     },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    // host: 'localhost', // can be overwritten by process.env.HOST
+    host: '192.168.1.10', 
     port: 8086, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true,
     errorOverlay: true,

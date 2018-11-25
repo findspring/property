@@ -41,10 +41,10 @@ Validator.extend('phone', { //手机号
 
 Validator.extend('valcode', {
   messages: {
-    zh_CN:field => field + '必须为6为数字',
+    zh_CN:field => field + '必须为4为数字',
   },
   validate: value => {
-    return /^\d{6}$/.test(value)
+    return /^\d{4}$/.test(value)
   }
 });
 Validator.extend('house', {

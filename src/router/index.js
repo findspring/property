@@ -8,6 +8,7 @@ const audit = r => require.ensure([],() => r(require('packages/audit/audit')),'a
 const auditInfo = r => require.ensure([],() => r(require('packages/audit-info/audit-info')),'audit-info');
 const mine = r => require.ensure([],() => r(require('packages/mine/mine')),'mine');
 const message = r => require.ensure([],() => r(require('packages/message/message')),'message');
+const question = r => require.ensure([],() => r(require('packages/question/question')),'question');
 const msgInfo = r => require.ensure([],() => r(require('packages/msg-info/msg-info')),'msgInfo');
 const identify = r => require.ensure([],() => r(require('packages/identify/identify')),'identify');
 const result = r => require.ensure([],() => r(require('packages/result/result')),'result');
@@ -83,9 +84,18 @@ export default new Router({
       name:'message',
       meta: {
         title: '我的消息',
-        flag: 'audit'
+        flag: 'message'
       },
       component: message
+    },
+    {
+      path: "/question",
+      name:'question',
+      meta: {
+        title: '常见问题',
+        flag: 'question'
+      },
+      component: question
     },
     {
       path: "/msgInfo",

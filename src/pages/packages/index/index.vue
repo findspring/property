@@ -116,7 +116,7 @@
       //     elem: '#test1',
       //     range: true
       // });
-	  	this.getIndex();
+	  	this.getProprietorList();
 	  },
 	  methods:{
 	  	formSubmit() {
@@ -127,16 +127,27 @@
 	  	},
 	    search(){
 
-	    },
-	  	getIndex(){
+	    }, 
+	  	getProprietorList(){ //业主列表接口
 	  		let day = new Date();
+	  		let cityCode = this.cityCode;
+	  		let pageNum = 1;
+	  		let pageSize = 100;
+	  		let auditStatus = 1;
+	  		let search = '';
 	  		this.$http({
 	  			method:'post',
 	  			url:'/wechat/officialAccount/community/proprietorList',
 	  			data:this.$qs.stringify({
-	  				time:day
+	  				'auditStatus':auditStatus,
+        		'pageNum':pageNum,
+        		'pageSize':pageSize,
+        		'search':search
 	  			})
-	  		})
+	  		}).then((res) => {
+
+	    	}).catch((err) => {
+	      });
 	  	}
 	  }
 	}

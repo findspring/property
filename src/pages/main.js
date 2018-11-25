@@ -5,6 +5,7 @@ import App from './App'
 import fastClick from "fastclick"
 import router from './../router/index'
 import install from 'utils/install'
+import obj from 'utils/index'
 import 'utils/validate.js'
 import Vant from 'vant';
 import {ToastPlugin,LoadingPlugin,AlertPlugin} from 'vux'
@@ -25,8 +26,13 @@ import './../assets/css/reset.css';
 import './../assets/stylus/index.styl';
 import 'vant/lib/index.css';
 
+let httpHead = {
+  // "channel": isWeixin?'1':(isios?'2':(isandroid?'3':'5')),//微信(公众号)传1，ios传2，安卓传3，其他传5
+  "clientTime": new Date().getTime(),
+  // "authToken": authToken,
+}
 router.beforeEach((to, from, next) => {
-  //判断浏览器区分微信端、IOS端、安卓端
+  // 获取authToken
   // let authToken = localStorage.getItem("authToken") || "";
   // if (!authToken) {
   //   authToken = obj.getQueryString("authToken")
@@ -38,7 +44,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
   }
-  // Vue.prototype.$http.defaults.headers['common']=httpHead;
+  Vue.prototype.$http.defaults.headers['common']=httpHead;
   // Vue.prototype.$http.defaults.headers['common']['authToken']= localStorage.getItem("authToken")||"";
   next()
 });
