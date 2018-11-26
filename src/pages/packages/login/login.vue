@@ -2,14 +2,13 @@
 	<div class="login">
 		<h2>欢迎使用智能门禁</h2>
 		<div class="login-input" v-show="addressStatus">
-			<div class="login-input-bg"></div>
-			<input type="text" v-on:input="searchCommunityList()" id="valcode" placeholder="社区地址" v-model="address">
+			<div class="login-input-bg" @click="hideSearch"></div>
+			<input type="text" v-on:input="searchCommunityList()" id="valcode" placeholder="请输入社区地址" v-model="address">
 			<div class="login-input-content">
 				<ul v-for="(item,index) in searchArr" :key="index">
 					<li  @click="chooseCommunity(item.communityName)">{{item.communityName}}</li>
 				</ul>
-			</div>
-				
+			</div>				
 		</div>
 		<form id="login-form">
 			<div class="login-item">
@@ -29,11 +28,13 @@
 		      <input v-validate ="'required|valcode'" type="text" id="valcode" name="验证码" placeholder="验证码" v-model="valcode">
 		    </div>
 		    <span v-show="errors.has('验证码')">{{ errors.first('验证码')}}</span>
-			</div>
+			</div>			
 			<div class="login-item">
 				<div class="login-top">
 		      <i class="icon login-icon icon-address"></i>
-		      <input v-validate ="'required|valcode'" type="text" id="valcode" name="社区地址" placeholder="社区地址" v-model="address"  onfocus="">
+		      <input v-validate ="'required|valcode'" type="text" id="valcode" name="社区地址" placeholder="社区地址" v-model="address" onfocus="this.blur()"  @click="showSearch">		      
+		      <i class="common-icon icon-more"></i>
+		      <popup-picker :data="list1" v-model="value1" @on-change="onChange" placeholder="111"></popup-picker>
 		    </div>
 		    <span v-show="errors.has('社区地址')">{{ errors.first('社区地址')}}</span>
 			</div>
@@ -51,6 +52,7 @@
 </template>
 
 <script>
+import { PopupPicker } from 'vux'
 export default {
   name: 'login',
   data () {
@@ -64,18 +66,34 @@ export default {
     	house:'',
     	cityCode:'0',
     	fCityCode:'110000',
-    	addressStatus:true,
-    	searchArr:[]
+    	addressStatus:false,
+    	searchArr:[],
+    	value1: ['iPhone'],
+    	list1: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你']],
 
     }
+  },
+  components:{
+  	PopupPicker
   },
   mounted(){
   	this.getCommunityList();
   },
   methods:{
+  	onChange(val) {
+      // console.log(val)
+      this.address = val[0];
+    },
+  	showSearch(){
+  		this.addressStatus = true
+  	},
+  	hideSearch(){
+  		this.addressStatus = false
+  	},
   	chooseCommunity(val){
   		console.log(val);
-  		this.address = val
+  		this.address = val;
+  		this.addressStatus = false
   	},
   	searchCommunityList(){
   		let communityName = this.address;
@@ -218,9 +236,7 @@ export default {
 						height .8rem
 						line-height .8rem
 						border-bottom 1px solid #ccc
-						text-indent .2rem
-						
-				
+						text-indent .2rem								
 		#login-form
 			margin-left .54rem
 			width 6.42rem
@@ -232,10 +248,15 @@ export default {
 					border-radius .48rem
 					background #f5f5f5
 					overflow hidden
+					position relative
 					.icon
 						display block
 						float left
 						margin .31rem .25rem 0 .57rem
+					.icon-more
+						position absolute
+						right .4rem
+						top  .3rem
 					input
 						min-width 3rem
 						font-size .28rem
@@ -245,7 +266,14 @@ export default {
 						line-height .3rem
 						padding .33rem 0
 						::palceholder
-							color #A6A0A0					
+							color #A6A0A0
+					.vux-cell-box
+						position absolute
+						right .4rem
+						top  .3rem
+						z-index 10 
+						opacity:0	
+						overflow hidden		
 					.login-phone
 						width 4.18rem
 						height .96rem

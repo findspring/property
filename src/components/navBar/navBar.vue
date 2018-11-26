@@ -71,7 +71,7 @@ export default {
 			left 0px
 			bottom 0px
 			display flex
-			z-index 999
+			z-index 99
 			li
 				display flex
 				flex 1

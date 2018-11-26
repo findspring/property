@@ -9,15 +9,16 @@
 		<div class="identify-main">			
 			<div class="identify-idcard">
 				<h5>拍摄/上传身份证正面照</h5>
-				<div class="identify-upload identify-common">
+				<!-- <div class="identify-upload identify-common">
 					<i class="common-icon identify-delete"></i>
 					<i class="common-icon identify-big"></i>
-					<input type="file" name="file_head" id="file_head" onchange="javascript:setImagePreview();" />
+					<input type="file" name="file_head" id="file_head" @change="setImagePreview" />
 					<img src="./../../../assets/images/upidcard.png" alt="">
-				</div>
-				<div id="localImag" style="opacity:0">
+				</div> -->
+				<v-photo :src1="src1"></v-photo>
+				<!-- <div id="localImag">
           <img id="preview" width="-1" height="-1" style="display: none" />
-      	</div>
+      	</div> -->
 			</div>
 			<div class="identify-face">
 				<h5>人脸识别扫描</h5>
@@ -33,46 +34,51 @@
 </template>
 
 <script>
+	import vPhoto from 'components/photo/photo'
 	export default {
 	  name: 'identify',
 	  data () {
 	    return {
+	    	src1:require('./../../../assets/images/upidcard.png'),
 	    	cityName:localStorage.getItem('cityName') || ''
 	    }
+	  },
+	  components:{
+	  	vPhoto
 	  },
 	  methods:{
 	  	onClickLeft(){
 	  		this.$router.go(-1);
 	  	},
-	  	setImagePreview(){
-	  		var preview, img_txt, localImag, file_head = document.getElementById("file_head"),
-	      picture = file_head.value;
-	      if (!picture.match(/.jpg|.gif|.png|.bmp/i)) return alert("您上传的图片格式不正确，请重新选择！"),
-	      !1;
-	      if (preview = document.getElementById("preview"), file_head.files && file_head.files[0]) preview.style.display = "block",
-	        preview.style.width = "63px",
-	        preview.style.height = "63px",
-	        preview.src = window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1 ? window.webkitURL.createObjectURL(file_head.files[0]) : window.URL.createObjectURL(file_head.files[0]);
-	      else {
-	        file_head.select(),
-	        file_head.blur(),
-	        img_txt = document.selection.createRange().text,
-	        localImag = document.getElementById("localImag"),
-	        localImag.style.width = "63px",
-	        localImag.style.height = "63px";
-	        try {
-	          localImag.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)",
-	          localImag.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = img_txt
-	        } catch(f) {
-	          return alert("您上传的图片格式不正确，请重新选择！"),
-	          !1
-	        }
-	        preview.style.display = "none",
-	        document.selection.empty()
-	      }
-	      return document.getElementById("DivUp").style.display = "block",
-	      !0
-	  	}
+	  	// setImagePreview(){
+	  	// 	var preview, img_txt, localImag, file_head = document.getElementById("file_head"),
+	   //    picture = file_head.value;
+	   //    if (!picture.match(/.jpg|.gif|.png|.bmp/i)) return alert("您上传的图片格式不正确，请重新选择！"),
+	   //    !1;
+	   //    if (preview = document.getElementById("preview"), file_head.files && file_head.files[0]) preview.style.display = "block",
+	   //      preview.style.width = "63px",
+	   //      preview.style.height = "63px",
+	   //      preview.src = window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1 ? window.webkitURL.createObjectURL(file_head.files[0]) : window.URL.createObjectURL(file_head.files[0]);
+	   //    else {
+	   //      file_head.select(),
+	   //      file_head.blur(),
+	   //      img_txt = document.selection.createRange().text,
+	   //      localImag = document.getElementById("localImag"),
+	   //      localImag.style.width = "63px",
+	   //      localImag.style.height = "63px";
+	   //      try {
+	   //        localImag.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)",
+	   //        localImag.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = img_txt
+	   //      } catch(f) {
+	   //        return alert("您上传的图片格式不正确，请重新选择！"),
+	   //        !1
+	   //      }
+	   //      preview.style.display = "none",
+	   //      document.selection.empty()
+	   //    }
+	   //    // return document.getElementById("DivUp").style.display = "block",
+	   //    !0
+	  	// }
 	  }
 	}
 </script>

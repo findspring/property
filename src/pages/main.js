@@ -11,6 +11,12 @@ import Vant from 'vant';
 import {ToastPlugin,LoadingPlugin,AlertPlugin} from 'vux'
 import VueLazyLoad from 'vue-lazyload'
 
+import lrz from 'lrz'
+// 图片预览
+import preview from 'vue-photo-preview'
+import 'vue-photo-preview/dist/skin.css'
+Vue.use(preview)
+
 Vue.use(Vant);
 Vue.use(install)
 Vue.use(VueLazyLoad,{

@@ -33,7 +33,8 @@
 			  				<div>
 			  					<p>与户主关系</p>
 			  					<div>
-			  						<input v-validate ="'required|valcode'" type="text" id="valcode" name="与户主关系" placeholder="请输入" v-model="relationShip">
+			  						<input v-validate ="'required|valcode'" type="text" id="valcode" name="与户主关系" placeholder="请选择" v-model="relationShip">
+			  						<popup-picker :data="list1" v-model="value1" @on-change="onChange" placeholder="111"></popup-picker>
 			  					</div>				  				
 			  				</div>
 				  			<span v-show="errors.has('与户主关系')">{{ errors.first('与户主关系')}}</span>	
@@ -75,6 +76,7 @@
 	</div>
 </template>
 <script>
+	import { PopupPicker } from 'vux'
 	import navBar from "components/navBar/navBar";
 	export default {
 	  name: 'members',
@@ -85,13 +87,37 @@
 	    	name:'',
 	    	houseNum:'',
 	    	relationShip:'',
-	    	cdNum:''
+	    	cdNum:'',
+	    	value1: ['iPhone'],
+	    	list1: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你']],
 	    }
 	  },
 	  components:{
-	  	navBar
+	  	navBar,PopupPicker
+	  },
+	  mounted(){
+	  	this.getMemberList();
 	  },
 	  methods:{
+	  	getMemberList(){
+	  		let communityName = this.address;
+	  		let pageNum = 1;
+	  		let pageSize = 100;
+				this.$http({
+	        method: "post",
+	        url: "/wechat/officialAccount/familyTiesList",
+	        data: this.$qs.stringify({
+	        })
+	      }).then((res) => {
+	      	// let result = res.data.result;
+	      	// this.searchArr = result.list
+	    	}).catch((err) => {
+	      });
+	  	},
+	  	onChange(val) {
+	      // console.log(val)
+	      this.relationShip = val[0];
+	    },
 	  	onClickLeft(){
 	  		this.$router.go(-1);
 	  	}
@@ -149,6 +175,7 @@
 								line-height .45rem
 								padding-bottom .12rem
 							div
+								position relative
 								width 100%
 								font-weight 400
 								height .94rem
@@ -167,6 +194,15 @@
 									background:rgba(250,250,250,1);
 									&::placeholder
 										color #ccc
+								.vux-cell-box
+									position absolute
+									left 0
+									top 0
+									width 100%
+									height .94rem
+									overflow hidden
+									z-index 10
+									opacity 0									
 						span
 							font-size .24rem
 							display block!important

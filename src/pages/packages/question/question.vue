@@ -31,9 +31,29 @@
 	    	activeNames: ['2'],
 	    }
 	  },
-	  components:{navBar
+	  components:{
+	  	navBar
+	  },
+	  mounted(){
+	  	this.getIssueList();
 	  },
 	  methods:{
+	  	getIssueList(){
+	  		let pageNum = 1;
+  			let pageSize = 100;
+	  		this.$http({
+	  			method:'post',
+	  			url:'/pub/customerComplaint/issueList',
+	  			data:this.$qs.stringify({
+	  				'bizType':2,
+        		'pageNum':pageNum,
+        		'pageSize':pageSize,
+	  			})
+	  		}).then((res) => {
+
+	    	}).catch((err) => {
+	      });
+	  	},
 	  	goMsgInfo(){
 	  		this.$router.push({path:'/msgInfo'})
 	  	},
@@ -61,20 +81,23 @@
 				font-weight 700!important
 		.question-main
 			margin-top 46px
-			.van-collapse-item
-					margin-left .32rem
-					// border-bottom 1px solid #EEEEEE
-				.van-cell
-					// margin-left .32rem
-					border-bottom 1px solid #EEEEEE
-					font-size .34rem
-					color #333
-					padding .28rem .32rem .28rem 0
-					&::after
-						display none
-				.van-collapse-item__content
-					padding .5rem .32rem .5rem 0
-					font-size .3rem
-					line-height 1.2
-					color #999999
+			.van-hairline--top-bottom
+				&::after
+					border none!important
+				.van-collapse-item
+						margin-left .32rem
+						// border-bottom 1px solid #EEEEEE
+					.van-cell
+						// margin-left .32rem
+						// border-bottom 1px solid #EEEEEE
+						font-size .34rem
+						color #333
+						padding .28rem .32rem .28rem 0
+						&::after
+							display none
+					.van-collapse-item__content
+						padding .5rem .32rem .5rem 0
+						font-size .3rem
+						line-height 1.2
+						color #999999
 </style>

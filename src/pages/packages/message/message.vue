@@ -11,9 +11,25 @@
 		</van-nav-bar>
 		<!-- <v-header title="我的消息" :showBack="true" class="already-record"></v-header> -->
 		<div class="message-box">
+			<div>
+				<van-pull-refresh class="refresh" v-model="isLoading" @refresh="onRefresh">
+				  <p>刷新次数: {{ count }}</p>
+				  <van-list
+					  v-model="loading"
+					  :finished="finished"
+					  @load="onLoad"
+					>
+					  <van-cell
+					    v-for="item in list"
+					    :key="item"
+					    :title="item"
+					  />
+					</van-list>
+				</van-pull-refresh>				
+			</div>
 			<div class="message-box-item" @click="goMsgInfo">
 				<div class="message-headimg">
-					<img src="https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg" alt="">
+					<img src="./../../../assets/images/headimg05.png" alt="">
 				</div>				
 				<div class="message-content">
 					<div class="message-content-top">
@@ -38,13 +54,39 @@
 	  name: 'message',
 	  data () {
 	    return {
-
+	    	count: 0,
+				isLoading: false,
+	    	list: [],
+				loading: false,
+				finished: false
 	    }
 	  },
 	  components:{
 	    Badge,navBar
 	  },
 	  methods:{
+	  	onLoad(){
+	      // 异步更新数据
+	      setTimeout(() => {
+	        for (let i = 0; i < 10; i++) {
+	          this.list.push(this.list.length + 1);
+	        }
+	        // 加载状态结束
+	        this.loading = false;
+
+	        // 数据全部加载完成
+	        if (this.list.length >= 25) {
+	          this.finished = true;
+	        }
+	      }, 500);
+	    },
+	    onRefresh() {
+	      setTimeout(() => {
+	        this.$toast('刷新成功');
+	        this.isLoading = false;
+	        this.count++;
+	      }, 500);
+	    },
 	  	goMsgInfo(){
 	  		this.$router.push({path:'/msgInfo'})
 	  	},
