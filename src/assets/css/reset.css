@@ -19,6 +19,14 @@ input[type="search"]::-webkit-search-decoration,input[type="search"]::-webkit-se
 textarea{overflow:auto;vertical-align:top;outline:none;}
 em,i{font-style:normal}
 table{border-collapse:collapse;border-spacing:0;}
+body{
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  background-color:#fff;
+}
 /*::-webkit-input-placeholder{color:#A6A0A0}
 ::-moz-placeholder{color:#A6A0A0}
 :-moz-placeholder{color:#A6A0A0}*/
@@ -81,6 +89,12 @@ table{border-collapse:collapse;border-spacing:0;}
   color: #fff;
   font-size: .3rem
 }
+.fade-transition {
+  transition: opacity .3s ease;
+}
+.fade-enter, .fade-leave {
+  opacity: 0;
+}
 /*去除头部下划线*/
 .van-hairline--bottom::after{
   border-bottom:none!important;
@@ -92,10 +106,19 @@ table{border-collapse:collapse;border-spacing:0;}
 .van-nav-bar .van-icon{
   color: #aaa!important
 }
+.van-dialog__confirm, .van-dialog__confirm:active{
+  color:#d45855!important;
+}
+.van-dialog__message{
+  text-align: center;
+}
 /*kkfff*/
 .vux-header .vux-header-left .left-arrow:before{
   border-top:1px solid #aaa!important;
   border-left:1px solid #aaa!important;
+}
+.vux-popup-header-right{
+  color:#d45855!important;
 }
 .van-nav-bar__title{
   /*color: #333!important;*/

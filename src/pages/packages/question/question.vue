@@ -8,13 +8,16 @@
 		<div class="question-main">
 			<van-collapse v-model="activeNames">
 			  <van-collapse-item title="有赞微商城" name="1">
-			    提供多样店铺模板，快速搭建网上商城
+			    提供多样店铺模板，快速搭建网上商城网店吸粉获客、会员分层营销、一机多种收款，告别经营低效和客户流失
+			    <div class="question-bg"></div>
 			  </van-collapse-item>
 			  <van-collapse-item title="有赞零售" name="2">
-			    网店吸粉获客、会员分层营销、一机多种收款，告别经营低效和客户流失
+		  		网店吸粉获客、会员分层营销、一机多种收款，告别经营低效和客户流失			    
+			    <div class="question-bg"></div>
 			  </van-collapse-item>
 			  <van-collapse-item title="有赞美业" name="3">
 			    线上拓客，随时预约，贴心顺手的开单收银
+			    <div class="question-bg"></div>
 			  </van-collapse-item>
 			</van-collapse>
 		</div>
@@ -28,7 +31,7 @@
 	  name: 'question',
 	  data () {
 	    return {
-	    	activeNames: ['2'],
+	    	activeNames: [''],
 	    }
 	  },
 	  components:{
@@ -85,19 +88,29 @@
 				&::after
 					border none!important
 				.van-collapse-item
-						margin-left .32rem
-						// border-bottom 1px solid #EEEEEE
+					margin-left .32rem		
 					.van-cell
-						// margin-left .32rem
-						// border-bottom 1px solid #EEEEEE
 						font-size .34rem
 						color #333
 						padding .28rem .32rem .28rem 0
 						&::after
 							display none
-					.van-collapse-item__content
-						padding .5rem .32rem .5rem 0
-						font-size .3rem
-						line-height 1.2
-						color #999999
+					.van-collapse-item__wrapper
+						overflow inherit
+						position relative
+						.van-collapse-item__content
+							padding .5rem .41rem 1.25rem 0
+							font-size .3rem
+							line-height 1.2
+							color #999999
+							// position relative
+							.question-bg
+								position absolute
+								left -.32rem 
+								bottom 0
+								width 7.5rem
+								height .1rem
+								background #f5f5f5
+					.van-collapse-item__title--expanded
+						border-bottom 1px solid #EEEEEE
 </style>

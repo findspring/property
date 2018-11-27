@@ -59,7 +59,7 @@
 						</div>
 					</div>
 					<div class="result-btn">
-						<div>确认</div>
+						<div @click="goIndex">确认</div>
 					</div>
 				</form>
 			</div>
@@ -80,6 +80,13 @@
 	  	onClickLeft(){
 	  		this.$router.go(-1);
 	  	},
+	  	goIndex(){
+	  		if(this.$route.query.from == 'members'){
+	  			this.$router.push({path:'/members',query:{from:'members'}})
+	  		}else{
+	  			this.$router.push({path:'/'})
+	  		}	
+	  	}
 	  }
 	}
 </script>

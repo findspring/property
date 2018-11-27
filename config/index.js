@@ -4,7 +4,8 @@
 
 const path = require('path')
 // const _serverUrl = "139.159.159.137:8888/mockjsdata/5/ip";
-const _serverUrl = "139.159.159.137";
+const _serverUrl = "192.168.1.24";
+// const _serverUrl = "139.159.159.137";
 
 module.exports = {
   dev: {
@@ -13,14 +14,16 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/wechat': {
-        target:'http://'+_serverUrl+':8184/wechat',
+        target:'http://'+_serverUrl+':8089/wechat',
+        // target:'http://'+_serverUrl+':8184/wechat',
         changeOrigin: true,
         pathRewrite: {
           '^/wechat': '/'
         }
       },
       '/pub': {
-        target:'http://'+_serverUrl+':8182/pub',
+        target:'http://'+_serverUrl+':8089/pub',
+        // target:'http://'+_serverUrl+':8182/pub',
         changeOrigin: true,
         pathRewrite: {
           '^/pub': '/'

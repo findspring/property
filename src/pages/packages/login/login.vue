@@ -32,9 +32,9 @@
 			<div class="login-item">
 				<div class="login-top">
 		      <i class="icon login-icon icon-address"></i>
-		      <input v-validate ="'required|valcode'" type="text" id="valcode" name="社区地址" placeholder="社区地址" v-model="address" onfocus="this.blur()"  @click="showSearch">		      
+		      <input v-validate ="'required|house'" type="text" id="community" name="社区地址" placeholder="社区地址" v-model="address" onfocus="this.blur()"  @click="showSearch">	      
 		      <i class="common-icon icon-more"></i>
-		      <popup-picker :data="list1" v-model="value1" @on-change="onChange" placeholder="111"></popup-picker>
+		      <popup-picker v-if="addressList&&addressList.length" :data="addressList" v-model="value1" @on-change="changePicker" placeholder="111"></popup-picker>
 		    </div>
 		    <span v-show="errors.has('社区地址')">{{ errors.first('社区地址')}}</span>
 			</div>
@@ -68,8 +68,8 @@ export default {
     	fCityCode:'110000',
     	addressStatus:false,
     	searchArr:[],
-    	value1: ['iPhone'],
-    	list1: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你']],
+    	value1: [],
+    	addressList: [],
 
     }
   },
@@ -80,7 +80,7 @@ export default {
   	this.getCommunityList();
   },
   methods:{
-  	onChange(val) {
+  	changePicker(val) {
       // console.log(val)
       this.address = val[0];
     },
@@ -117,7 +117,7 @@ export default {
   	getCommunityList(){
   		let cityCode = this.cityCode;
   		let pageNum = 1;
-  		let pageSize = 100;
+  		let pageSize = 10000;
 			this.$http({
         method: "post",
         url: "/pub/pubBase/communityList",
@@ -126,6 +126,13 @@ export default {
         	'pageSize':pageSize
         })
       }).then((res) => {
+      	let list = res.data.result.list;
+      	let listArr = [];
+      	list.forEach((item,index) => {
+      	  listArr.push(item.communityName)
+      	})
+      	this.addressList = [listArr];
+      	console.log(listArr)
     	}).catch((err) => {
       });
   	},
@@ -175,12 +182,20 @@ export default {
     validateBeforeSubmit () {
       this.$validator.validateAll().then((result) => {
         if (result) {
-          // eslint-disable-next-line
-          alert('验证成功');
+       //  	this.$http({
+		     //    method: "post",
+		     //    url: "/wechat/officialAccount/user/phoneRegister",
+		     //    data: this.$qs.stringify({'phone':phoneNumber})
+		     //  }).then((res) => {
+		    	// }).catch((err) => {
+		     //  });
+          this.$router.push({path:'/identify'});
+          // this.$dialog.alert({message:'验证成功'});
           return
-        }
-
-        alert('验证失败')
+        }else{
+        	this.$router.push({path:'/identify'});
+        	// this.$dialog.alert({message:'验证失败'});
+        }        
       })
     }
   }
@@ -303,6 +318,4 @@ export default {
 				text-align center
 				background #D45855
 				color #fff
-				
-		
 </style>

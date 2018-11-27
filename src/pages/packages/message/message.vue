@@ -11,7 +11,7 @@
 		</van-nav-bar>
 		<!-- <v-header title="我的消息" :showBack="true" class="already-record"></v-header> -->
 		<div class="message-box">
-			<div>
+			<!-- <div>
 				<van-pull-refresh class="refresh" v-model="isLoading" @refresh="onRefresh">
 				  <p>刷新次数: {{ count }}</p>
 				  <van-list
@@ -26,7 +26,7 @@
 					  />
 					</van-list>
 				</van-pull-refresh>				
-			</div>
+			</div> -->
 			<div class="message-box-item" @click="goMsgInfo">
 				<div class="message-headimg">
 					<img src="./../../../assets/images/headimg05.png" alt="">

@@ -22,12 +22,13 @@
 			</div>
 			<div class="identify-face">
 				<h5>人脸识别扫描</h5>
-				<div class="identify-scan identify-common">
+				<v-face :src2="src2"></v-face>
+				<!-- <div class="identify-scan identify-common">
 					<img src="./../../../assets/images/upface.png"  alt="">
-				</div>
+				</div> -->
 			</div>
 			<div class="identify-btn">
-				<div>上传</div>
+				<div @click="goResult">上传</div>
 			</div>
 		</div>
 	</div>
@@ -35,50 +36,30 @@
 
 <script>
 	import vPhoto from 'components/photo/photo'
+	import vFace from 'components/face/face'
 	export default {
 	  name: 'identify',
 	  data () {
 	    return {
 	    	src1:require('./../../../assets/images/upidcard.png'),
+	    	src2:require('./../../../assets/images/upface.png'),
 	    	cityName:localStorage.getItem('cityName') || ''
 	    }
 	  },
 	  components:{
-	  	vPhoto
+	  	vPhoto,vFace
 	  },
 	  methods:{
 	  	onClickLeft(){
 	  		this.$router.go(-1);
 	  	},
-	  	// setImagePreview(){
-	  	// 	var preview, img_txt, localImag, file_head = document.getElementById("file_head"),
-	   //    picture = file_head.value;
-	   //    if (!picture.match(/.jpg|.gif|.png|.bmp/i)) return alert("您上传的图片格式不正确，请重新选择！"),
-	   //    !1;
-	   //    if (preview = document.getElementById("preview"), file_head.files && file_head.files[0]) preview.style.display = "block",
-	   //      preview.style.width = "63px",
-	   //      preview.style.height = "63px",
-	   //      preview.src = window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1 ? window.webkitURL.createObjectURL(file_head.files[0]) : window.URL.createObjectURL(file_head.files[0]);
-	   //    else {
-	   //      file_head.select(),
-	   //      file_head.blur(),
-	   //      img_txt = document.selection.createRange().text,
-	   //      localImag = document.getElementById("localImag"),
-	   //      localImag.style.width = "63px",
-	   //      localImag.style.height = "63px";
-	   //      try {
-	   //        localImag.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)",
-	   //        localImag.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = img_txt
-	   //      } catch(f) {
-	   //        return alert("您上传的图片格式不正确，请重新选择！"),
-	   //        !1
-	   //      }
-	   //      preview.style.display = "none",
-	   //      document.selection.empty()
-	   //    }
-	   //    // return document.getElementById("DivUp").style.display = "block",
-	   //    !0
-	  	// }
+	  	goResult(){
+	  		if(this.$route.query.from == 'members'){
+	  			this.$router.push({path:'/result',query:{from:'members'}})
+	  		}else{
+	  			this.$router.push({path:'/result'})
+	  		}	  		
+	  	}
 	  }
 	}
 </script>
@@ -101,26 +82,29 @@
 			.identify-common
 				margin 0 auto
 				overflow hidden
-				width 100%
+				width 5.68rem
 				height 3.58rem
 				border-radius .12rem
+				border 1px solid #D6D6D6
 				position relative
-				i
-					position absolute
-					width .8rem
-					height 1.01rem
-					top 50% 
-					margin-top -.5rem
-				.identify-delete
-					left 0
-					background-image url('./../../../assets/images/del.png')
-				.identify-big
-					right 0
-					background-image url('./../../../assets/images/big.png')
+				// i
+				// 	position absolute
+				// 	width .8rem
+				// 	height 1.01rem
+				// 	top 50% 
+				// 	margin-top -.5rem
+				// .identify-delete
+				// 	left 0
+				// 	background-image url('./../../../assets/images/del.png')
+				// .identify-big
+				// 	right 0
+				// 	background-image url('./../../../assets/images/big.png')
 				img
-					width 5.68rem	
-					border 1px solid #D6D6D6
-					height 100%
+					width 3.62rem	
+					height 2.94rem
+					position absolute
+					left 1.02rem
+					top .32rem
 			h5				
 				font-size .36rem
 				color #5C5C5C

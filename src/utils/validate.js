@@ -49,9 +49,10 @@ Validator.extend('valcode', {
 });
 Validator.extend('house', {
   messages: {
-    zh_CN:field => field + '不能超出10个字',
+    zh_CN:field => field + '汉字、字母、数字且不能超出10个字',
   },
   validate: value => {
-    return /^\{10}$/.test(value)
+    // return /^[\u2E80-\u9FFF-Za-z0-9]{10}$/
+    return /^[\u2E80-\u9FFF-ZA-Za-z0-9-]{1,10}$/.test(value)
   }
 });

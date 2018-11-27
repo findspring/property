@@ -1,15 +1,15 @@
 <template>
-	<div class="photo">
-		<div class="photo-upload">
-			<div class="photo-preview" v-show="previewStatus">
-				<img :src="srcPreview" preview="0" preview-text="" alt="">
+	<div class="face">
+		<div class="face-upload">
+			<div class="face-preview" v-show="previewStatus">
+				<img :src="srcPreview" preview="1" preview-text="" alt="">
 			</div>
-			<i class="common-icon identify-delete" v-show="iconStatus"></i>
-			<div class="photo-btn">
-				<input type="file" name="file_head" id="file_head" @change="setImagePreview" accept="image/*" capture="camera" />
-				<img :src="src1" alt="" class="upload-bg">
+			<i class="common-icon identify-delete" @click="clearAll" v-show="iconStatus"></i>
+			<div class="face-btn">
+				<input type="file" name="face" id="face" @change="changeFace" accept="image/*" capture="camera" />
+				<img :src="src2" alt="" class="upload-bg">
 				<div id="localImag">
-					<img id="preview" />
+					<img id="faceView" />
 				</div>
 			</div>
 			<i class="common-icon identify-big" v-show="iconStatus"></i>
@@ -19,7 +19,7 @@
 
 <script>
 	export default {
-	  name: 'photo',
+	  name: 'face',
 	  data () {
 	    return {
 	    	srcPreview:'',
@@ -28,7 +28,7 @@
 	    }
 	  },
 	  props:{
-	  	'src1':{
+	  	'src2':{
 	  		type:String,
 	  		default:''
 	  	}
@@ -38,7 +38,7 @@
 	  },
 	  methods:{
 	  	showCapture(){
-	  		let file = document.getElementById("file_head");
+	  		let file = document.getElementById("face");
 	  		if(this.getIos()){
 	  			file.removeAttribute("multiple");
 	  		}
@@ -51,16 +51,16 @@
           }
 	  	},
 	  	clearAll(){
-	  		let file_head = document.getElementById("file_head"),preview = document.getElementById("preview");
-	  		file_head.value = '';
-	  		preview.src = '';
-	  		preview.style.display = "none"
+	  		let face = document.getElementById("face"),faceView = document.getElementById("faceView");
+	  		face.value = '';
+	  		faceView.src = '';
+	  		faceView.style.display = "none"
 	  		this.srcPreview ='';
 	  		this.iconStatus = false;
-	  		console.log(1,file_head.value)
+	  		console.log(1,face.value)
 	  	},
 	  	compressImg(){
-	  		let compressFile = document.getElementById("file_head");
+	  		let compressFile = document.getElementById("face");
 	  		let preview = document.getElementById("preview");
 	  		let _this = this;
         if(compressFile.length <= 0){
@@ -111,47 +111,31 @@
           // 不管是成功失败，都会执行
         })
 	  	},
-	  	setImagePreview(){
-	  		let preview, img_txt, localImag, file_head = document.getElementById("file_head"),
-	      picture = file_head.value;
+	  	changeFace(){
+	  		let faceView, img_txt, localImag, face = document.getElementById("face"),
+	      picture = face.value;
 	      if (!picture.match(/.jpg|.gif|.png|.bmp/i)) return this.$dialog.alert({message: '您上传的图片格式不正确，请重新选择！'}); 
-	      if (preview = document.getElementById("preview"), file_head.files && file_head.files[0]){
-	       	preview.style.display = "block",
-	        preview.src = window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1 ? window.webkitURL.createObjectURL(file_head.files[0]) : window.URL.createObjectURL(file_head.files[0]);
+	      if (faceView = document.getElementById("faceView"), face.files && face.files[0]){
+	       	faceView.style.display = "block",
+	        faceView.src = window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1 ? window.webkitURL.createObjectURL(face.files[0]) : window.URL.createObjectURL(face.files[0]);
 	      }
-	      else {
-	        // file_head.select(),
-	        // file_head.blur(),
-	        // img_txt = document.selection.createRange().text,
-	        // localImag = document.getElementById("localImag");
-	        // console.log(2,img_txt)
-	        // try {
-	        //   localImag.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)",
-	        //   localImag.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = img_txt
-	        // } catch(f) {
-	        //   return alert("您上传的图片格式不正确，请重新选择！"),
-	        //   !1
-	        // }
-	        // preview.style.display = "none",
-	        // document.selection.empty()
-	      }
-	      this.srcPreview = preview.src;
+	      this.srcPreview = faceView.src;
 	      this.iconStatus = true;
 	  	}
 	  },
 	}
 </script>
 <style lang="stylus" type="text/stylus" scoped>
-	.photo
+	.face
 		width 100%
-		.photo-upload
+		.face-upload
 			width 100%
 			height 3.58rem
 			display flex
 			align-items center
 			justify-content space-between
 			position relative
-			.photo-preview
+			.face-preview
 				position absolute
 				right 0
 				top 50%
@@ -167,11 +151,10 @@
 				width .8rem
 				height 1.01rem
 			.identify-delete
-				opacity 0
 				background-image url('./../../assets/images/del.png')
 			.identify-big
 				background-image url('./../../assets/images/big.png')
-			.photo-btn
+			.face-btn
 				width 5.68rem
 				height 3.58rem
 				position relative	
@@ -181,11 +164,11 @@
 				overflow hidden	
 				.upload-bg
 					position absolute
-					left .5rem
-					top .54rem
+					left 1.03rem
+					top .33rem
 					z-index 1
-					width 4.63rem
-					height 2.5rem
+					width 3.62rem	
+					height 2.94rem
 				input
 					width 100%
 					height 100%

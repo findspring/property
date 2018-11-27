@@ -59,9 +59,9 @@ export default {
 }
 </script>
 <style lang="stylus" type="text/stylus" scoped>
-	.navBar
-		width 100%
-		padding-top 1rem
+  .navBar
+    width 100%    
+    padding-top 1rem
 		.nav
 			width 100%
 			height .97rem

@@ -48,9 +48,18 @@
 			  				</div>
 				  			<span v-show="errors.has('身份证号码')">{{ errors.first('身份证号码')}}</span>	
 			  			</div>
-			  			<div class="common-btn fr" style="margin-top:.28rem">下一步</div>
+			  			<div class="common-btn fr" style="margin-top:.28rem" @click="nextStep">下一步</div>
 			  		</form>
 			  	</div>
+			  	<!-- <div class="members-identify" v-if="photoStatus">
+			  		<h5>拍摄/上传身份证正面照</h5>
+			  		<v-photo :src1="src1"></v-photo>
+			  		<h5>人脸识别扫描</h5>
+			  		<v-face :src2="src2"></v-face>
+			  		<div class="members-identify-btn">
+			  			<div class="common-btn" @click="upload">上传</div>
+			  		</div>
+			  	</div> -->
 			  </van-tab>
 			  <van-tab title="我的家庭">
 			  	<div class="members-family">
@@ -76,6 +85,8 @@
 	</div>
 </template>
 <script>
+	import vPhoto from 'components/photo/photo'
+	import vFace from 'components/face/face'
 	import { PopupPicker } from 'vux'
 	import navBar from "components/navBar/navBar";
 	export default {
@@ -83,22 +94,29 @@
 	  data () {
 	    return {
 	    	cityName:localStorage.getItem('cityName') || '',
+	    	src1:require('./../../../assets/images/upidcard.png'),
+	    	src2:require('./../../../assets/images/upface.png'),
 	    	active:2,
 	    	name:'',
 	    	houseNum:'',
 	    	relationShip:'',
 	    	cdNum:'',
+	    	msgStatus:true,
+	    	photoStatus:false,
 	    	value1: ['iPhone'],
 	    	list1: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你']],
 	    }
 	  },
 	  components:{
-	  	navBar,PopupPicker
+	  	navBar,PopupPicker,vPhoto,vFace
 	  },
 	  mounted(){
 	  	this.getMemberList();
 	  },
 	  methods:{
+	  	nextStep(){
+	  		this.$router.push({path:'/identify',query:{from:'members'}})
+	  	},
 	  	getMemberList(){
 	  		let communityName = this.address;
 	  		let pageNum = 1;
@@ -119,7 +137,11 @@
 	      this.relationShip = val[0];
 	    },
 	  	onClickLeft(){
-	  		this.$router.go(-1);
+	  		if(this.$route.query.from == 'members'){
+	  			return
+	  		}else{
+	  			this.$router.go(-1);
+	  		}	
 	  	}
 	  }
 	}
@@ -210,6 +232,25 @@
 							line-height .44rem
 							padding-left .4rem
 							color red						
+				.members-identify
+					width 100%
+					padding .64rem .18rem 0 .22rem
+					background #fff
+					min-height 12rem
+					border-radius .14rem
+					box-shadow:0 .02rem .17rem 0 rgba(0,0,0,0.17)
+					text-align center
+					h5
+						font-size .36rem
+						color #5C5C5C
+						line-height .5rem
+						padding .2rem 0
+					.members-identify-btn
+						width 100%
+						margin-top .6rem
+						display flex
+						align-items center
+						justify-content center
 							
 				.members-family
 					// padding .18rem .17rem 0 .21rem						
