@@ -6,7 +6,7 @@
 			</div>
 			<i class="common-icon identify-delete" @click="clearAll" v-show="iconStatus"></i>
 			<div class="face-btn">
-				<input type="file" name="face" id="face" @change="changeFace" accept="image/*" capture="camera" />
+				<input type="file" name="face" id="face" @change="compressFace" accept="image/*" capture="camera" />
 				<img :src="src2" alt="" class="upload-bg">
 				<div id="localImag">
 					<img id="faceView" />
@@ -54,14 +54,14 @@
 	  		let face = document.getElementById("face"),faceView = document.getElementById("faceView");
 	  		face.value = '';
 	  		faceView.src = '';
-	  		faceView.style.display = "none"
 	  		this.srcPreview ='';
 	  		this.iconStatus = false;
 	  		console.log(1,face.value)
+	  		this.$emit('faceBack',false,'')
 	  	},
-	  	compressImg(){
-	  		let compressFile = document.getElementById("face");
-	  		let preview = document.getElementById("preview");
+	  	compressFace(){
+	  		let compressFile = document.getElementById("face").files[0];
+	  		let faceView = document.getElementById("faceView");
 	  		let _this = this;
         if(compressFile.length <= 0){
           return;
@@ -72,56 +72,34 @@
         }).then(function(rst){
         	// rst.attachType = picType;
           //rst.srcName = compressFile.name;
-          // preview.src = rst.base64
-          _this.$http.post(uploadurl, {
-            "formData":rst
-          }).then(Response => {
-            let data = JSON.parse(Response.body);
+          console.log(rst)
+          faceView.src = rst.base64;
+          _this.srcPreview = faceView.src;
+	      	_this.iconStatus = true;
+          let formData = new window.FormData()
+	      	formData.append('file',compressFile)
+	      	formData.append('uploadImgType','headPortrait')
+	      	formData.append('userType',1)	      	
+          _this.$http({
+		        method: "post",
+		        headers: {'content-type': 'multipart/form-data'},
+		        url: "/pub/image/identityGather",
+		        data: formData
+		      }).then(Response => {
+            let result = Response.data.result;
+            let imgUrl = result.imgUrl
+            _this.$emit('faceBack',true,imgUrl)
             // console.log(data);
-            if (data) {
-              if (0 != data.errCode) {
-                _this.$dialog.alert(data.errMsg);
-                return;
-              }
-              if (1 == num) {
-                  _this.msg.custAgentIdFront = data.result.attachKey;
-                  _this.ocrRecog(num, 2, rst.base64);
-              }
-              if (2 == num) {
-                  console.log(num);
-                  _this.msg.custAgentIdBack = data.result.attachKey;
-              }
-              if (3 == num) {
-                  _this.msg.bankCard = data.result.attachKey;
-                  _this.ocrRecog(num, 17, rst.base64);
-              }
-              if (4 == num) {
-                  _this.msg.investigation.push(data.result.attachKey);
-                  // console.log(_this.msg.investigation);
-                  let fname = $("#file_" + num).val()
-              }
-            }
           }).catch(function(err){
               console.log(err);
-          });  
+          });   
         }).catch(function (err){
         	// 处理失败会执行
         }).always(function () {
-          e.target.value = null;
+          // e.target.value = null;
           // 不管是成功失败，都会执行
         })
 	  	},
-	  	changeFace(){
-	  		let faceView, img_txt, localImag, face = document.getElementById("face"),
-	      picture = face.value;
-	      if (!picture.match(/.jpg|.gif|.png|.bmp/i)) return this.$dialog.alert({message: '您上传的图片格式不正确，请重新选择！'}); 
-	      if (faceView = document.getElementById("faceView"), face.files && face.files[0]){
-	       	faceView.style.display = "block",
-	        faceView.src = window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1 ? window.webkitURL.createObjectURL(face.files[0]) : window.URL.createObjectURL(face.files[0]);
-	      }
-	      this.srcPreview = faceView.src;
-	      this.iconStatus = true;
-	  	}
 	  },
 	}
 </script>

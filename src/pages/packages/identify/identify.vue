@@ -15,20 +15,20 @@
 					<input type="file" name="file_head" id="file_head" @change="setImagePreview" />
 					<img src="./../../../assets/images/upidcard.png" alt="">
 				</div> -->
-				<v-photo :src1="src1"></v-photo>
+				<v-photo :src1="src1" @photoBack="photoBack"></v-photo>
 				<!-- <div id="localImag">
           <img id="preview" width="-1" height="-1" style="display: none" />
       	</div> -->
 			</div>
 			<div class="identify-face">
 				<h5>人脸识别扫描</h5>
-				<v-face :src2="src2"></v-face>
+				<v-face :src2="src2" @faceBack="faceBack"></v-face>
 				<!-- <div class="identify-scan identify-common">
 					<img src="./../../../assets/images/upface.png"  alt="">
 				</div> -->
 			</div>
 			<div class="identify-btn">
-				<div @click="goResult">上传</div>
+				<div @click="confirm">上传</div>
 			</div>
 		</div>
 	</div>
@@ -43,21 +43,50 @@
 	    return {
 	    	src1:require('./../../../assets/images/upidcard.png'),
 	    	src2:require('./../../../assets/images/upface.png'),
-	    	cityName:localStorage.getItem('cityName') || ''
+	    	cityName:localStorage.getItem('cityName') || '',
+	    	faceType:false,
+	    	photoType:false,
+	    	faceUrl:'',
+	    	photoUrl:'',
 	    }
 	  },
 	  components:{
 	  	vPhoto,vFace
 	  },
 	  methods:{
+	  	faceBack(val,url){
+	  		if(val){
+	  			this.faceType = true
+	  		}else{
+	  			this.faceType = false
+	  		}
+	  		this.faceUrl = url;
+	  	},
+	  	photoBack(val,url){
+	  		if(val){
+	  			this.photoType = true
+	  		}else{
+	  			this.photoType = false
+	  		}
+	  		this.photoUrl = url;
+	  		console.log('photoBack',url)
+	  	},
 	  	onClickLeft(){
 	  		this.$router.go(-1);
 	  	},
-	  	goResult(){
-	  		if(this.$route.query.from == 'members'){
-	  			this.$router.push({path:'/result',query:{from:'members'}})
+	  	confirm(){
+	  		console.log(this.photoType,this.faceType)
+	  		if(this.photoType && this.faceType){
+	  			this.goResult(this.photoUrl,this.faceUrl);
 	  		}else{
-	  			this.$router.push({path:'/result'})
+	  			this.$dialog.alert({message:'请完成全部上传'})
+	  		}
+	  	},
+	  	goResult(photoUrl,faceUrl){
+	  		if(this.$route.query.from == 'members'){
+	  			this.$router.push({path:'/result',query:{from:'members',photoUrl:photoUrl,faceUrl:faceUrl}})
+	  		}else{
+	  			this.$router.push({path:'/result',query:{photoUrl:photoUrl,faceUrl:faceUrl}})
 	  		}	  		
 	  	}
 	  }

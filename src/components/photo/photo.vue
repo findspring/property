@@ -6,7 +6,7 @@
 			</div>
 			<i class="common-icon identify-delete" v-show="iconStatus"></i>
 			<div class="photo-btn">
-				<input type="file" name="file_head" id="file_head" @change="setImagePreview" accept="image/*" capture="camera" />
+				<input type="file" name="file_head" id="file_head" @change="compressImg" accept="image/*" capture="camera" />
 				<img :src="src1" alt="" class="upload-bg">
 				<div id="localImag">
 					<img id="preview" />
@@ -60,9 +60,10 @@
 	  		console.log(1,file_head.value)
 	  	},
 	  	compressImg(){
-	  		let compressFile = document.getElementById("file_head");
+	  		let compressFile = document.getElementById("file_head").files[0];
 	  		let preview = document.getElementById("preview");
 	  		let _this = this;
+	  		// console.log(compressFile)
         if(compressFile.length <= 0){
           return;
         }
@@ -70,74 +71,76 @@
         	"quality":1,
           "width": 600
         }).then(function(rst){
+        	// console.log(rst)
         	// rst.attachType = picType;
           //rst.srcName = compressFile.name;
-          // preview.src = rst.base64
-          _this.$http.post(uploadurl, {
-            "formData":rst
-          }).then(Response => {
-            let data = JSON.parse(Response.body);
-            // console.log(data);
-            if (data) {
-              if (0 != data.errCode) {
-                _this.$dialog.alert(data.errMsg);
-                return;
-              }
-              if (1 == num) {
-                  _this.msg.custAgentIdFront = data.result.attachKey;
-                  _this.ocrRecog(num, 2, rst.base64);
-              }
-              if (2 == num) {
-                  console.log(num);
-                  _this.msg.custAgentIdBack = data.result.attachKey;
-              }
-              if (3 == num) {
-                  _this.msg.bankCard = data.result.attachKey;
-                  _this.ocrRecog(num, 17, rst.base64);
-              }
-              if (4 == num) {
-                  _this.msg.investigation.push(data.result.attachKey);
-                  // console.log(_this.msg.investigation);
-                  let fname = $("#file_" + num).val()
-              }
-            }
+          preview.src = rst.base64
+          _this.srcPreview = preview.src;
+	      	_this.iconStatus = true;
+	      	let formData = new window.FormData()
+	      	formData.append('file',compressFile)
+	      	formData.append('uploadImgType','identity')
+	      	formData.append('userType',1)
+	      	
+          _this.$http({
+		        method: "post",
+		        headers: {'content-type': 'multipart/form-data'},
+		        url: "/pub/image/identityGather",
+		        data: formData
+		      }).then(Response => {
+            let result = Response.data.result;
+            let imgUrl = result.imgUrl
+            _this.$emit('photoBack',true,imgUrl)
           }).catch(function(err){
               console.log(err);
           });  
         }).catch(function (err){
         	// 处理失败会执行
         }).always(function () {
-          e.target.value = null;
+          // e.target.value = null;
           // 不管是成功失败，都会执行
         })
 	  	},
-	  	setImagePreview(){
-	  		let preview, img_txt, localImag, file_head = document.getElementById("file_head"),
-	      picture = file_head.value;
-	      if (!picture.match(/.jpg|.gif|.png|.bmp/i)) return this.$dialog.alert({message: '您上传的图片格式不正确，请重新选择！'}); 
-	      if (preview = document.getElementById("preview"), file_head.files && file_head.files[0]){
-	       	preview.style.display = "block",
-	        preview.src = window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1 ? window.webkitURL.createObjectURL(file_head.files[0]) : window.URL.createObjectURL(file_head.files[0]);
-	      }
-	      else {
-	        // file_head.select(),
-	        // file_head.blur(),
-	        // img_txt = document.selection.createRange().text,
-	        // localImag = document.getElementById("localImag");
-	        // console.log(2,img_txt)
-	        // try {
-	        //   localImag.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)",
-	        //   localImag.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = img_txt
-	        // } catch(f) {
-	        //   return alert("您上传的图片格式不正确，请重新选择！"),
-	        //   !1
-	        // }
-	        // preview.style.display = "none",
-	        // document.selection.empty()
-	      }
-	      this.srcPreview = preview.src;
-	      this.iconStatus = true;
-	  	}
+	  	// setImagePreview(){
+	  	// 	let preview, img_txt, localImag, file_head = document.getElementById("file_head"),
+	   //    picture = file_head.value;
+	   //    if (!picture.match(/.jpg|.gif|.png|.bmp/i)) return this.$dialog.alert({message: '您上传的图片格式不正确，请重新选择！'}); 
+	   //    if (preview = document.getElementById("preview"), file_head.files && file_head.files[0]){
+	   //     	preview.style.display = "block",
+	   //      preview.src = window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1 ? window.webkitURL.createObjectURL(file_head.files[0]) : window.URL.createObjectURL(file_head.files[0]);
+	   //      this.$http({
+		  //       method: "post",
+		  //       url: "/pub/image/identityGather",
+		  //       data: this.$qs.stringify({
+		  //       	// 'file':preview.src,
+		  //       	'uploadImgType':'identity',
+		  //       	'userType':1,
+		  //       })
+		  //     }).then((res) => {
+		  //     	let result = res.data.result;
+		  //     	this.searchArr = result.list
+		  //   	}).catch((err) => {
+		  //     });
+	   //    }
+	   //    else {
+	   //      // file_head.select(),
+	   //      // file_head.blur(),
+	   //      // img_txt = document.selection.createRange().text,
+	   //      // localImag = document.getElementById("localImag");
+	   //      // console.log(2,img_txt)
+	   //      // try {
+	   //      //   localImag.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)",
+	   //      //   localImag.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = img_txt
+	   //      // } catch(f) {
+	   //      //   return alert("您上传的图片格式不正确，请重新选择！"),
+	   //      //   !1
+	   //      // }
+	   //      // preview.style.display = "none",
+	   //      // document.selection.empty()
+	   //    }
+	   //    this.srcPreview = preview.src;
+	   //    this.iconStatus = true;
+	  	// }
 	  },
 	}
 </script>

@@ -123,6 +123,7 @@
 	      return false
 	    },
 	    onClickLeft(){
+	    	return 
 	  		this.$router.go(-1);
 	  	},
 	    search(){

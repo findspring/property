@@ -30,7 +30,8 @@ export default new Router({
       	requireAuth:true,
       	title:'首页',
       	flag:'index',
-      	belongToGroup:'首页'
+      	belongToGroup:'首页',
+        keepAlive: true,
       },
       component:index
     },
@@ -39,7 +40,8 @@ export default new Router({
       name:'visitors',
       meta: {
         title: '访客',
-        flag: 'visitors'
+        flag: 'visitors',
+        keepAlive: true,
       },
       component: visitors
     },
@@ -48,7 +50,8 @@ export default new Router({
       name:'members',
       meta: {
         title: '家庭成员添加',
-        flag: 'members'
+        flag: 'members',
+        keepAlive: true,
       },
       component: members
     },
@@ -57,7 +60,8 @@ export default new Router({
       name:'audit',
       meta: {
         title: '审核',
-        flag: 'audit'
+        flag: 'audit',
+        keepAlive: true,
       },
       component: audit
     },
@@ -66,7 +70,8 @@ export default new Router({
       name:'auditInfo',
       meta: {
         title: '审核详情',
-        flag: 'auditInfo'
+        flag: 'auditInfo',
+        keepAlive: true,
       },
       component: auditInfo
     },
@@ -75,7 +80,8 @@ export default new Router({
       name:'mine',
       meta: {
         title: '我的',
-        flag: 'mine'
+        flag: 'mine',
+        keepAlive: true,
       },
       component: mine
     },
@@ -84,7 +90,8 @@ export default new Router({
       name:'message',
       meta: {
         title: '我的消息',
-        flag: 'message'
+        flag: 'message',
+        keepAlive: true,
       },
       component: message
     },
@@ -93,7 +100,8 @@ export default new Router({
       name:'question',
       meta: {
         title: '常见问题',
-        flag: 'question'
+        flag: 'question',
+        keepAlive: true,
       },
       component: question
     },
@@ -102,7 +110,8 @@ export default new Router({
       name:'msgInfo',
       meta: {
         title: '我的消息',
-        flag: 'msgInfo'
+        flag: 'msgInfo',
+        keepAlive: true,
       },
       component: msgInfo
     },
@@ -111,7 +120,8 @@ export default new Router({
       name:'login',
       meta: {
         title: '欢迎使用智能门禁',
-        flag: 'login'
+        flag: 'login',
+        keepAlive: true,
       },
       component: login
     },
@@ -120,7 +130,8 @@ export default new Router({
       name:'identify',
       meta: {
         title: '身份认证',
-        flag: 'identify'
+        flag: 'identify',
+        keepAlive: true,
       },
       component: identify
     },
@@ -129,7 +140,8 @@ export default new Router({
       name:'result',
       meta: {
         title: '身份认证',
-        flag: 'result'
+        flag: 'result',
+        keepAlive: true,
       },
       component: result
     },

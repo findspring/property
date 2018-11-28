@@ -12,10 +12,10 @@
 				<p>身份证提交不可修改</p>
 				<div class="result-imgs">
 					<div class="result-img">
-						<img src="./../../../assets/images/upidcard.png" alt="">
+						<img :src="photoUrl" alt="">
 					</div>
 					<div class="result-img">
-						<img src="./../../../assets/images/upidcard.png" alt="">
+						<img :src="faceUrl" alt="">
 					</div>
 				</div>
 			</div>
@@ -27,39 +27,40 @@
 						<div class="result-item">
 							<p>姓名</p>
 							<div class="result-item-input">
-								<input v-validate ="'required|valcode'" type="text" id="valcode" name="验证码" v-model="valcode">
+								<input v-validate ="'required|realname'" type="text" id="realname" name="姓名" v-model="realname">
 								<i class="common-icon icon-edit"></i>
 							</div>
-							<span v-show="errors.has('验证码')">{{ errors.first('验证码')}}</span>
+							<span v-show="errors.has('姓名')">{{ errors.first('姓名')}}</span>
 						</div>
 						<div class="result-item">
 							<p>性别</p>
 							<div class="result-item-input">
-								<input v-validate ="'required|valcode'" type="text" id="valcode" name="验证码" v-model="valcode">
+								<input v-validate ="'required|sex'" type="text" id="sex" name="性别" v-model="sex">
 								<i class="common-icon icon-edit"></i>
+								<popup-picker :data="sexList" v-model="sexVal" @on-change="changeSex"></popup-picker>
 							</div>
-							<span v-show="errors.has('验证码')">{{ errors.first('验证码')}}</span>
+							<span v-show="errors.has('性别')">{{ errors.first('性别')}}</span>
 						</div>
 					</div>
 					<div class="result-form-first">
 						<div class="result-item">
 							<p>地址</p>
 							<div class="result-item-input">
-								<input v-validate ="'required|valcode'" type="text" id="valcode" name="验证码" v-model="valcode">
-								<i class="common-icon icon-edit"></i>
+								<input v-validate ="'required|address'" type="text" id="address" name="地址" v-model="address">
+								<i class="common-icon icon-edit"></i>								
 							</div>
-							<span v-show="errors.has('验证码')">{{ errors.first('验证码')}}</span>
+							<span v-show="errors.has('地址')">{{ errors.first('地址')}}</span>
 						</div>
 						<div class="result-item">
 							<p>身份证号码</p>
 							<div class="result-item-input">
-								<input v-validate ="'required|valcode'" type="text" id="valcode" name="验证码" v-model="idNum" disabled="disabled">
+								<input v-validate ="'required|idNum'" type="text" id="idNum" name="身份证号码" v-model="idNum" disabled="disabled">
 							</div>
-							<span v-show="errors.has('验证码')">{{ errors.first('验证码')}}</span>
+							<span v-show="errors.has('身份证号码')">{{ errors.first('身份证号码')}}</span>
 						</div>
 					</div>
 					<div class="result-btn">
-						<div @click="goIndex">确认</div>
+						<div @click="submit">确认</div>
 					</div>
 				</form>
 			</div>
@@ -67,18 +68,87 @@
 	</div>		
 </template>
 <script>
+	import { PopupPicker } from 'vux'
 	export default {
 	  name: 'result',
 	  data () {
 	    return {
 	    	cityName:localStorage.getItem('cityName') || '',
 	    	valcode:'',
-	    	idNum:'1908231772323456789'
+	    	idNum:'',
+	    	faceUrl:'',
+	    	photoUrl:'',
+	    	realname:'',
+	    	sex:'男',
+	    	sexVal:['男'],
+	    	sexList:[["男","女"]],
+	    	address:'',
 	    }
 	  },
+	  components:{
+	  	PopupPicker
+	  },
+	  mounted(){
+	  	this.getIdentityInfo();
+	  	this.faceUrl = this.$route.query.faceUrl
+	  	this.photoUrl = this.$route.query.photoUrl
+	  },
+	  beforeRouteLeave(to, from, next) {
+      // 设置下一个路由的 meta
+      to.meta.keepAlive = false; // C 跳转到 A 时让 A 不缓存，即刷新
+      next();
+    },
 	  methods:{
+	  	changeSex(val){
+	  		this.sex = val[0];
+	  	},
+	  	getIdentityInfo(){
+	  		let authToken = localStorage.getItem("authToken")
+	  		this.$http({
+	        method: "post",
+	        url: "/wechat/mini/user/identityInfo",
+	        data: this.$qs.stringify({
+	        	'authToken':authToken,
+	        })
+	      }).then((res) => {
+	      	let result = res.data.result;
+	      	this.idNum = result.idCardNo
+	      	this.address = result.address
+	      	this.realname = result.userName
+	      	this.sex = result.gender
+	      	this.sexVal = [''+result.gender+'']
+	      	this.faceUrl = result.headPortraitUrl
+	      	this.photoUrl = result.identityImgUrl
+	    	}).catch((err) => {
+	      });
+	  	},
 	  	onClickLeft(){
 	  		this.$router.go(-1);
+	  	},
+	  	submit(){
+	  		this.$validator.validateAll().then((result) => {
+        if (result) {
+        	let authToken = localStorage.getItem("authToken")
+        	this.$http({
+		        method: "post",
+		        url: "/wechat/mini/user/identityConfirm",
+		        data: this.$qs.stringify({
+		        	'authToken':authToken,
+		        	'cardNum':this.idNum,
+		        	'address':this.address,
+		        	'gender':this.sex,
+		        	'userName':this.realname,
+		        })
+		      }).then((res) => {
+		      	this.goIndex();
+		    	}).catch((err) => {
+		      });
+          return
+        }else{
+        	// this.$router.push({path:'/identify'});
+        	this.$dialog.alert({message:'信息输入有误！'});
+        }        
+      })
 	  	},
 	  	goIndex(){
 	  		if(this.$route.query.from == 'members'){
@@ -149,6 +219,14 @@
 								line-height .8rem
 								border 1px solid #D8D8D8
 								border-radius .14rem
+								.vux-cell-box
+									position absolute
+									left 0
+									top 0
+									width 100%
+									height .8rem
+									z-index 2
+									opacity 0
 								input
 									height .4rem
 									line-height .4rem

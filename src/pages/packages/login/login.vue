@@ -1,7 +1,7 @@
 <template>
 	<div class="login">
 		<h2>欢迎使用智能门禁</h2>
-		<div class="login-input" v-show="addressStatus">
+		<!-- <div class="login-input" v-show="addressStatus">
 			<div class="login-input-bg" @click="hideSearch"></div>
 			<input type="text" v-on:input="searchCommunityList()" id="valcode" placeholder="请输入社区地址" v-model="address">
 			<div class="login-input-content">
@@ -9,7 +9,7 @@
 					<li  @click="chooseCommunity(item.communityName)">{{item.communityName}}</li>
 				</ul>
 			</div>				
-		</div>
+		</div> -->
 		<form id="login-form">
 			<div class="login-item">
 				<div class="login-top">
@@ -17,31 +17,37 @@
 						<i class="icon login-icon icon-phone"></i>
 		      	<input v-validate ="'required|phone'" type="number" id="phone" name="手机号" placeholder="我的手机" v-model="phone">
 					</div>
-					<div class="login-code fr" v-if="codeStatus"  @click="sendCode">获取验证码</div>
-					<div class="login-code fr" v-else>{{time}}s后重新获取</div>		      
+					<!-- <div class="login-code fr" v-if="codeStatus"  @click="sendCode">获取验证码</div>
+					<div class="login-code fr" v-else>{{time}}s后重新获取</div>	 -->	      
 		    </div>
 		    <span v-show="errors.has('手机号')">{{ errors.first('手机号')}}</span>
 			</div>
 			<div class="login-item">
 				<div class="login-top">
 		      <i class="icon login-icon icon-code"></i>
-		      <input v-validate ="'required|valcode'" type="text" id="valcode" name="验证码" placeholder="验证码" v-model="valcode">
+		      <input v-validate ="'required|valcode'" type="text" id="valcode" name="验证码" placeholder="验证码" readonly="readonly" v-if="disabled" v-model="valcode"  @click="canInput">
+		      <input v-validate ="'required|valcode'" type="text" id="valcode" name="验证码" placeholder="验证码" v-else v-model="valcode">
+		      <div class="login-code fr" v-if="codeStatus"  @click="sendCode">获取验证码</div>
+					<div class="login-code fr" v-else>{{time}}s后重新获取</div>	
 		    </div>
 		    <span v-show="errors.has('验证码')">{{ errors.first('验证码')}}</span>
 			</div>			
 			<div class="login-item">
 				<div class="login-top">
 		      <i class="icon login-icon icon-address"></i>
-		      <input v-validate ="'required|house'" type="text" id="community" name="社区地址" placeholder="社区地址" v-model="address" onfocus="this.blur()"  @click="showSearch">	      
+		      <input v-validate ="'required|house'" type="text" id="community" name="社区地址" placeholder="社区地址" readonly="readonly" v-model="address" onfocus="this.blur()" >	      
 		      <i class="common-icon icon-more"></i>
-		      <popup-picker v-if="addressList&&addressList.length" :data="addressList" v-model="value1" @on-change="changePicker" placeholder="111"></popup-picker>
+		      <select v-model="select" @change="changeSelect" id="selectAdd">
+            <option v-for="(item,index) in addressList" :key="index" :value="item.value">{{item.name}}</option>
+       	 	</select>
+		      <!-- <popup-picker v-if="addressList&&addressList.length" :data="addressList" v-model="value1" :columns="1" show-name @on-change="changePicker"></popup-picker> -->
 		    </div>
 		    <span v-show="errors.has('社区地址')">{{ errors.first('社区地址')}}</span>
 			</div>
 			<div class="login-item">
 				<div class="login-top">
 		      <i class="icon login-icon icon-house"></i>
-		      <input v-validate ="'required|house'" type="text" id="house" name="门牌号码" placeholder="门牌号码">
+		      <input v-validate ="'required|house'" type="text" id="house" name="门牌号码" placeholder="门牌号码" v-model="house" >
 		    </div>
 		    <span v-show="errors.has('门牌号码')">{{ errors.first('门牌号码')}}</span>
 			</div>	
@@ -64,13 +70,13 @@ export default {
     	valcode:'',
     	address:'',
     	house:'',
-    	cityCode:'0',
     	fCityCode:'110000',
     	addressStatus:false,
     	searchArr:[],
     	value1: [],
     	addressList: [],
-
+    	disabled:true,
+    	select:''
     }
   },
   components:{
@@ -80,8 +86,19 @@ export default {
   	this.getCommunityList();
   },
   methods:{
-  	changePicker(val) {
-      // console.log(val)
+  	changeSelect(){
+  		let selectAdd = document.getElementById('selectAdd');
+  		let index = selectAdd.selectedIndex;
+  		this.address = selectAdd[index].text
+  	},
+  	canInput(){
+  		if(this.disabled == true){
+  			this.$dialog.alert({message:"请先获取验证码"})
+  		}else{
+
+  		}
+  	},
+  	changePicker(val){
       this.address = val[0];
     },
   	showSearch(){
@@ -115,7 +132,6 @@ export default {
   		console.log(this.address)
   	},
   	getCommunityList(){
-  		let cityCode = this.cityCode;
   		let pageNum = 1;
   		let pageSize = 10000;
 			this.$http({
@@ -126,13 +142,12 @@ export default {
         	'pageSize':pageSize
         })
       }).then((res) => {
-      	let list = res.data.result.list;
-      	let listArr = [];
+      	let list = res.data.result;
       	list.forEach((item,index) => {
-      	  listArr.push(item.communityName)
+      	  this.addressList.push({name:item.communityName,value:item.id})
       	})
-      	this.addressList = [listArr];
-      	console.log(listArr)
+      	// this.addressList = listArr;
+      	console.log(this.addressList)
     	}).catch((err) => {
       });
   	},
@@ -156,6 +171,7 @@ export default {
   		this.$validator.validate('手机号',this.phone).then((result) => {
         if (result) {
           this.codeStatus = false;
+          this.disabled = false
 		    	let timer = setInterval(() => {
 		    	  if (this.time > 1) {
 			        this.time--;
@@ -182,19 +198,26 @@ export default {
     validateBeforeSubmit () {
       this.$validator.validateAll().then((result) => {
         if (result) {
-       //  	this.$http({
-		     //    method: "post",
-		     //    url: "/wechat/officialAccount/user/phoneRegister",
-		     //    data: this.$qs.stringify({'phone':phoneNumber})
-		     //  }).then((res) => {
-		    	// }).catch((err) => {
-		     //  });
-          this.$router.push({path:'/identify'});
+        	this.$http({
+		        method: "post",
+		        url: "/wechat/officialAccount/user/phoneRegister",
+		        data: this.$qs.stringify({
+		        	'userType':1,
+		        	'verCode':this.valcode,
+		        	'communityId':this.select,
+		        	'phone':this.phone,
+		        	'owerNum':this.house,
+		        })
+		      }).then((res) => {
+		      	this.$router.push({path:'/identify'});
+		    	}).catch((err) => {
+		      });
+          
           // this.$dialog.alert({message:'验证成功'});
           return
         }else{
-        	this.$router.push({path:'/identify'});
-        	// this.$dialog.alert({message:'验证失败'});
+        	// this.$router.push({path:'/identify'});
+        	this.$dialog.alert({message:'验证失败'});
         }        
       })
     }
@@ -282,10 +305,21 @@ export default {
 						padding .33rem 0
 						::palceholder
 							color #A6A0A0
+					select
+						position absolute
+						width 100%
+						height .96rem
+						left 0
+						top  0
+						z-index 10 
+						opacity:0	
+						overflow hidden
 					.vux-cell-box
 						position absolute
-						right .4rem
-						top  .3rem
+						width 100%
+						height .96rem
+						left 0
+						top  0
 						z-index 10 
 						opacity:0	
 						overflow hidden		
@@ -295,6 +329,10 @@ export default {
 						input
 							width 2rem
 					.login-code 
+						position absolute
+						right 0
+						top 0
+						z-index 10
 						font-size: .28rem
 						width 2.24rem
 						text-align center

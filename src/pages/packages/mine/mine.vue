@@ -33,7 +33,7 @@
 					<li>
 						<div>
 							<p>10</p>
-							<span>签到</span>
+							<span>家庭成员</span>
 						</div>
 					</li>
 				</ul>
@@ -61,7 +61,7 @@
 					<i class="common-icon icon-more"></i>
 				</div>
 			</div>
-			<div class="mine-item" @click="goLinks()">
+			<div class="mine-item" @click="goLinks('identify')">
 				<div class="mine-item-left">
 					<i class="common-icon icon-fill"></i>
 					<span>资料完善</span>

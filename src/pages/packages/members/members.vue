@@ -15,7 +15,7 @@
 			  				<div>
 			  					<p>姓名</p>
 			  					<div>
-			  						<input v-validate ="'required|valcode'" type="text" id="valcode" name="姓名" placeholder="请输入" v-model="name">
+			  						<input v-validate ="'required|realname'" type="text" id="realname" name="姓名" placeholder="请输入" v-model="realname">
 			  					</div>				  				
 			  				</div>
 				  			<span v-show="errors.has('姓名')">{{ errors.first('姓名')}}</span>	
@@ -24,7 +24,7 @@
 			  				<div>
 			  					<p>门牌号</p>
 			  					<div>
-			  						<input v-validate ="'required|valcode'" type="text" id="valcode" name="门牌号" placeholder="请输入" v-model="houseNum">
+			  						<input v-validate ="'required|house'" type="text" id="house" name="门牌号" placeholder="请输入" v-model="house">
 			  					</div>				  				
 			  				</div>
 				  			<span v-show="errors.has('门牌号')">{{ errors.first('门牌号')}}</span>	
@@ -33,7 +33,7 @@
 			  				<div>
 			  					<p>与户主关系</p>
 			  					<div>
-			  						<input v-validate ="'required|valcode'" type="text" id="valcode" name="与户主关系" placeholder="请选择" v-model="relationShip">
+			  						<input v-validate ="'required|relationShip'" type="text" id="relationShip" name="与户主关系" placeholder="请选择" v-model="relationShip">
 			  						<popup-picker :data="list1" v-model="value1" @on-change="onChange" placeholder="111"></popup-picker>
 			  					</div>				  				
 			  				</div>
@@ -43,7 +43,7 @@
 			  				<div>
 			  					<p>身份证号码</p>
 			  					<div>
-			  						<input v-validate ="'required|valcode'" type="text" id="valcode" name="身份证号码" placeholder="请输入" v-model="cdNum">
+			  						<input v-validate ="'required|idNum'" type="text" id="idNum" name="身份证号码" placeholder="请输入" v-model="cdNum">
 			  					</div>				  				
 			  				</div>
 				  			<span v-show="errors.has('身份证号码')">{{ errors.first('身份证号码')}}</span>	
@@ -113,6 +113,11 @@
 	  mounted(){
 	  	this.getMemberList();
 	  },
+	  beforeRouteLeave(to, from, next) {
+      // 设置下一个路由的 meta
+      to.meta.keepAlive = false; // C 跳转到 A 时让 A 不缓存，即刷新
+      next();
+    },
 	  methods:{
 	  	nextStep(){
 	  		this.$router.push({path:'/identify',query:{from:'members'}})
