@@ -7,6 +7,7 @@ const members = r => require.ensure([],() => r(require('packages/members/members
 const audit = r => require.ensure([],() => r(require('packages/audit/audit')),'audit');
 const auditInfo = r => require.ensure([],() => r(require('packages/audit-info/audit-info')),'audit-info');
 const mine = r => require.ensure([],() => r(require('packages/mine/mine')),'mine');
+const edit = r => require.ensure([],() => r(require('packages/edit/edit')),'edit');
 const message = r => require.ensure([],() => r(require('packages/message/message')),'message');
 const question = r => require.ensure([],() => r(require('packages/question/question')),'question');
 const msgInfo = r => require.ensure([],() => r(require('packages/msg-info/msg-info')),'msgInfo');
@@ -84,6 +85,16 @@ export default new Router({
         keepAlive: true,
       },
       component: mine
+    },
+    {
+      path: "/edit",
+      name:'edit',
+      meta: {
+        title: '修改资料',
+        flag: 'edit',
+        keepAlive: true,
+      },
+      component: edit
     },
     {
       path: "/message",

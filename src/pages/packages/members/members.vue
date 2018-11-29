@@ -7,8 +7,8 @@
 			</div>
 		</van-nav-bar>
 		<div class="members-tab">
-			<van-tabs v-model="active" color="#D45855" :line-width="64">
-			  <van-tab title="添加成员">
+			<van-tabs v-model="active" color="#D45855" :line-width="64" sticky :offset-top="46" @change="changeTab">
+			  <van-tab :title="titleName">
 			  	<div class="members-add">
 			  		<form>
 			  			<div class="members-add-item">
@@ -24,7 +24,7 @@
 			  				<div>
 			  					<p>门牌号</p>
 			  					<div>
-			  						<input v-validate ="'required|house'" type="text" id="house" name="门牌号" placeholder="请输入" v-model="house">
+			  						<input v-validate ="'required|house'" type="text" id="house" name="门牌号" placeholder="请输入" v-model="houseNum">
 			  					</div>				  				
 			  				</div>
 				  			<span v-show="errors.has('门牌号')">{{ errors.first('门牌号')}}</span>	
@@ -43,7 +43,7 @@
 			  				<div>
 			  					<p>身份证号码</p>
 			  					<div>
-			  						<input v-validate ="'required|idNum'" type="text" id="idNum" name="身份证号码" placeholder="请输入" v-model="cdNum">
+			  						<input v-validate ="'required|idNum'" type="text" id="idNum" name="身份证号码" placeholder="请输入" v-model="idNum">
 			  					</div>				  				
 			  				</div>
 				  			<span v-show="errors.has('身份证号码')">{{ errors.first('身份证号码')}}</span>	
@@ -51,30 +51,21 @@
 			  			<div class="common-btn fr" style="margin-top:.28rem" @click="nextStep">下一步</div>
 			  		</form>
 			  	</div>
-			  	<!-- <div class="members-identify" v-if="photoStatus">
-			  		<h5>拍摄/上传身份证正面照</h5>
-			  		<v-photo :src1="src1"></v-photo>
-			  		<h5>人脸识别扫描</h5>
-			  		<v-face :src2="src2"></v-face>
-			  		<div class="members-identify-btn">
-			  			<div class="common-btn" @click="upload">上传</div>
-			  		</div>
-			  	</div> -->
 			  </van-tab>
 			  <van-tab title="我的家庭">
 			  	<div class="members-family">
-			  		<div class="members-family-item">
+			  		<div class="members-family-item" v-for="(item,index) in familyArr" :key="index" >
 			  			<div class="members-family-img">
 			  				<img src="./../../../assets/images/headimg02.png" alt="">
 			  			</div>			  			
 			  			<div class="members-family-content">
 			  				<div class="members-family-top">
-			  					<h4>任桂英</h4>
-			  					<i class="common-icon icon-edit"></i>
+			  					<h4>{{item.familyTiesName}}</h4>
+			  					<i class="common-icon icon-edit" @click="editMember(item)"></i>
 			  				</div>
-			  				<p>身份证号码：530623398954897603</p>
-			  				<p>门牌号码：A234678</p>
-			  				<p>与业主的关系：<span>业主</span></p>
+			  				<p>身份证号码：{{item.familyTiesIdCard}}</p>
+			  				<p>门牌号码：{{item.familyTiesOwerNum}}</p>
+			  				<p>与业主的关系：<span>{{item.familyTiesRelation}}</span></p>
 			  			</div>
 			  		</div>
 			  	</div>
@@ -85,8 +76,6 @@
 	</div>
 </template>
 <script>
-	import vPhoto from 'components/photo/photo'
-	import vFace from 'components/face/face'
 	import { PopupPicker } from 'vux'
 	import navBar from "components/navBar/navBar";
 	export default {
@@ -96,19 +85,21 @@
 	    	cityName:localStorage.getItem('cityName') || '',
 	    	src1:require('./../../../assets/images/upidcard.png'),
 	    	src2:require('./../../../assets/images/upface.png'),
-	    	active:2,
-	    	name:'',
+	    	active:0,
+	    	realname:'',
 	    	houseNum:'',
 	    	relationShip:'',
-	    	cdNum:'',
+	    	idNum:'',
 	    	msgStatus:true,
 	    	photoStatus:false,
-	    	value1: ['iPhone'],
-	    	list1: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你']],
+	    	value1: ['父母'], //当前选择关系
+	    	list1: [['父母', '夫妻', '子女', '亲友', '租客', '其他']],
+	    	familyArr:[],
+	    	titleName:'添加成员'
 	    }
 	  },
 	  components:{
-	  	navBar,PopupPicker,vPhoto,vFace
+	  	navBar,PopupPicker
 	  },
 	  mounted(){
 	  	this.getMemberList();
@@ -119,8 +110,52 @@
       next();
     },
 	  methods:{
+	  	editMember(item){
+	  		this.titleName = "编辑成员"
+	  		this.active = 0
+	  		this.realname = item.familyTiesName
+	  		this.houseNum = item.familyTiesOwerNum
+	  		this.relationShip = item.familyTiesRelation
+	  		this.value1 = [''+item.familyTiesRelation+'']
+	  		this.idNum = item.familyTiesIdCard
+	  	},
+	  	changeTab(index){
+	  		if(index == 1 && this.titleName == "编辑成员"){
+	  			this.titleName = "添加成员"
+	  			this.realname = ''
+		  		this.houseNum = ''
+		  		this.relationShip = ''
+		  		this.value1 = ['父母']
+		  		this.idNum = ''
+	  		}
+	  	},
 	  	nextStep(){
-	  		this.$router.push({path:'/identify',query:{from:'members'}})
+	  		this.$validator.validateAll().then((result) => {
+	        if (result) {
+	        	this.$http({
+			        method: "post",
+			        url: "/wechat/officialAccount/user/saveFfmily",
+			        data: this.$qs.stringify({
+			        	'authToken':localStorage.getItem('authToken'),
+			        	'userType':1,
+			        	'userName':this.realname,
+			        	'familyTies':this.relationShip,
+			        	'owerNum':this.houseNum,
+			        	'idCardNo':this.idNum,
+			        })
+			      }).then((res) => {
+			      	console.log(1)
+			      	this.$router.push({path:'/identify',query:{from:'members'}})
+			      	// this.$router.push({path:'/identify'});
+			    	}).catch((err) => {
+			      });	          
+	          // this.$dialog.alert({message:'验证成功'});
+	          return
+	        }else{
+	        	// this.$router.push({path:'/identify'});
+	        	this.$dialog.alert({message:'验证失败'});
+	        }        
+	      })	  		
 	  	},
 	  	getMemberList(){
 	  		let communityName = this.address;
@@ -128,11 +163,12 @@
 	  		let pageSize = 100;
 				this.$http({
 	        method: "post",
-	        url: "/wechat/officialAccount/familyTiesList",
+	        url: "/wechat/officialAccount/user/familyTiesList",
 	        data: this.$qs.stringify({
 	        })
 	      }).then((res) => {
-	      	// let result = res.data.result;
+	      	let result = res.data.result;
+	      	this.familyArr = result;
 	      	// this.searchArr = result.list
 	    	}).catch((err) => {
 	      });
@@ -266,6 +302,7 @@
 						padding .36rem .44rem .24rem .43rem
 						border-radius .14rem
 						box-shadow:0 .02rem .17rem 0 rgba(0,0,0,0.17);
+						margin-bottom: .2rem
 						.members-family-img
 							img
 								width 1rem

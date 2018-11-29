@@ -6,7 +6,7 @@
 				<div class="mine-top-left">
 					<h2>我是大表姐</h2>
 					<p>爱笑的女孩运气不会差</p>
-					<div class="mine-edit">
+					<div class="mine-edit" @click="goLinks('edit')">
 						<i class="common-icon icon-edit"></i>
 						<span>编辑</span>
 					</div>

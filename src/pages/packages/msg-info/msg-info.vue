@@ -5,9 +5,9 @@
 				<i class="common-icon icon-back"></i>
 			</div>
 			<!-- <div slot="right" @click="show"> -->
-			<div slot="right">
+			<!-- <div slot="right">
 				<i class="common-icon icon-date"></i>
-			</div>
+			</div> -->
 		</van-nav-bar>
 		<div class="msgInfo-main">
 			<div class="msgInfo-item">

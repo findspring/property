@@ -15,7 +15,7 @@ Vue.use(VeeValidate,config);
 const dictionary = {
    zh_CN: {
       messages: {
-        email: () => '请输入正确的邮箱格式1',
+        email: () => '请输入正确的邮箱格式',
         required: ( field )=> "请输入" + field
       },
       attributes:{
@@ -63,7 +63,7 @@ Validator.extend('realname', {  //姓名
   },
   validate: value => {
     // return /^[\u2E80-\u9FFF-Za-z0-9]{10}$/
-    return /^[\u4e00-\u9fa5]{2,8}$/.test(value)
+    return /^[\u4e00-\u9FFF]{2,8}$/.test(value)
   }
 });
 

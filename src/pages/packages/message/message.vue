@@ -5,9 +5,9 @@
 				<i class="common-icon icon-back"></i>
 			</div>
 			<!-- <div slot="right" @click="show"> -->
-			<div slot="right">
+			<!-- <div slot="right">
 				<i class="common-icon icon-date"></i>
-			</div>
+			</div> -->
 		</van-nav-bar>
 		<!-- <v-header title="我的消息" :showBack="true" class="already-record"></v-header> -->
 		<div class="message-box">
@@ -27,21 +27,29 @@
 					</van-list>
 				</van-pull-refresh>				
 			</div> -->
-			<div class="message-box-item" @click="goMsgInfo">
-				<div class="message-headimg">
-					<img src="./../../../assets/images/headimg05.png" alt="">
-				</div>				
-				<div class="message-content">
-					<div class="message-content-top">
-						<h4>人脸识别不了</h4>
-						<time>04月05日</time>
+			<div>
+				<van-pull-refresh class="refresh" v-model="isLoading" @refresh="onRefresh">
+				  <p>刷新次数: {{ count }}</p>
+				  <div class="message-box-item" @click="goMsgInfo"
+						v-for="(item,index) in msgArr" :key="index"
+					>
+						<div class="message-headimg">
+							<img :src="item.avatarUrl" alt="">
+						</div>				
+						<div class="message-content">
+							<div class="message-content-top">
+								<h4>{{item.msgTit}}</h4>
+								<time>{{item.msgTime}}</time>
+							</div>
+							<div class="message-content-bottom">
+								<p class="line-ellipsis01">{{item.msgIntro}}</p>
+								<!-- <badge text="1"></badge> -->
+							</div>
+						</div>
 					</div>
-					<div class="message-content-bottom">
-						<p class="line-ellipsis01">视频过人脸验证，活体检测，为小米金融实现极速放款…</p>
-						<badge text="1"></badge>
-					</div>
-				</div>
+				</van-pull-refresh>				
 			</div>
+					
 		</div>
 		<nav-bar :page="3"></nav-bar>	
 	</div>
@@ -49,7 +57,7 @@
 
 <script>
 	import navBar from "components/navBar/navBar";
-	import {Badge} from 'vux'
+	// import {Badge} from 'vux'
 	export default {
 	  name: 'message',
 	  data () {
@@ -58,13 +66,33 @@
 				isLoading: false,
 	    	list: [],
 				loading: false,
-				finished: false
+				finished: false,
+				msgArr:[],
 	    }
 	  },
 	  components:{
-	    Badge,navBar
+	    // Badge,
+	    navBar
+	  },
+	  mounted(){
+	  	this.getMessageList();
 	  },
 	  methods:{
+	  	getMessageList(){
+	  		this.$http({
+          method: "post",
+          url: "/wechat/officialAccount/user/msgList",
+          data: this.$qs.stringify({
+            'authToken':localStorage.getItem('authToken'),
+            // 'pageNum':pageNum,
+            // 'operateStatus':operateStatus,
+            // 'pageSize':pageSize,
+          })
+        }).then((res) => {
+          this.msgArr = res.data.result;
+        }).catch((err) => {
+        }); 
+	  	},
 	  	onLoad(){
 	      // 异步更新数据
 	      setTimeout(() => {
@@ -131,6 +159,7 @@
 						overflow hidden
 				.message-content
 					.message-content-top
+						min-width 5.9rem
 						margin-bottom .08rem
 						height .42rem
 						display flex

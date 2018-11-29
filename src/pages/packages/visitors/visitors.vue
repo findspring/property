@@ -31,7 +31,7 @@
       <div class="visitors-tab-bottom">
         <div class="visitors-tab-bg"></div>
         <div class="visitors-item visitors-has" v-if="num == 0">
-          <div class="visitors-has-item" v-if="visitorsStatus">
+          <div class="visitors-has-item" v-if="hasArr&&hasArr.length">
             <div class="visitors-has-img">
               <img src="./../../../assets/images/headimg01.png" alt="">
             </div>              
@@ -45,75 +45,33 @@
               <p>拜访事由：探访</p>
             </div>
           </div>
-          <div class="visitors-nodata" v-if="!visitorsStatus">
+          <div class="visitors-nodata" v-else>
             <img src="./../../../assets/images/none.png" alt="">
             <p>没内容真可怕</p>
           </div>
         </div>
         <div class="visitors-item visitors-none" v-else-if="num == 1">
-          <div class="visitors-none-item">
+          <div class="visitors-none-item" v-for="(item,index) in noneArr" :key="index">
             <div class="visitors-none-img">
-              <img src="./../../../assets/images/headimg03.png" alt="">
+              <img :src="item.avatarUrl" alt="">
             </div>              
             <div class="visitors-none-content">
               <div class="visitors-none-top">
-                <h4>傅小小</h4>
+                <h4>{{item.appointmentName}}</h4>
               </div>
-              <p>预约电话：19766203418</p>
-              <p>预约时间：2018/08/08</p>
-              <p>拜访事由：探访</p>
+              <p>预约电话：{{item.phone}}</p>
+              <p>预约时间：{{item.appointmentTime}}</p>
+              <p>拜访事由：{{item.reasons}}</p>
               <div class="visitors-none-btns">
-                <div class="visitors-none-refused visitors-btn">
+                <div class="visitors-none-refused visitors-btn" @click="goRefused(index)">
                   拒绝
                 </div>
-                <div class="visitors-none-pass visitors-btn" @click="goPass">
+                <div class="visitors-none-pass visitors-btn" @click="goPass(index)">
                   通过
                 </div>
               </div>
             </div>
           </div>
-          <!-- <div class="visitors-none-item">
-            <div class="visitors-none-img">
-              <img src="./../../../assets/images/headimg03.png" alt="">
-            </div>              
-            <div class="visitors-none-content">
-              <div class="visitors-none-top">
-                <h4>傅小小</h4>
-              </div>
-              <p>预约电话：19766203418</p>
-              <p>预约时间：2018/08/08</p>
-              <p>拜访事由：探访</p>
-              <div class="visitors-none-btns">
-                <div class="visitors-none-refused visitors-btn">
-                  拒绝
-                </div>
-                <div class="visitors-none-pass visitors-btn">
-                  通过
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="visitors-none-item">
-            <div class="visitors-none-img">
-              <img src="./../../../assets/images/headimg03.png" alt="">
-            </div>              
-            <div class="visitors-none-content">
-              <div class="visitors-none-top">
-                <h4>傅小小</h4>
-              </div>
-              <p>预约电话：19766203418</p>
-              <p>预约时间：2018/08/08</p>
-              <p>拜访事由：探访</p>
-              <div class="visitors-none-btns">
-                <div class="visitors-none-refused visitors-btn">
-                  拒绝
-                </div>
-                <div class="visitors-none-pass visitors-btn">
-                  通过
-                </div>
-              </div>
-            </div>
-          </div> -->
         </div> 
       </div>
     </div>
@@ -130,7 +88,9 @@
         date:'',
         tabs: ["已操作", "未操作"],
         num: 0,
-        visitorsStatus:false
+        hasArr:[],
+        noneArr:[],
+
       }
     },
     components:{
@@ -144,11 +104,63 @@
             this.date = value
           }
       });
+      this.getHasList();
+      this.getNoneList();
     },
     methods:{
-      goPass(){
-        this.visitorsStatus = !this.visitorsStatus;
-        this.tab(0);
+      getHasList(){
+        this.getVistorsList(1);
+      },
+      getNoneList(){
+        this.getVistorsList(2);
+      },
+      getVistorsList(operateStatus){
+        let pageNum = 1;
+        let pageSize = 5;
+        this.$http({
+          method: "post",
+          url: "/wechat/officialAccount/appointment/appointmentList",
+          data: this.$qs.stringify({
+            'authToken':localStorage.getItem('authToken'),
+            'pageNum':pageNum,
+            'operateStatus':operateStatus,
+            'pageSize':pageSize,
+          })
+        }).then((res) => {
+          if(operateStatus == 1){
+            this.hasArr = res.data.result.list;
+          }else if(operateStatus == 2){
+            this.noneArr = res.data.result.list;
+          }
+        }).catch((err) => {
+        }); 
+      },
+      goRefused(index){
+        this.noneArr.splice(index,1)
+        this.auditVisitor(2);
+        // this.tab(0);
+      },
+      goPass(index){
+        this.noneArr.splice(index,1)
+        this.auditVisitor(1);
+        // this.tab(0);
+      },
+      auditVisitor(auditSatus){
+        this.$http({
+          method: "post",
+          url: "/wechat/officialAccount/appointment/appointmentAudit",
+          data: this.$qs.stringify({
+            'authToken':localStorage.getItem('authToken'),
+            'auditSatus':auditSatus,
+          })
+        }).then((res) => {
+          // if(operateStatus == 1){
+          //   this.hasArr = res.data.result.list;
+          // }else if(operateStatus == 2){
+          //   this.noneArr = res.data.result.list;
+          // }
+        }).catch((err) => {
+        });
       },
     	tab(index) {
         this.num = index;
