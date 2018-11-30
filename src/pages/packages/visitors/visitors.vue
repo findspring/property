@@ -4,10 +4,11 @@
       <div class="visitors-header">
         <i class="common-icon icon-back" @click="goback"></i>
         <div class="search-info">
-          <div ref="searchIcon" class="search-icon common-icon icon-search fl"></div>
+          <div ref="searchIcon" class="search-icon common-icon icon-search fl"  @click="keySearch"></div>
           <form  @submit.prevent="formSubmit" action="javascript:return true"> 
-            <!-- <input ref="input" class="search-input" type="search" name="" value="" placeholder="search" @click="search" @blur="searchBlur" @keyup.13="keySearch"> -->
-            <input ref="input" class="search-input" type="search" name="" value="" placeholder="search">
+            <input ref="input" class="search-input" type="search" name="" v-model="searchVal" placeholder="search" v-on:focus="searchFocus" @blur="searchBlur" @keyup.13="keySearch">
+            <i class="common-icon icon-delete" v-show="clearStatus" @click="clearAll"></i>
+            <!-- <input ref="input" class="search-input" type="search" name="" value="" placeholder="search"> -->
           </form>
         </div>
         <div class="top-right">
@@ -31,19 +32,34 @@
       <div class="visitors-tab-bottom">
         <div class="visitors-tab-bg"></div>
         <div class="visitors-item visitors-has" v-if="num == 0">
-          <div class="visitors-has-item" v-if="hasArr&&hasArr.length">
-            <div class="visitors-has-img">
-              <img src="./../../../assets/images/headimg01.png" alt="">
-            </div>              
-            <div class="visitors-has-content">
-              <div class="visitors-has-top">
-                <h4>傅小小</h4>
-                <i class="visitors-has-type pass">已通过</i>
-              </div>
-              <p>预约电话：19766203418</p>
-              <p>预约时间：2018/08/08</p>
-              <p>拜访事由：探访</p>
-            </div>
+          <div v-if="hasArr.length">
+            <van-pull-refresh class="refresh" v-model="isLoading" @refresh="onRefresh(1)"> 
+              <van-list
+                v-model="loading"
+                finished-text="没有更多了"
+                :offset="50"
+                :finished="finished"
+                @load="onLoad(1)"
+              >
+                <div class="visitors-has-item" v-if="hasArr&&hasArr.length" v-for="(val,y) in hasArr" :key="y">
+                  <div class="visitors-has-img">
+                    <img :src="val.avatarUrl" alt="">
+                  </div>              
+                  <div class="visitors-has-content">
+                    <div class="visitors-has-top">
+                      <h4>{{val.appointmentName}}</h4>
+                      <i class="visitors-has-type pass" v-if="val.appointmentStatus == 1">已通过</i>
+                      <i class="visitors-has-type arrived" v-else-if="val.appointmentStatus == 2">已到访</i>
+                      <i class="visitors-has-type expire" v-else-if="val.appointmentStatus == 3">已过期</i>
+                      <i class="visitors-has-type refused" v-else-if="val.appointmentStatus == 4">已拒绝</i>
+                    </div>
+                    <p>预约电话：{{val.phone}}</p>
+                    <p>预约时间：{{val.appointmentTime}}</p>
+                    <p>拜访事由：{{val.reasons}}</p>
+                  </div>
+                </div>
+              </van-list>
+            </van-pull-refresh>
           </div>
           <div class="visitors-nodata" v-else>
             <img src="./../../../assets/images/none.png" alt="">
@@ -51,28 +67,46 @@
           </div>
         </div>
         <div class="visitors-item visitors-none" v-else-if="num == 1">
-          <div class="visitors-none-item" v-for="(item,index) in noneArr" :key="index">
-            <div class="visitors-none-img">
-              <img :src="item.avatarUrl" alt="">
-            </div>              
-            <div class="visitors-none-content">
-              <div class="visitors-none-top">
-                <h4>{{item.appointmentName}}</h4>
-              </div>
-              <p>预约电话：{{item.phone}}</p>
-              <p>预约时间：{{item.appointmentTime}}</p>
-              <p>拜访事由：{{item.reasons}}</p>
-              <div class="visitors-none-btns">
-                <div class="visitors-none-refused visitors-btn" @click="goRefused(index)">
-                  拒绝
-                </div>
-                <div class="visitors-none-pass visitors-btn" @click="goPass(index)">
-                  通过
-                </div>
-              </div>
-            </div>
+          <div v-if="noneArr.length">
+            <van-pull-refresh class="refresh" v-model="isLoading1" @refresh="onRefresh(2)"> 
+              <van-list
+                v-model="loading1"
+                finished-text="没有更多了"
+                :offset="50"
+                :finished="finished1"
+                @load="onLoad(2)"
+              >
+                <!-- <transition-group name="animate" tag="p"> -->
+                  <div class="visitors-none-item" v-for="(item,index) in noneArr" :key="index">
+                    <div class="visitors-none-img">
+                      <img :src="item.avatarUrl" alt="">
+                    </div>              
+                    <div class="visitors-none-content">
+                      <div class="visitors-none-top">
+                        <h4>{{item.appointmentName}}</h4>
+                      </div>
+                      <p>预约电话：{{item.phone}}</p>
+                      <p>预约时间：{{item.appointmentTime}}</p>
+                      <p>拜访事由：{{item.reasons}}</p>
+                      <div class="visitors-none-btns">
+                        <div class="visitors-none-refused visitors-btn" @click="goRefused(index)">
+                          拒绝
+                        </div>
+                        <div class="visitors-none-pass visitors-btn" @click="goPass(index)">
+                          通过
+                        </div>
+                      </div>
+                    </div>
+                  </div> 
+                <!-- </transition-group> -->
+              </van-list>
+            </van-pull-refresh>       
           </div>
-        </div> 
+          <div class="visitors-nodata" v-if="!noneArr.length">
+            <img src="./../../../assets/images/none.png" alt="">
+            <p>没内容真可怕</p>
+          </div>          
+        </div>     
       </div>
     </div>
     <nav-bar :page="2"></nav-bar>
@@ -85,11 +119,21 @@
     name: 'visitors',
     data () {
       return {
+        isLoading: false,
+        loading: false,
+        finished: false,
+        isLoading1: false,
+        loading1: false,
+        finished1: false,
         date:'',
         tabs: ["已操作", "未操作"],
         num: 0,
         hasArr:[],
         noneArr:[],
+        pageNum:1,
+        pageNum1:1,
+        clearStatus: false,
+        searchVal:'',
 
       }
     },
@@ -104,33 +148,118 @@
             this.date = value
           }
       });
-      this.getHasList();
-      this.getNoneList();
+      this.getHasList(); 
+      this.getNoneList();    
     },
     methods:{
+      clearAll(){
+        // console.log(this.date.substring(0,10))
+        // console.log(this.date.substring(this.date.length - 10))
+        this.clearStatus = false;
+        this.searchVal = '';
+        this.date = '';
+      },
+      keySearch(){
+        this.getVistorsList((this.num+1),1,this.searchVal,this.date);
+      },
+      searchFocus(){
+        this.clearStatus = true;
+      },
+      searchBlur(){
+        this.clearStatus = false;
+      },
+      onLoad(type){ //已操作 
+        if(type == 1){
+          // 异步更新数据
+          setTimeout(() => {
+            this.getVistorsList(1,this.pageNum);
+            // 加载状态结束
+            this.loading = false;
+          }, 1000);
+        }else if(type == 2){
+          setTimeout(() => {
+            this.getVistorsList(2,this.pageNum1);
+            // 加载状态结束
+            this.loading1 = false;
+          }, 1000);
+        }             
+      },
+      onRefresh(type) {
+        if(type == 1){
+          setTimeout(() => { 
+            this.pageNum = 1;
+            this.getVistorsList(1,this.pageNum);
+            this.loading = false;
+            this.finished = false;
+            this.$toast({message:'刷新成功',duration:600});
+            // this.getVistorsList(2);
+            this.isLoading = false;
+          }, 500);
+        }else if(type == 2){
+          setTimeout(() => { 
+            this.pageNum1 = 1;
+            this.getVistorsList(2,this.pageNum1);
+            this.loading1 = false;
+            this.finished1 = false;
+            this.$toast({message:'刷新成功',duration:600});
+            // this.getVistorsList(2);
+            this.isLoading1 = false;
+          }, 500);
+        }
+      },
       getHasList(){
-        this.getVistorsList(1);
+        this.getVistorsList(1,1);
       },
       getNoneList(){
-        this.getVistorsList(2);
+        this.getVistorsList(2,1);
       },
-      getVistorsList(operateStatus){
-        let pageNum = 1;
+      getVistorsList(operateStatus,pageNum,val,time){
+        let _this = this;
         let pageSize = 5;
-        this.$http({
+        let startDate,endDate;
+        if(time){
+          startDate = _this.date.substring(0,10);
+          endDate = _this.date.substring(_this.date.length - 10);
+        }else{
+          startDate = '';
+          endDate = ''
+        }
+        _this.$http({
           method: "post",
           url: "/wechat/officialAccount/appointment/appointmentList",
-          data: this.$qs.stringify({
+          data: _this.$qs.stringify({
             'authToken':localStorage.getItem('authToken'),
             'pageNum':pageNum,
             'operateStatus':operateStatus,
             'pageSize':pageSize,
+            'startDate':startDate,
+            'endDate':endDate,
+            'searchTxt':val
           })
         }).then((res) => {
+          let result = res.data.result;
           if(operateStatus == 1){
-            this.hasArr = res.data.result.list;
+            let list = result.list;
+            let pages = result.pages;
+            if(_this.pageNum > pages){ 
+              _this.finished = true
+            }else{
+              if(0 < list.length <= pageSize){
+                _this.hasArr = _this.hasArr.concat(list);
+                _this.pageNum++
+              }   
+            } 
           }else if(operateStatus == 2){
-            this.noneArr = res.data.result.list;
+            let list = result.list;
+            let pages = result.pages;
+            if(_this.pageNum1 > pages){ 
+              _this.finished1 = true
+            }else{
+              if(0 < list.length <= pageSize){
+                _this.noneArr = _this.noneArr.concat(list);
+                _this.pageNum1++
+              }   
+            }                                
           }
         }).catch((err) => {
         }); 
@@ -142,6 +271,7 @@
       },
       goPass(index){
         this.noneArr.splice(index,1)
+        // this.getVistorsList(2);
         this.auditVisitor(1);
         // this.tab(0);
       },
@@ -154,11 +284,11 @@
             'auditSatus':auditSatus,
           })
         }).then((res) => {
-          // if(operateStatus == 1){
-          //   this.hasArr = res.data.result.list;
-          // }else if(operateStatus == 2){
-          //   this.noneArr = res.data.result.list;
-          // }
+          if(auditSatus == 1){
+            this.$toast({message:'审核通过！',duration:600});
+          }else if(auditSatus == 2){
+            this.$toast({message:'审核拒绝！',duration:600});
+          }
         }).catch((err) => {
         });
       },
@@ -193,13 +323,20 @@
           height .72rem
           background:rgba(247,239,239,0.8)
           border-radius .14rem
+          position relative
           .search-icon
             margin .18rem .3rem 0 .43rem
+          .icon-delete
+            position absolute
+            right .2rem
+            top .16rem
+            z-index 2
           input
+            min-width: 4rem
             background none
             font-size: .34rem
             line-height 1
-            padding .14rem 0
+            padding .17rem 0
             &::placeholder
               color #fff
         .top-right
@@ -224,6 +361,8 @@
       top 1.3rem
       padding-bottom 1rem
       background #e8e8e8
+      .van-pull-refresh__head
+        color #fff
       .visitors-tab-top
         background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
         ul
@@ -411,7 +550,13 @@
                 .visitors-none-pass
                   background #D45855
                   color #fff
-                  
+  // .animate-enter-active,.animate-leave-active
+  //   transition: all 1s;
+  // .animate-enter,.animate-leave
+  //   opacity: 0;
+  //   transform: translateX(100%);
+  
+                 
           
           
               

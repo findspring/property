@@ -144,6 +144,11 @@ body{
   height: .44rem;
   background-image: url(../images/position.png);
 }*/
+.icon-delete{
+  width: .4rem;
+  height: .4rem;
+  background-image: url(../images/delete.png);
+}
 .icon-position01{
   width: .4rem;
   height: .4rem;

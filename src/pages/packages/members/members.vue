@@ -221,6 +221,8 @@
 			.van-tabs__content
 				padding .21rem
 				background #e8e8e8
+				.van-tab__pane
+					width 100%!important
 				.members-add
 					width 100%
 					padding .64rem .18rem 0 .22rem

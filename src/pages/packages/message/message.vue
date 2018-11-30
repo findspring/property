@@ -29,24 +29,31 @@
 			</div> -->
 			<div>
 				<van-pull-refresh class="refresh" v-model="isLoading" @refresh="onRefresh">
-				  <p>刷新次数: {{ count }}</p>
-				  <div class="message-box-item" @click="goMsgInfo"
-						v-for="(item,index) in msgArr" :key="index"
-					>
-						<div class="message-headimg">
-							<img :src="item.avatarUrl" alt="">
-						</div>				
-						<div class="message-content">
-							<div class="message-content-top">
-								<h4>{{item.msgTit}}</h4>
-								<time>{{item.msgTime}}</time>
-							</div>
-							<div class="message-content-bottom">
-								<p class="line-ellipsis01">{{item.msgIntro}}</p>
-								<!-- <badge text="1"></badge> -->
+					<van-list
+            v-model="loading"
+            finished-text="没有更多了"
+            :offset="50"
+            :finished="finished"
+            @load="onLoad"
+          >
+					  <div class="message-box-item" @click="goMsgInfo"
+							v-for="(item,index) in msgArr" :key="index"
+						>
+							<div class="message-headimg">
+								<img :src="item.avatarUrl" alt="">
+							</div>				
+							<div class="message-content">
+								<div class="message-content-top">
+									<h4>{{item.msgTit}}</h4>
+									<time>{{item.msgTime}}</time>
+								</div>
+								<div class="message-content-bottom">
+									<p class="line-ellipsis01">{{item.msgIntro}}</p>
+									<!-- <badge text="1"></badge> -->
+								</div>
 							</div>
 						</div>
-					</div>
+					</van-list>
 				</van-pull-refresh>				
 			</div>
 					
@@ -62,12 +69,11 @@
 	  name: 'message',
 	  data () {
 	    return {
-	    	count: 0,
 				isLoading: false,
-	    	list: [],
 				loading: false,
 				finished: false,
 				msgArr:[],
+				pageNum:1,
 	    }
 	  },
 	  components:{
@@ -75,46 +81,52 @@
 	    navBar
 	  },
 	  mounted(){
-	  	this.getMessageList();
+	  	this.getMessageList(this.pageNum);
 	  },
 	  methods:{
-	  	getMessageList(){
-	  		let pageNum  = 1;
+	  	getMessageList(pageNum){
+	  		let _this = this;
 	  		let pageSize  = 5;
-	  		this.$http({
+	  		_this.$http({
           method: "post",
           url: "/wechat/officialAccount/user/msgList",
-          data: this.$qs.stringify({
+          data: _this.$qs.stringify({
             'authToken':localStorage.getItem('authToken'),
             'pageNum':pageNum,
             // 'operateStatus':operateStatus,
             'pageSize':pageSize,
           })
         }).then((res) => {
-          this.msgArr = res.data.result;
+        	let list = res.data.result;
+        	if(_this.pageNum > 2){
+        		_this.finished = true
+        	}else{
+        		if(0<list.length <= pageSize){
+        			_this.msgArr = _this.msgArr.concat(list);
+        			_this.pageNum++
+	        	}
+        	}
+        	
+          
         }).catch((err) => {
         }); 
 	  	},
 	  	onLoad(){
 	      // 异步更新数据
 	      setTimeout(() => {
-	        for (let i = 0; i < 10; i++) {
-	          this.list.push(this.list.length + 1);
-	        }
+	        this.getMessageList(this.pageNum);
 	        // 加载状态结束
 	        this.loading = false;
-
-	        // 数据全部加载完成
-	        if (this.list.length >= 25) {
-	          this.finished = true;
-	        }
 	      }, 500);
 	    },
 	    onRefresh() {
 	      setTimeout(() => {
+	      	this.pageNum = 1;
+	      	this.loading = false;
+          this.finished = false;
+          this.getMessageList(this.pageNum);
 	        this.$toast('刷新成功');
 	        this.isLoading = false;
-	        this.count++;
 	      }, 500);
 	    },
 	  	goMsgInfo(){
