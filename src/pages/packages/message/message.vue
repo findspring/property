@@ -79,14 +79,16 @@
 	  },
 	  methods:{
 	  	getMessageList(){
+	  		let pageNum  = 1;
+	  		let pageSize  = 5;
 	  		this.$http({
           method: "post",
           url: "/wechat/officialAccount/user/msgList",
           data: this.$qs.stringify({
             'authToken':localStorage.getItem('authToken'),
-            // 'pageNum':pageNum,
+            'pageNum':pageNum,
             // 'operateStatus':operateStatus,
-            // 'pageSize':pageSize,
+            'pageSize':pageSize,
           })
         }).then((res) => {
           this.msgArr = res.data.result;
