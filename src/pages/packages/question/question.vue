@@ -7,16 +7,8 @@
 		</van-nav-bar>
 		<div class="question-main">
 			<van-collapse v-model="activeNames">
-			  <van-collapse-item title="有赞微商城" name="1">
-			    提供多样店铺模板，快速搭建网上商城网店吸粉获客、会员分层营销、一机多种收款，告别经营低效和客户流失
-			    <div class="question-bg"></div>
-			  </van-collapse-item>
-			  <van-collapse-item title="有赞零售" name="2">
-		  		网店吸粉获客、会员分层营销、一机多种收款，告别经营低效和客户流失			    
-			    <div class="question-bg"></div>
-			  </van-collapse-item>
-			  <van-collapse-item title="有赞美业" name="3">
-			    线上拓客，随时预约，贴心顺手的开单收银
+			  <van-collapse-item :title="item.faqTile" :name="index" v-for="(item,index) in quesList" :key="index">
+			    {{item.faqContent}}
 			    <div class="question-bg"></div>
 			  </van-collapse-item>
 			</van-collapse>
@@ -32,6 +24,7 @@
 	  data () {
 	    return {
 	    	activeNames: [''],
+	    	quesList:[],
 	    }
 	  },
 	  components:{
@@ -53,7 +46,8 @@
         		'pageSize':pageSize,
 	  			})
 	  		}).then((res) => {
-
+	  			let list = res.data.result.list;
+	  			this.quesList = list;
 	    	}).catch((err) => {
 	      });
 	  	},

@@ -4,29 +4,8 @@
 			<div slot="left">
 				<i class="common-icon icon-back"></i>
 			</div>
-			<!-- <div slot="right" @click="show"> -->
-			<!-- <div slot="right">
-				<i class="common-icon icon-date"></i>
-			</div> -->
 		</van-nav-bar>
-		<!-- <v-header title="我的消息" :showBack="true" class="already-record"></v-header> -->
 		<div class="message-box">
-			<!-- <div>
-				<van-pull-refresh class="refresh" v-model="isLoading" @refresh="onRefresh">
-				  <p>刷新次数: {{ count }}</p>
-				  <van-list
-					  v-model="loading"
-					  :finished="finished"
-					  @load="onLoad"
-					>
-					  <van-cell
-					    v-for="item in list"
-					    :key="item"
-					    :title="item"
-					  />
-					</van-list>
-				</van-pull-refresh>				
-			</div> -->
 			<div>
 				<van-pull-refresh class="refresh" v-model="isLoading" @refresh="onRefresh">
 					<van-list
@@ -36,7 +15,7 @@
             :finished="finished"
             @load="onLoad"
           >
-					  <div class="message-box-item" @click="goMsgInfo"
+					  <div class="message-box-item" @click="goMsgInfo(item.id)"
 							v-for="(item,index) in msgArr" :key="index"
 						>
 							<div class="message-headimg">
@@ -129,8 +108,8 @@
 	        this.isLoading = false;
 	      }, 500);
 	    },
-	  	goMsgInfo(){
-	  		this.$router.push({path:'/msgInfo'})
+	  	goMsgInfo(id){
+	  		this.$router.push({path:'/msgInfo',query:{msgId:id}})
 	  	},
 	  	onClickLeft(){
 	  		this.$router.go(-1);

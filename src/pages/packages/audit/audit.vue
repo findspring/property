@@ -120,7 +120,7 @@
               <div class="audit-check-box">
                 <van-checkbox v-model="checkedObj[value.id]" checked-color="#D45855"></van-checkbox>
               </div>
-              <div class="audit-check-click">
+              <div class="audit-check-click" @click="goInfo(value.id)">
                 <div class="audit-check-img">
                   <img :src="value.avatarUrl" alt="">
                 </div>              
@@ -148,10 +148,10 @@
                 <p>全选</p>
               </div>
               <div class="audit-check-btns">
-                <div class="audit-check-refused audit-btn" @click="proprietorAudit(2,this.checkedPram)">
+                <div class="audit-check-refused audit-btn" @click="proprietorAudit(2,checkedPram)">
                   拒绝
                 </div>
-                <div class="audit-check-pass audit-btn" @click="proprietorAudit(1,this.checkedPram)">
+                <div class="audit-check-pass audit-btn" @click="proprietorAudit(1,checkedPram)">
                   通过
                 </div>
               </div>
@@ -225,6 +225,10 @@
           this.date = value
         }
       });
+      let back = this.$route.query.back;
+      if(back == 1){
+        this.tab(2);
+      }
       this.getProprietorList(1);
       this.getProprietorList(2);
       this.getProprietorList(3);
@@ -249,8 +253,8 @@
         this.date = '';
       },
       keySearch(){
-        console.log(this.checkedArr)
-        // this.getProprietorList((this.num+1),1,this.searchVal,this.date);
+        // console.log(this.checkedArr)
+        this.getProprietorList((this.num+1),1,this.searchVal,this.date);
       },
       searchFocus(){
         this.clearStatus = true;
@@ -390,8 +394,17 @@
       tab(index) {
         this.num = index;
       },
+      goInfo(id){
+        this.$router.push({path:'/auditInfo',query:{personnelId:id}})
+      },
       goback(){
-        this.$router.go(-1);
+        let back = this.$route.query.back;
+        if(back == 1){
+          return
+        }else{
+          this.$router.go(-1);
+        }
+        
       }
     }
   }

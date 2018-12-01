@@ -5,7 +5,7 @@ const index = r => require.ensure([],() => r(require('packages/index/index')),'i
 const visitors = r => require.ensure([],() => r(require('packages/visitors/visitors')),'visitors');
 const members = r => require.ensure([],() => r(require('packages/members/members')),'members');
 const audit = r => require.ensure([],() => r(require('packages/audit/audit')),'audit');
-const auditInfo = r => require.ensure([],() => r(require('packages/audit-info/audit-info')),'audit-info');
+const auditInfo = r => require.ensure([],() => r(require('packages/audit-info/audit-info')),'auditInfo');
 const mine = r => require.ensure([],() => r(require('packages/mine/mine')),'mine');
 const edit = r => require.ensure([],() => r(require('packages/edit/edit')),'edit');
 const message = r => require.ensure([],() => r(require('packages/message/message')),'message');

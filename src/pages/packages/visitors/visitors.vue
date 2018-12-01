@@ -41,7 +41,7 @@
                 :finished="finished"
                 @load="onLoad(1)"
               >
-                <div class="visitors-has-item" v-if="hasArr&&hasArr.length" v-for="(val,y) in hasArr" :key="y">
+                <div class="visitors-has-item" v-if="hasArr &&hasArr.length" v-for="(val,y) in hasArr" :key="y">
                   <div class="visitors-has-img">
                     <img :src="val.avatarUrl" alt="">
                   </div>              
@@ -146,6 +146,7 @@
           range: true,
           done: (value) => {
             this.date = value
+            this.keySearch()
           }
       });
       this.getHasList(); 
@@ -160,6 +161,7 @@
         this.date = '';
       },
       keySearch(){
+        console.log(1)
         this.getVistorsList((this.num+1),1,this.searchVal,this.date);
       },
       searchFocus(){

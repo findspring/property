@@ -11,16 +11,19 @@
 		</van-nav-bar>
 		<div class="msgInfo-main">
 			<div class="msgInfo-item">
-				<time>04月05日</time>
+				<time>{{msgTime}}</time>
 				<div class="msgInfo-msg">
 					<div class="msgInfo-headimg">
-						<img src="./../../../assets/images/headimg05.png" alt="">
+						<img :src="avatarUrl" alt="">
 					</div>					
 					<div class="msgInfo-context">
-						<h5>人脸识别不了</h5>
+						<h5>{{msgTit}}</h5>
+						<div v-html="msgContent" class="msg-content">
+							
+						</div>
+						<!-- <p>通过深度学习技术，将用户照片与数据源照片（可以来自身份证，或者客户自己提供）进行精准匹配，判断身份一致性。</p>
 						<p>通过深度学习技术，将用户照片与数据源照片（可以来自身份证，或者客户自己提供）进行精准匹配，判断身份一致性。</p>
-						<p>通过深度学习技术，将用户照片与数据源照片（可以来自身份证，或者客户自己提供）进行精准匹配，判断身份一致性。</p>
-						<img src="./../../../assets/images/banner.png" alt="">
+						<img src="./../../../assets/images/banner.png" alt=""> -->
 					</div>
 				</div>
 			</div>
@@ -35,13 +38,38 @@
 	  name: 'msg-info',
 	  data () {
 	    return {
-
+	    	msgTit:'',
+	    	avatarUrl:'',
+	    	msgContent:'',
+	    	msgTime:'',
 	    }
 	  },
 	  components:{
 	    navBar
 	  },
+	  mounted(){
+	  	let msgId = this.$route.query.msgId;
+	  	console.log(msgId)
+	  	this.getViewMsg(msgId);
+	  },
 	  methods:{
+	  	getViewMsg(msgId){
+	  		this.$http({
+	  			method:'post',
+	  			url:'/wechat/officialAccount/user/viewMsg',
+	  			data:this.$qs.stringify({
+        		'msgId':msgId,
+	  			})
+	  		}).then((res) => {
+	  			let result = res.data.result;
+	  			this.avatarUrl = result.avatarUrl;
+	  			this.msgContent = result.msgContent;
+	  			this.msgTime = result.msgTime;
+	  			this.msgTit = result.msgTit;
+	  			
+	    	}).catch((err) => {
+	      });
+	  	},
 	  	onClickLeft(){
 	  		this.$router.go(-1);
 	  	},
@@ -96,6 +124,16 @@
 							color #4A4A4A
 							line-height .4rem
 							padding-bottom .2rem
+						.msg-content
+							div
+								font-size .24rem
+								color #4A4A4A
+								line-height 1.2
+								padding-bottom .3rem
+								text-align justify
+								max-width 5rem
+								img
+									max-width 5.28rem				
 						p
 							font-size .24rem
 							color #4A4A4A

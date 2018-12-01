@@ -10,23 +10,23 @@
 		<div class="auditInfo-wrapper clearfix">
 			<div class="auditInfo-main clearfix">
 				<div class="auditInfo-headimg">
-					<img src="./../../../assets/images/headimg01.png" height="141" width="141" alt="">
-					<h4>傅小小</h4>
+					<img :src="avatarUrl" alt="">
+					<h4>{{owerName}}</h4>
 				</div>
 				<div class="auditInfo-content">
-					<p>门牌号码：A234678</p>
-					<p>与业主的关系：<span>业主</span></p>
-					<p>电话号码：19320625035</p>
-					<p>身份证号码：530623398954897603</p>
+					<p>门牌号码：{{owerNum}}</p>
+					<!-- <p>与业主的关系：<span>业主</span></p> -->
+					<p>电话号码：{{phone}}</p>
+					<p>身份证号码：{{idCardNo}}</p>
 					<p>审批意见：</p>
-					<textarea name="">
+					<textarea name="" v-model="auditOpinion">
 						
 					</textarea>
 					<div class="audit-check-btns">
-            <div class="audit-check-refused audit-btn">
+            <div class="audit-check-refused audit-btn" @click="proprietorAudit(2)">
               拒绝
             </div>
-            <div class="audit-check-pass audit-btn">
+            <div class="audit-check-pass audit-btn" @click="proprietorAudit(1)">
               通过
             </div>
           </div>
@@ -43,12 +43,67 @@
 	  data () {
 	    return {
 	    	cityName:localStorage.getItem('cityName') || '',
+	    	avatarUrl:'',
+	    	idCardNo:'',
+	    	owerName:'',
+	    	owerNum:'',
+	    	phone:'',
+	    	auditOpinion:''
 	    }
 	  },
 	  components:{
 	    navBar
 	  },
+	  beforeRouteLeave(to, from, next) {
+      // 设置下一个路由的 meta
+      to.meta.keepAlive = false; // 跳转到 A 时让 A 不缓存，即刷新
+      next();
+    },
+	  mounted(){
+	  	let personnelId = this.$route.query.personnelId;
+	  	this.getAuditInfo(personnelId);
+	  },
 	  methods:{
+	  	getAuditInfo(personnelId){
+	  		this.$http({
+	  			method:'post',
+	  			url:'/wechat/officialAccount/community/proprietorInfo',
+	  			data:this.$qs.stringify({
+        		'personnelId':personnelId,
+	  			})
+	  		}).then((res) => {
+	  			let result = res.data.result;
+	  			this.avatarUrl = result.avatarUrl;
+	  			this.idCardNo = result.idCardNo;
+	  			this.owerName = result.owerName;
+	  			this.owerNum = result.owerNum;
+	  			this.phone = result.phone;	  			
+	    	}).catch((err) => {
+	      });
+	  	},
+	  	proprietorAudit(auditSatus,personnelIds){
+	  		console.log(this.auditOpinion);
+	  		let personnelId = this.$route.query.personnelId;
+        this.$http({
+          method: "post",
+          url: "/wechat/officialAccount/community/proprietorAudit",
+          data: this.$qs.stringify({
+            'authToken':localStorage.getItem('authToken'),
+            'auditSatus':auditSatus,
+            'personnelIds':personnelIds,
+            'auditOpinion':this.auditOpinion
+
+          })
+        }).then((res) => {
+          // if(auditSatus == 1){
+          //   this.$toast({message:'审核通过！',duration:600});
+          // }else if(auditSatus == 2){
+          //   this.$toast({message:'审核拒绝！',duration:600});
+          // }
+          this.$router.push({path:'/audit',query:{back:1}});
+        }).catch((err) => {
+        });
+      },
 	  	onClickLeft(){
 	  		this.$router.go(-1);
 	  	},
