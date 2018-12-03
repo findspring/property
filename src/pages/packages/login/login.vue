@@ -142,7 +142,7 @@ export default {
         	'pageSize':pageSize
         })
       }).then((res) => {
-      	let list = res.data.result;
+      	let list = res.data.result.list;
       	list.forEach((item,index) => {
       	  this.addressList.push({name:item.communityName,value:item.id})
       	})
