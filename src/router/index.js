@@ -102,7 +102,7 @@ export default new Router({
       meta: {
         title: '我的消息',
         flag: 'message',
-        keepAlive: true,
+        keepAlive: false,
       },
       component: message
     },

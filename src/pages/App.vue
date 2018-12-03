@@ -23,6 +23,7 @@ export default {
       let code = new Date().getTime();
       this.$http({
         method: "post",
+        // url: "/pub/pubBase/communityList",
         url: "/wechat/officialAccount/user/accountLogin",
         data: this.$qs.stringify({
           'code':code

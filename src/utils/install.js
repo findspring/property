@@ -17,6 +17,9 @@ axios.interceptors.response.use((res) => {
 		case '8002':
 			location.href = res.data.errMsg;
 			return 
+		case '8888':
+			location.href = res.data.errMsg;
+			return 
 		case '0':
 			return res
 		case '9000':
