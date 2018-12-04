@@ -87,8 +87,9 @@
 	  		}
 	  	},
 	  	goResult(photoUrl,faceUrl){
-	  		if(this.$route.query.from == 'members'){
-	  			this.$router.push({path:'/result',query:{from:'members',photoUrl:photoUrl,faceUrl:faceUrl}})
+	  		let fromUrl = this.$route.query.from;
+	  		if(fromUrl){
+	  			this.$router.push({path:'/result',query:{from:fromUrl,photoUrl:photoUrl,faceUrl:faceUrl}})
 	  		}else{
 	  			this.$router.push({path:'/result',query:{photoUrl:photoUrl,faceUrl:faceUrl}})
 	  		}	  		

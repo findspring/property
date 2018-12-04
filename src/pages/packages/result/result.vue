@@ -157,6 +157,8 @@
 	  	goIndex(){
 	  		if(this.$route.query.from == 'members'){
 	  			this.$router.push({path:'/members',query:{from:'members'}})
+	  		}else if(this.$route.query.from == 'mine'){
+	  			this.$router.push({path:'/mine'})
 	  		}else{
 	  			this.$router.push({path:'/'})
 	  		}	

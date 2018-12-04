@@ -90,7 +90,11 @@
 	  },
 	  methods:{
 	  	goLinks(url){
-	  		this.$router.push({path:''+url})
+	  		if(url == 'identify'){
+	  			this.$router.push({path:''+url,query:{from:'mine'}})
+	  		}else{
+	  			this.$router.push({path:''+url})
+	  		}	  		
 	  	},
 	  }
 	}
