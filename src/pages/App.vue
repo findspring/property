@@ -24,6 +24,9 @@ export default {
       this.$http({
         method: "post",
         // url: "/pub/pubBase/communityList",
+        headers:{
+        'Content-type': 'text/plain'
+      },
         url: "/wechat/officialAccount/user/accountLogin",
         data: this.$qs.stringify({
           'code':code

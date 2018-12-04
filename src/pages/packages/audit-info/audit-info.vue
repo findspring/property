@@ -48,7 +48,8 @@
 	    	owerName:'',
 	    	owerNum:'',
 	    	phone:'',
-	    	auditOpinion:''
+	    	auditOpinion:'',
+	    	status:false
 	    }
 	  },
 	  components:{
@@ -56,7 +57,12 @@
 	  },
 	  beforeRouteLeave(to, from, next) {
       // 设置下一个路由的 meta
-      to.meta.keepAlive = false; // 跳转到 A 时让 A 不缓存，即刷新
+      if(this.status == false){
+      	to.meta.keepAlive = false; // 跳转到 A 时让 A 不缓存，即刷新
+      }else{
+      	to.meta.keepAlive = true;
+      }
+      
       next();
     },
 	  mounted(){
@@ -104,7 +110,8 @@
         }).catch((err) => {
         });
       },
-	  	onClickLeft(){
+	  	onClickLeft(){	  		
+	  		this.status = true
 	  		this.$router.go(-1);
 	  	},
 	  }

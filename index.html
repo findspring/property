@@ -35,5 +35,39 @@
         var myCity = new BMap.LocalCity();
         myCity.get(myFun);
     </script>
+    <script>
+      //获取url参数值
+      String.prototype.getQueryString = function () {
+        var url = this;
+        if (url && url.length > 0) {
+          url = url.split("?")[1];
+          var tmp_para = {};
+          if (url) {
+            var queryarr = url.split("&");
+            for (var i = 0; i < queryarr.length; i++) {
+              var keyval = queryarr[i];
+              if (keyval) {
+                var keyvalarr = keyval.split("=");
+                if (keyvalarr.length > 0) {
+                  tmp_para[keyvalarr[0]] = keyvalarr[1];
+                }
+              }
+            }
+          }
+        }
+        return tmp_para;
+      };
+      var authToken = localStorage.getItem("authToken") || "";
+      if (!authToken) {
+        var currurl = window.location.href.toString();
+        var data = currurl.getQueryString();
+        if(data["removeToken"]==1){
+          localStorage.removeItem("authToken");
+        }
+        if (data["authToken"]) {
+          localStorage.setItem("authToken", data["authToken"]);
+        }
+      }
+    </script>
   </body>
 </html>

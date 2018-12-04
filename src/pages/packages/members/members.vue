@@ -190,8 +190,14 @@
 
 <style lang="stylus" type="text/stylus">
 	.members
-		min-height 12rem
+		// min-height 13rem
 		background #e8e8e8
+		position absolute
+		left 0
+		top 0
+		bottom 0
+		width 100%
+		height 100%
 		.members-top-right
 			display flex
 			align-items center

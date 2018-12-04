@@ -10,7 +10,6 @@
 				<van-pull-refresh class="refresh" v-model="isLoading" @refresh="onRefresh">
 					<van-list
             v-model="loading"
-            finished-text="没有更多了"
             :offset="50"
             :finished="finished"
             @load="onLoad"
@@ -77,16 +76,19 @@
           })
         }).then((res) => {
         	let list = res.data.result;
-        	if(_this.pageNum > 2){
-        		_this.finished = true
+        	if(_this.pageNum == 1){
+        		_this.msgArr = list;
+        		_this.pageNum++;
         	}else{
-        		if(0<list.length <= pageSize){
-        			_this.msgArr = _this.msgArr.concat(list);
-        			_this.pageNum++
+        		if(_this.pageNum > 2){
+	        		_this.finished = true
+	        	}else{
+	        		if(0<list.length <= pageSize){
+	        			_this.msgArr = _this.msgArr.concat(list);
+	        			_this.pageNum++
+		        	}
 	        	}
-        	}
-        	
-          
+        	}        	        	          
         }).catch((err) => {
         }); 
 	  	},

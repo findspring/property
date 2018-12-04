@@ -49,7 +49,11 @@
 	    	faceUrl:'',
 	    	photoUrl:'',
 	    }
-	  },
+	  },	  
+	  beforeRouteLeave(to, from, next) {
+      to.meta.keepAlive = true;      
+      next();
+    },
 	  components:{
 	  	vPhoto,vFace
 	  },

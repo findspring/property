@@ -61,10 +61,10 @@ export default {
 <style lang="stylus" type="text/stylus" scoped>
   .navBar
     width 100%    
-    padding-top 1rem
+    padding-top .96rem
 		.nav
 			width 100%
-			height .97rem
+			height .96rem
 			border-top 1px solid #ccc
 			background-color #fff
 			position fixed

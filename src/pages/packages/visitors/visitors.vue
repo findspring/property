@@ -36,7 +36,6 @@
             <van-pull-refresh class="refresh" v-model="isLoading" @refresh="onRefresh(1)"> 
               <van-list
                 v-model="loading"
-                finished-text="没有更多了"
                 :offset="50"
                 :finished="finished"
                 @load="onLoad(1)"
@@ -71,7 +70,6 @@
             <van-pull-refresh class="refresh" v-model="isLoading1" @refresh="onRefresh(2)"> 
               <van-list
                 v-model="loading1"
-                finished-text="没有更多了"
                 :offset="50"
                 :finished="finished1"
                 @load="onLoad(2)"
@@ -89,10 +87,10 @@
                       <p>预约时间：{{item.appointmentTime}}</p>
                       <p>拜访事由：{{item.reasons}}</p>
                       <div class="visitors-none-btns">
-                        <div class="visitors-none-refused visitors-btn" @click="goRefused(index)">
+                        <div class="visitors-none-refused visitors-btn" @click="auditVisitor(2,index)">
                           拒绝
                         </div>
-                        <div class="visitors-none-pass visitors-btn" @click="goPass(index)">
+                        <div class="visitors-none-pass visitors-btn" @click="auditVisitor(1,index)">
                           通过
                         </div>
                       </div>
@@ -149,8 +147,8 @@
             this.keySearch()
           }
       });
-      this.getHasList(); 
-      this.getNoneList();    
+      this.getVistorsList(1,1);
+      this.getVistorsList(2,1);  
     },
     methods:{
       clearAll(){
@@ -209,12 +207,7 @@
           }, 500);
         }
       },
-      getHasList(){
-        this.getVistorsList(1,1);
-      },
-      getNoneList(){
-        this.getVistorsList(2,1);
-      },
+      //获取访客审核数据
       getVistorsList(operateStatus,pageNum,val,time){
         let _this = this;
         let pageSize = 5;
@@ -243,41 +236,41 @@
           if(operateStatus == 1){
             let list = result.list;
             let pages = result.pages;
-            if(_this.pageNum > pages){ 
-              _this.finished = true
+            if(_this.pageNum == 1){
+              _this.hasArr = list;
+              _this.pageNum++;
             }else{
-              if(0 < list.length <= pageSize){
-                _this.hasArr = _this.hasArr.concat(list);
-                _this.pageNum++
-              }   
-            } 
+              if(_this.pageNum > pages){ 
+                _this.finished = true
+              }else{
+                if(0 < list.length <= pageSize){
+                  _this.hasArr = _this.hasArr.concat(list);
+                  _this.pageNum++
+                }   
+              } 
+            }              
           }else if(operateStatus == 2){
             let list = result.list;
             let pages = result.pages;
-            if(_this.pageNum1 > pages){ 
-              _this.finished1 = true
+            if(_this.pageNum1 == 1){
+              _this.noneArr = list;
+              _this.pageNum1++;
             }else{
-              if(0 < list.length <= pageSize){
-                _this.noneArr = _this.noneArr.concat(list);
-                _this.pageNum1++
-              }   
-            }                                
+              if(_this.pageNum1 > pages){ 
+                _this.finished1 = true
+              }else{
+                if(0 < list.length <= pageSize){
+                  _this.noneArr = _this.noneArr.concat(list);
+                  _this.pageNum1++
+                }   
+              }
+            }                                              
           }
         }).catch((err) => {
         }); 
       },
-      goRefused(index){
-        this.noneArr.splice(index,1)
-        this.auditVisitor(2);
-        // this.tab(0);
-      },
-      goPass(index){
-        this.noneArr.splice(index,1)
-        // this.getVistorsList(2);
-        this.auditVisitor(1);
-        // this.tab(0);
-      },
-      auditVisitor(auditSatus){
+      //审核
+      auditVisitor(auditSatus,index){
         this.$http({
           method: "post",
           url: "/wechat/officialAccount/appointment/appointmentAudit",
@@ -286,6 +279,7 @@
             'auditSatus':auditSatus,
           })
         }).then((res) => {
+          this.noneArr.splice(index,1)
           if(auditSatus == 1){
             this.$toast({message:'审核通过！',duration:600});
           }else if(auditSatus == 2){
@@ -296,6 +290,11 @@
       },
     	tab(index) {
         this.num = index;
+        this.pageNum = 1;
+        this.pageNum1 = 1;
+        this.finished = false;
+        this.finished1 = false;
+        this.getVistorsList(this.num+1,1);
       },
       goback(){
         this.$router.go(-1);
@@ -307,8 +306,12 @@
 <style lang="stylus" type="text/stylus">
   .visitors
     background #e8e8e8
-    position relative
-    // min-height 12rem
+    position absolute
+    left 0
+    top 0
+    width 100%
+    height 100%
+    // min-height 13rem
     .visitors-top
       padding-top .18rem
       width 100%

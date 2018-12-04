@@ -33,7 +33,6 @@
               <van-pull-refresh class="refresh" v-model="isLoading" @refresh="onRefresh(1)"> 
                 <van-list
                   v-model="loading"
-                  finished-text="没有更多了"
                   :offset="50"
                   :finished="finished"
                   @load="onLoad(1)"
@@ -74,7 +73,6 @@
               <van-pull-refresh class="refresh" v-model="isLoading1" @refresh="onRefresh(2)"> 
                 <van-list
                   v-model="loading1"
-                  finished-text="没有更多了"
                   :offset="50"
                   :finished="finished1"
                   @load="onLoad(2)"
@@ -98,10 +96,10 @@
                         </li>
                       </ul>
                       <div class="audit-none-btns">
-                        <div class="audit-none-refused audit-btn" @click="goRefused(index,item.id)">
+                        <div class="audit-none-refused audit-btn" @click="proprietorAudit(2,item.id,'single')">
                           拒绝
                         </div>
-                        <div class="audit-none-pass audit-btn" @click="goPass(index,item.id)">
+                        <div class="audit-none-pass audit-btn" @click="proprietorAudit(1,item.id,'single')">
                           通过
                         </div>
                       </div>
@@ -116,7 +114,7 @@
             </div>
           </div> 
           <div class="audit-item audit-check" v-else-if="num == 2">
-            <div class="audit-check-item" v-for="(value,k) in auditCheckArr" :key="value.id">
+            <div v-if="auditCheckArr.length" class="audit-check-item" v-for="(value,k) in auditCheckArr" :key="value.id">
               <div class="audit-check-box">
                 <van-checkbox v-model="checkedObj[value.id]" checked-color="#D45855"></van-checkbox>
               </div>
@@ -141,17 +139,21 @@
                 </div>
               </div>
             </div>
+            <div class="audit-nodata" v-if="!auditCheckArr.length">
+              <img src="./../../../assets/images/none.png" alt="">
+              <p>没内容真可怕</p>
+            </div>
             <!-- all -->
-            <div class="audit-check-all">
+            <div class="audit-check-all" v-if="auditCheckArr.length">
               <div class="audit-check-box" @click="isCheckedAll">
                 <van-checkbox v-model="checkedAll" checked-color="#D45855"></van-checkbox>
                 <p>全选</p>
               </div>
               <div class="audit-check-btns">
-                <div class="audit-check-refused audit-btn" @click="proprietorAudit(2,checkedPram)">
+                <div class="audit-check-refused audit-btn" @click="proprietorAudit(2,checkedPram,'more')">
                   拒绝
                 </div>
-                <div class="audit-check-pass audit-btn" @click="proprietorAudit(1,checkedPram)">
+                <div class="audit-check-pass audit-btn" @click="proprietorAudit(1,checkedPram,'more')">
                   通过
                 </div>
               </div>
@@ -190,6 +192,7 @@
         pageNum1:1,
         clearStatus: false,
         searchVal:'',
+        removeArr:[]
       }
     },
     components:{
@@ -207,8 +210,9 @@
             }
             return arr
           })
+          this.removeArr = hasCheckedArr
           this.checkedPram = hasCheckedArr.join();
-          // console.log(this.checkedPram);
+          console.log(this.removeArr);
           this.checkedAll = arr.every((val) => {
             return (val == true)
           }) 
@@ -229,12 +233,12 @@
       if(back == 1){
         this.tab(2);
       }
-      this.getProprietorList(1);
-      this.getProprietorList(2);
-      this.getProprietorList(3);
+      this.getProprietorList(1,1);
+      this.getProprietorList(2,1);
+      this.getProprietorList(3,1);
     },
     methods:{
-      isCheckedAll(){
+      isCheckedAll(){ //判断是否全选
         if(this.checkedAll == false){
           Object.keys(this.checkedObj).forEach((item,index) => {
             this.$set(this.checkedObj,item,false)
@@ -245,14 +249,12 @@
           })
         }  
       },
-      clearAll(){
-        // console.log(this.date.substring(0,10))
-        // console.log(this.date.substring(this.date.length - 10))
+      clearAll(){  //清空搜索条件
         this.clearStatus = false;
         this.searchVal = '';
         this.date = '';
       },
-      keySearch(){
+      keySearch(){ //搜索
         // console.log(this.checkedArr)
         this.getProprietorList((this.num+1),1,this.searchVal,this.date);
       },
@@ -262,15 +264,15 @@
       searchBlur(){
         this.clearStatus = false;
       },
-      onLoad(type){ //已操作 
-        if(type == 1){
+      onLoad(type){ 
+        if(type == 1){ //已操作 
           // 异步更新数据
           setTimeout(() => {
             this.getProprietorList(1,this.pageNum);
             // 加载状态结束
             this.loading = false;
           }, 1000);
-        }else if(type == 2){
+        }else if(type == 2){ //未操作
           setTimeout(() => {
             this.getProprietorList(2,this.pageNum1);
             // 加载状态结束
@@ -279,31 +281,38 @@
         }             
       },
       onRefresh(type) {
-        if(type == 1){
+        if(type == 1){ //已操作
           setTimeout(() => { 
             this.pageNum = 1;
+            // this.auditHasArr = [];
             this.getProprietorList(1,this.pageNum);
             this.loading = false;
             this.finished = false;
             this.$toast({message:'刷新成功',duration:600});
-            // this.getVistorsList(2);
             this.isLoading = false;
           }, 500);
-        }else if(type == 2){
+        }else if(type == 2){ //未操作
           setTimeout(() => { 
             this.pageNum1 = 1;
+            // this.auditNoneArr = [];
             this.getProprietorList(2,this.pageNum1);
             this.loading1 = false;
             this.finished1 = false;
             this.$toast({message:'刷新成功',duration:600});
-            // this.getVistorsList(2);
             this.isLoading1 = false;
           }, 500);
         }
       },
+      /**
+       * [getProprietorList 获取审核数据]
+       * @param  {[number]} operateStatus [操作类型]
+       * @param  {[number]} pageNum       [页数]
+       * @param  {[string]} val           [搜索条件]
+       * @param  {[string]} time          [日期范围]
+       */
       getProprietorList(operateStatus,pageNum,val,time){
         let _this = this;
-        let pageSize = 5;
+        let pageSize = 10;
         let startDate,endDate;
         if(time){
           startDate = _this.date.substring(0,10);
@@ -329,29 +338,39 @@
           if(operateStatus == 1){
             let list = result.list;
             let pages = result.pages;
-            if(_this.pageNum > pages){ 
-              _this.finished = true
+            if(_this.pageNum == 1){
+              _this.auditHasArr = list;
+              _this.pageNum++
             }else{
-              if(0 < list.length <= pageSize){
-                _this.auditHasArr = _this.auditHasArr.concat(list);
-                _this.pageNum++
-              }   
-            } 
+              if(_this.pageNum > pages){ 
+                _this.finished = true
+              }else{
+                if(0 < list.length <= pageSize){
+                  _this.auditHasArr = _this.auditHasArr.concat(list);
+                  _this.pageNum++
+                }   
+              } 
+            }              
           }else if(operateStatus == 2){
             let list = result.list;
             let pages = result.pages;
-            if(_this.pageNum1 > pages){ 
-              _this.finished1 = true
+            if(_this.pageNum1 == 1){
+              _this.auditNoneArr = list;
+              _this.pageNum1++
             }else{
-              if(0 < list.length <= pageSize){
-                _this.auditNoneArr = _this.auditNoneArr.concat(list);
-                _this.pageNum1++
+              if(_this.pageNum1 > pages){ 
+                _this.finished1 = true
+              }else{
+                if(0 < list.length <= pageSize){
+                  _this.auditNoneArr = _this.auditNoneArr.concat(list);
+                  _this.pageNum1++
+                }   
               }   
-            }                                
+            }                                           
           }else if(operateStatus == 3){
             let list = result.list;
-            let pages = result.pages;
-            _this.auditCheckArr = _this.auditCheckArr.concat(list);
+            // let pages = result.pages;
+            _this.auditCheckArr = list;
             _this.auditCheckArr.forEach((item,index) => {
               _this.$set(_this.checkedObj,item.id,false)
               // _this.checkedArr[index] = false;
@@ -360,19 +379,19 @@
         }).catch((err) => {
         }); 
       },
-      goRefused(index,id){
-        this.auditNoneArr.splice(index,1)
-        this.proprietorAudit(2,id);
-        // this.tab(0);
-      },
-      goPass(index,id){
-        this.auditNoneArr.splice(index,1)
-        // this.getVistorsList(2);
-        this.proprietorAudit(1,id);
-        // this.tab(0);
-      },
-      proprietorAudit(auditSatus,personnelIds){
-        console.log(personnelIds)
+      /**
+       * [proprietorAudit 审核]
+       * @param  {[number]} auditSatus   [审核状态]
+       * @param  {[string]} personnelIds [选中项]
+       * @param  {[string]} type         [单选还是多选]
+       */
+      proprietorAudit(auditSatus,personnelIds,type){
+        if(!personnelIds){
+          this.$dialog.alert({
+            message:'请选择要审核的选项！'
+          })
+          return
+        }
         this.$http({
           method: "post",
           url: "/wechat/officialAccount/community/proprietorAudit",
@@ -380,19 +399,46 @@
             'authToken':localStorage.getItem('authToken'),
             'auditSatus':auditSatus,
             'personnelIds':personnelIds
-
           })
         }).then((res) => {
+          //审核状态
           if(auditSatus == 1){
             this.$toast({message:'审核通过！',duration:600});
           }else if(auditSatus == 2){
             this.$toast({message:'审核拒绝！',duration:600});
           }
+          if(type == 'single'){  //单个审核
+            this.auditNoneArr.forEach((item,index) => {
+              if(item.id == personnelIds){
+                this.auditNoneArr.splice(index,1);
+              }
+            })
+          }else if(type == 'more'){  //遍历移除审核项
+            this.removeArr.forEach((item,index) => {
+              this.auditCheckArr.forEach((val,k) => {
+                if(item == val.id){
+                  this.auditCheckArr.splice(k,1);
+                }
+              })
+            })
+            // 重置checkedObj
+            this.checkedObj = {};
+            this.auditCheckArr.forEach((item,index) => {
+              this.$set(
+                this.checkedObj,item.id,false)
+            })
+          }
+          
         }).catch((err) => {
         });
       },
       tab(index) {
         this.num = index;
+        this.pageNum = 1;
+        this.pageNum1 = 1;
+        this.finished = false;
+        this.finished1 = false;
+        this.getProprietorList(this.num+1,1);
       },
       goInfo(id){
         this.$router.push({path:'/auditInfo',query:{personnelId:id}})
@@ -403,8 +449,7 @@
           return
         }else{
           this.$router.go(-1);
-        }
-        
+        }        
       }
     }
   }
@@ -412,7 +457,11 @@
 <style lang="stylus" type="text/stylus">
   .audit
     background #e8e8e8
-    min-height 12rem
+    position absolute
+    left 0
+    top 0
+    width 100%
+    height 100%
     .audit-top
       padding-top .18rem
       width 100%
@@ -502,6 +551,7 @@
             height 1.55rem
             background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
           .audit-item
+            // min-height 9rem
             position relative
             left 0
             top 0
