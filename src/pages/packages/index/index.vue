@@ -1,10 +1,10 @@
 <template>
 	<div class="index-wrapper">
 		<van-nav-bar title="阿尔法智汇" left-arrow :fixed="true" @click-left="onClickLeft">
-			<div slot="right" class="index-top-right">
+			<!-- <div slot="right" class="index-top-right">
 				<i class="common-icon icon-position02"></i>
 				<span>{{cityName}}</span>
-			</div>
+			</div> -->
 		</van-nav-bar>
 		<!-- <v-header title="阿尔法智汇" :showBack="true" class="already-record"></v-header> -->
 		<div class="index-main">
@@ -67,7 +67,7 @@
 				</ul>
 			</div>
 			<!-- products -->
-			<div class="index-products">
+			<!-- <div class="index-products">
 				<div class="index-products-title">
 					<h4><span></span>猜你喜欢</h4>
 				</div>
@@ -88,7 +88,7 @@
 					</div>
 				</div>
 				
-			</div>
+			</div> -->
 		</div>
 		<nav-bar :page="0"></nav-bar>		
 	</div>
@@ -99,7 +99,7 @@
 	  name:'index',
 	  data () {
 	    return {
-	    	cityName:localStorage.getItem('cityName') || '',
+	    	// cityName:localStorage.getItem('cityName') || '',
 	    	images: [
 	    		// './../../../../static/images/banner.png',
 	      //   './../../../../static/images/banner.png'

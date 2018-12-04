@@ -4,7 +4,7 @@
 			<div class="photo-preview" v-show="previewStatus">
 				<img :src="srcPreview" preview="0" preview-text="" alt="">
 			</div>
-			<i class="common-icon identify-delete" v-show="iconStatus"></i>
+			<i class="common-icon identify-delete" @click="clearAll" v-show="iconStatus"></i>
 			<div class="photo-btn">
 				<input type="file" name="file_head" id="file_head" @change="compressImg" accept="image/*" capture="camera" />
 				<img :src="src1" alt="" class="upload-bg">
@@ -54,10 +54,10 @@
 	  		let file_head = document.getElementById("file_head"),preview = document.getElementById("preview");
 	  		file_head.value = '';
 	  		preview.src = '';
-	  		preview.style.display = "none"
 	  		this.srcPreview ='';
 	  		this.iconStatus = false;
 	  		console.log(1,file_head.value)
+	  		this.$emit('photoBack',false,'')
 	  	},
 	  	compressImg(){
 	  		let compressFile = document.getElementById("file_head").files[0];
@@ -101,46 +101,6 @@
           // 不管是成功失败，都会执行
         })
 	  	},
-	  	// setImagePreview(){
-	  	// 	let preview, img_txt, localImag, file_head = document.getElementById("file_head"),
-	   //    picture = file_head.value;
-	   //    if (!picture.match(/.jpg|.gif|.png|.bmp/i)) return this.$dialog.alert({message: '您上传的图片格式不正确，请重新选择！'}); 
-	   //    if (preview = document.getElementById("preview"), file_head.files && file_head.files[0]){
-	   //     	preview.style.display = "block",
-	   //      preview.src = window.navigator.userAgent.indexOf("Chrome") >= 1 || window.navigator.userAgent.indexOf("Safari") >= 1 ? window.webkitURL.createObjectURL(file_head.files[0]) : window.URL.createObjectURL(file_head.files[0]);
-	   //      this.$http({
-		  //       method: "post",
-		  //       url: "/pub/image/identityGather",
-		  //       data: this.$qs.stringify({
-		  //       	// 'file':preview.src,
-		  //       	'uploadImgType':'identity',
-		  //       	'userType':1,
-		  //       })
-		  //     }).then((res) => {
-		  //     	let result = res.data.result;
-		  //     	this.searchArr = result.list
-		  //   	}).catch((err) => {
-		  //     });
-	   //    }
-	   //    else {
-	   //      // file_head.select(),
-	   //      // file_head.blur(),
-	   //      // img_txt = document.selection.createRange().text,
-	   //      // localImag = document.getElementById("localImag");
-	   //      // console.log(2,img_txt)
-	   //      // try {
-	   //      //   localImag.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)",
-	   //      //   localImag.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = img_txt
-	   //      // } catch(f) {
-	   //      //   return alert("您上传的图片格式不正确，请重新选择！"),
-	   //      //   !1
-	   //      // }
-	   //      // preview.style.display = "none",
-	   //      // document.selection.empty()
-	   //    }
-	   //    this.srcPreview = preview.src;
-	   //    this.iconStatus = true;
-	  	// }
 	  },
 	}
 </script>
@@ -170,7 +130,6 @@
 				width .8rem
 				height 1.01rem
 			.identify-delete
-				opacity 0
 				background-image url('./../../assets/images/del.png')
 			.identify-big
 				background-image url('./../../assets/images/big.png')

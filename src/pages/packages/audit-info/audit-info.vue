@@ -2,10 +2,10 @@
 	<div class="auditInfo clearfix">
 		<van-nav-bar title="审核详情" left-arrow  @click-left="onClickLeft">
 			<!-- <div slot="right" @click="show"> -->
-			<div slot="right" class="auditInfo-top-right">
+			<!-- <div slot="right" class="auditInfo-top-right">
 				<i class="common-icon icon-position01"></i>
 				<span>{{cityName}}</span>
-			</div>
+			</div> -->
 		</van-nav-bar>
 		<div class="auditInfo-wrapper clearfix">
 			<div class="auditInfo-main clearfix">
@@ -42,7 +42,7 @@
 	  name: 'audit-info',
 	  data () {
 	    return {
-	    	cityName:localStorage.getItem('cityName') || '',
+	    	// cityName:localStorage.getItem('cityName') || '',
 	    	avatarUrl:'',
 	    	idCardNo:'',
 	    	owerName:'',

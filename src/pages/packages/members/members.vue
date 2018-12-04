@@ -1,10 +1,10 @@
 <template>
 	<div class="members">
 		<van-nav-bar title="家庭成员添加" left-arrow :fixed="true" :z-index="100" @click-left="onClickLeft">
-			<div slot="right" class="members-top-right">
+			<!-- <div slot="right" class="members-top-right">
 				<i class="common-icon icon-position02"></i>
 				<span>{{cityName}}</span>
-			</div>
+			</div> -->
 		</van-nav-bar>
 		<div class="members-tab">
 			<van-tabs v-model="active" color="#D45855" :line-width="64" sticky :offset-top="46" @change="changeTab">
@@ -82,10 +82,10 @@
 	  name: 'members',
 	  data () {
 	    return {
-	    	cityName:localStorage.getItem('cityName') || '',
+	    	// cityName:localStorage.getItem('cityName') || '',
 	    	src1:require('./../../../assets/images/upidcard.png'),
 	    	src2:require('./../../../assets/images/upface.png'),
-	    	active:0,
+	    	active:1,
 	    	realname:'',
 	    	houseNum:'',
 	    	relationShip:'',
@@ -100,6 +100,20 @@
 	  },
 	  components:{
 	  	navBar,PopupPicker
+	  },
+	  watch:{
+	  	// '$route':{
+	  	// 	handler(newVal){
+	  	// 		let from = newVal.query.from
+			 //  	if(from == "members"){
+			 //  		console.log('111')
+			 //  		this.active = 1;
+			 //  		this.changeTab(1);
+			 //  		this.getMemberList();
+			 //  	}
+	  	// 	},
+	  	// 	immediate:true
+	  	// }
 	  },
 	  mounted(){
 	  	this.getMemberList();
@@ -144,7 +158,6 @@
 			        	'idCardNo':this.idNum,
 			        })
 			      }).then((res) => {
-			      	console.log(1)
 			      	this.$router.push({path:'/identify',query:{from:'members'}})
 			      	// this.$router.push({path:'/identify'});
 			    	}).catch((err) => {

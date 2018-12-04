@@ -31,10 +31,16 @@
 							<span>消息通知</span>
 						</div>
 					</li>
-					<li>
+					<li v-if="propertyStatus">
 						<div>
 							<p>10</p>
 							<span>家庭成员</span>
+						</div>
+					</li>
+					<li v-else-if="!propertyStatus">
+						<div>
+							<p>10</p>
+							<span>审批数量</span>
 						</div>
 					</li>
 				</ul>
@@ -82,16 +88,22 @@
 	  name: 'mine',
 	  data () {
 	    return {
-
+	    	propertyStatus:true
 	    }
 	  },
 	  components:{
 	    navBar
 	  },
+	  mounted(){
+
+	  },
 	  methods:{
 	  	goLinks(url){
 	  		if(url == 'identify'){
-	  			this.$router.push({path:''+url,query:{from:'mine'}})
+	  			this.$dialog.alert({
+	  				message:'即将上线'
+	  			})
+	  			// this.$router.push({path:''+url,query:{from:'mine'}})
 	  		}else{
 	  			this.$router.push({path:''+url})
 	  		}	  		

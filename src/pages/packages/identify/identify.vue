@@ -1,10 +1,10 @@
 <template>
 	<div class="identify clearfix">
 		<van-nav-bar title="身份认证" left-arrow :fixed="true" @click-left="onClickLeft">
-			<div slot="right" class="identify-top-right">
+			<!-- <div slot="right" class="identify-top-right">
 				<i class="common-icon icon-position02"></i>
 				<span>{{cityName}}</span>
-			</div>
+			</div> -->
 		</van-nav-bar>
 		<div class="identify-main">			
 			<div class="identify-idcard">
@@ -28,7 +28,7 @@
 				</div> -->
 			</div>
 			<div class="identify-btn">
-				<div @click="confirm">上传</div>
+				<div @click="confirm" v-show="faceType&&photoType">下一步</div>
 			</div>
 		</div>
 	</div>
@@ -43,7 +43,7 @@
 	    return {
 	    	src1:require('./../../../assets/images/upidcard.png'),
 	    	src2:require('./../../../assets/images/upface.png'),
-	    	cityName:localStorage.getItem('cityName') || '',
+	    	// cityName:localStorage.getItem('cityName') || '',
 	    	faceType:false,
 	    	photoType:false,
 	    	faceUrl:'',

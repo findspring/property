@@ -1,11 +1,10 @@
 <template>
 	<div class="navBar">
 		<ul class="nav">
-	    <li v-for="(item,index)  in arr" :class="item.add_link">
+	    <li v-for="(item,index)  in navArr" :style="item.hide?'display:none':''">
 	    	<div @click="goNav(item.url,index)">
 	      <!-- <router-link :to="{path:item.url}"> -->
 	        <i class="nav-icon" :class="index===page?item.iconClassActive:item.iconClass"></i>
-
 	        <span :class="{active:index===page}" >{{ item.title }}</span>
 	      <!-- </router-link> -->
 	      </div>
@@ -18,6 +17,8 @@ export default {
   name: 'navBar',
   data () {
     return {
+      type:1,
+      navArr:[],
     	arr:[
     		{
     			title: "首页",
@@ -44,9 +45,46 @@ export default {
     		 	iconClassActive:"icon-mine-on"
     		},
     	],
+      arr2:[
+        {
+          title: "首页",
+          hide:false,
+          url: "/index",
+          iconClass: "icon-home",
+          iconClassActive:"icon-home-on"
+        },
+        {
+          title: "访客",
+          hide:true,
+          url: "/visitors",
+          iconClass: "icon-visitors",
+          iconClassActive:"icon-visitors-on"
+        },
+        {
+          title: "物业",
+          hide:false,
+          url: "/audit",
+          iconClass: "icon-visitors",
+          iconClassActive:"icon-visitors-on"
+        },
+        {
+          title: "我的",
+          hide:false,
+          url: "/mine",
+          iconClass: "icon-mine",
+          iconClassActive:"icon-mine-on"
+        },
+      ],
     }
   },
   props:['page'],
+  mounted(){
+    if(this.type == 2){
+      this.navArr = this.arr2;
+    }else{
+      this.navArr = this.arr;
+    }
+  },
   methods:{
   	goNav(url,index){
   		if(index == this.page){
@@ -74,7 +112,7 @@ export default {
 			z-index 99
 			li
 				display flex
-				flex 1
+				flex 1          
 				div
 					display flex
 					flex 1

@@ -1,10 +1,10 @@
 <template>
 	<div class="result clearfix">
 		<van-nav-bar title="身份认证" left-arrow :fixed="true" @click-left="onClickLeft">
-			<div slot="right" class="result-top-right">
+			<!-- <div slot="right" class="result-top-right">
 				<i class="common-icon icon-position02"></i>
 				<span>{{cityName}}</span>
-			</div>
+			</div> -->
 		</van-nav-bar>
 		<div class="result-main">
 			<!-- top -->
@@ -73,7 +73,7 @@
 	  name: 'result',
 	  data () {
 	    return {
-	    	cityName:localStorage.getItem('cityName') || '',
+	    	// cityName:localStorage.getItem('cityName') || '',
 	    	valcode:'',
 	    	idNum:'',
 	    	faceUrl:'',
@@ -83,13 +83,18 @@
 	    	sexVal:['男'],
 	    	sexList:[["男","女"]],
 	    	address:'',
+	    	keepStatus:false,
 	    }
 	  },
 	  components:{
 	  	PopupPicker
 	  },	  
 	  beforeRouteLeave(to, from, next) {
-      to.meta.keepAlive = true;      
+	  	if(this.keepStatus == true){
+	  		to.meta.keepAlive = true;  
+	  	}else{
+	  		to.meta.keepAlive = false;   
+	  	}         
       next();
     },
 	  mounted(){
@@ -127,6 +132,7 @@
 	      });
 	  	},
 	  	onClickLeft(){
+	  		this.keepStatus = true
 	  		this.$router.go(-1);
 	  	},
 	  	submit(){
@@ -144,7 +150,10 @@
 		        	'userName':this.realname,
 		        })
 		      }).then((res) => {
-		      	this.goIndex();
+		      	this.$toast({message:'您的申请已提交审批',duration:600});
+		      	setTimeout(() =>{
+		      		this.goIndex();
+		      	},600);		      	
 		    	}).catch((err) => {
 		      });
           return
