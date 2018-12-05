@@ -60,12 +60,12 @@
 			  			</div>			  			
 			  			<div class="members-family-content">
 			  				<div class="members-family-top">
-			  					<h4>{{item.familyTiesName}}</h4>
+			  					<h4>{{item.personnelName}}</h4>
 			  					<i class="common-icon icon-edit" @click="editMember(item)"></i>
 			  				</div>
-			  				<p>身份证号码：{{item.familyTiesIdCard}}</p>
-			  				<p>门牌号码：{{item.familyTiesOwerNum}}</p>
-			  				<p>与业主的关系：<span>{{item.familyTiesRelation}}</span></p>
+			  				<p>身份证号码：{{item.idCardNo}}</p>
+			  				<p>门牌号码：{{item.houseNumber}}</p>
+			  				<p>与业主的关系：<span>{{item.familyTies}}</span></p>
 			  			</div>
 			  		</div>
 			  		<!-- <div class="members-family-shadow"></div> -->
@@ -102,20 +102,6 @@
 	  components:{
 	  	navBar,PopupPicker
 	  },
-	  watch:{
-	  	// '$route':{
-	  	// 	handler(newVal){
-	  	// 		let from = newVal.query.from
-			 //  	if(from == "members"){
-			 //  		console.log('111')
-			 //  		this.active = 1;
-			 //  		this.changeTab(1);
-			 //  		this.getMemberList();
-			 //  	}
-	  	// 	},
-	  	// 	immediate:true
-	  	// }
-	  },
 	  mounted(){
 	  	this.getMemberList();
 	  },
@@ -128,11 +114,11 @@
 	  	editMember(item){
 	  		this.titleName = "编辑成员"
 	  		this.active = 0
-	  		this.realname = item.familyTiesName
-	  		this.houseNum = item.familyTiesOwerNum
-	  		this.relationShip = item.familyTiesRelation
-	  		this.value1 = [''+item.familyTiesRelation+'']
-	  		this.idNum = item.familyTiesIdCard
+	  		this.realname = item.personnelName
+	  		this.houseNum = item.houseNumber
+	  		this.relationShip = item.familyTies
+	  		this.value1 = [''+item.familyTies+'']
+	  		this.idNum = item.idCardNo
 	  	},
 	  	changeTab(index){
 	  		if(index == 1 && this.titleName == "编辑成员"){
@@ -172,7 +158,6 @@
 	      })	  		
 	  	},
 	  	getMemberList(){
-	  		let communityName = this.address;
 	  		let pageNum = 1;
 	  		let pageSize = 100;
 				this.$http({
@@ -333,7 +318,7 @@
 								overflow hidden
 								margin-right .37rem
 						.members-family-content
-							max-width 4.8rem
+							min-width 4.8rem
 							.members-family-top
 								display flex
 								justify-content space-between

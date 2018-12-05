@@ -53,7 +53,7 @@ export default new Router({
       meta: {
         title: '审核详情',
         flag: 'visitorsInfo',
-        keepAlive: true,
+        keepAlive: false,
       },
       component: visitorsInfo
     },
@@ -83,7 +83,7 @@ export default new Router({
       meta: {
         title: '审核详情',
         flag: 'auditInfo',
-        keepAlive: true,
+        keepAlive: false,
       },
       component: auditInfo
     },
