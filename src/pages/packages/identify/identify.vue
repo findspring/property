@@ -101,7 +101,7 @@
 	      		this.uploadFace = true;
 	      	}
 	      	if(this.uploadFace && this.uploadPhoto){
-	  				this.$router.push({path:'/result'})
+	  				this.goResult();
 	  			}
           let result = Response.data.result;
           // let imgUrl = result.imgUrl
@@ -119,14 +119,14 @@
 	  			this.$dialog.alert({message:'请完成全部上传'})
 	  		}
 	  	},
-	  	// goResult(photoUrl,faceUrl){
-	  	// 	let fromUrl = this.$route.query.from;
-	  	// 	if(fromUrl){
-	  	// 		this.$router.push({path:'/result',query:{from:fromUrl,photoUrl:photoUrl,faceUrl:faceUrl}})
-	  	// 	}else{
-	  	// 		this.$router.push({path:'/result',query:{photoUrl:photoUrl,faceUrl:faceUrl}})
-	  	// 	}	  		
-	  	// }
+	  	goResult(photoUrl,faceUrl){
+	  		let fromUrl = this.$route.query.from;
+	  		if(fromUrl){
+	  			this.$router.push({path:'/result',query:{from:fromUrl}})
+	  		}else{
+	  			this.$router.push({path:'/result'})
+	  		}	  		
+	  	}
 	  }
 	}
 </script>
