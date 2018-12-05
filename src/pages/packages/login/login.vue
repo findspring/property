@@ -210,6 +210,7 @@ export default {
 		        })
 		      }).then((res) => {
 		      	this.$router.push({path:'/identify'});
+		      	// this.$router.push({path:'/identify',query:{owerNum:this.house}});
 		    	}).catch((err) => {
 		      });
           

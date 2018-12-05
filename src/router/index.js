@@ -3,6 +3,7 @@ import Router from 'vue-router'
 const login = r => require.ensure([],() => r(require('packages/login/login')),'login');
 const index = r => require.ensure([],() => r(require('packages/index/index')),'index');
 const visitors = r => require.ensure([],() => r(require('packages/visitors/visitors')),'visitors');
+const visitorsInfo = r => require.ensure([],() => r(require('packages/visitors-info/visitors-info')),'visitorsInfo');
 const members = r => require.ensure([],() => r(require('packages/members/members')),'members');
 const audit = r => require.ensure([],() => r(require('packages/audit/audit')),'audit');
 const auditInfo = r => require.ensure([],() => r(require('packages/audit-info/audit-info')),'auditInfo');
@@ -45,6 +46,16 @@ export default new Router({
         keepAlive: true,
       },
       component: visitors
+    },
+    {
+      path: "/visitorsInfo",
+      name:'visitorsInfo',
+      meta: {
+        title: '审核详情',
+        flag: 'visitorsInfo',
+        keepAlive: true,
+      },
+      component: visitorsInfo
     },
     {
       path: "/members",

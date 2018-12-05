@@ -99,10 +99,10 @@ export default {
 <style lang="stylus" type="text/stylus" scoped>
   .navBar
     width 100%    
-    padding-top .96rem
+    padding-top 1rem
 		.nav
 			width 100%
-			height .96rem
+			height 1rem
 			border-top 1px solid #ccc
 			background-color #fff
 			position fixed
@@ -120,10 +120,10 @@ export default {
 					align-items center
 					justify-content center
 					span
-						color #9B9B9B
+						color #999
 						font-size .2rem
-						margin-top .06rem
+						margin-top .08rem
 					.active
-						color #D45855
+						color #CE3D3A
   				
 </style>

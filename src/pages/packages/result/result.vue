@@ -99,8 +99,8 @@
     },
 	  mounted(){
 	  	this.getIdentityInfo();
-	  	this.faceUrl = this.$route.query.faceUrl
-	  	this.photoUrl = this.$route.query.photoUrl
+	  	// this.faceUrl = this.$route.query.faceUrl
+	  	// this.photoUrl = this.$route.query.photoUrl
 	  },
 	  // beforeRouteLeave(to, from, next) {
    //    // 设置下一个路由的 meta

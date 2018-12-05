@@ -48,6 +48,11 @@
 	    	photoType:false,
 	    	faceUrl:'',
 	    	photoUrl:'',
+	    	photoFormData:'',
+	    	faceFormData:'',
+	    	uploadFace:false,
+	    	uploadPhoto:false,
+	    	// owerNum:'',
 	    }
 	  },	  
 	  beforeRouteLeave(to, from, next) {
@@ -57,43 +62,71 @@
 	  components:{
 	  	vPhoto,vFace
 	  },
+	  mounted(){
+	  	// this.owerNum = this.$route.query.owerNum;	  	
+	  },
 	  methods:{
-	  	faceBack(val,url){
+	  	faceBack(val,formData){
+	  		console.log('2',val)
 	  		if(val){
 	  			this.faceType = true
 	  		}else{
 	  			this.faceType = false
 	  		}
-	  		this.faceUrl = url;
+	  		this.faceFormData = formData;
+	  		// this.faceUrl = url;
 	  	},
-	  	photoBack(val,url){
+	  	photoBack(val,formData){
+	  		console.log('1',val)
 	  		if(val){
 	  			this.photoType = true
 	  		}else{
 	  			this.photoType = false
 	  		}
-	  		this.photoUrl = url;
-	  		console.log('photoBack',url)
+	  		this.photoFormData = formData;
 	  	},
 	  	onClickLeft(){
 	  		this.$router.go(-1);
 	  	},
+	  	uploadImg(formData,type){
+	  		this.$http({
+	        method: "post",
+	        headers: {'content-type': 'multipart/form-data'},
+	        url: "/pub/image/identityGather",
+	        data:formData 
+	      }).then(Response => {
+	      	if(type == 1){
+	      		this.uploadPhoto = true;
+	      	}else if(type == 2){
+	      		this.uploadFace = true;
+	      	}
+	      	if(this.uploadFace && this.uploadPhoto){
+	  				this.$router.push({path:'/result'})
+	  			}
+          let result = Response.data.result;
+          // let imgUrl = result.imgUrl
+        }).catch(function(err){
+          return
+        });  
+	  	},
 	  	confirm(){
-	  		console.log(this.photoType,this.faceType)
+	  		// console.log(this.photoType,this.faceType)
 	  		if(this.photoType && this.faceType){
-	  			this.goResult(this.photoUrl,this.faceUrl);
+	  			this.uploadImg(this.photoFormData,1)
+	  			this.uploadImg(this.faceFormData,2)	  			          
+	  			// this.goResult(this.photoUrl,this.faceUrl);
 	  		}else{
 	  			this.$dialog.alert({message:'请完成全部上传'})
 	  		}
 	  	},
-	  	goResult(photoUrl,faceUrl){
-	  		let fromUrl = this.$route.query.from;
-	  		if(fromUrl){
-	  			this.$router.push({path:'/result',query:{from:fromUrl,photoUrl:photoUrl,faceUrl:faceUrl}})
-	  		}else{
-	  			this.$router.push({path:'/result',query:{photoUrl:photoUrl,faceUrl:faceUrl}})
-	  		}	  		
-	  	}
+	  	// goResult(photoUrl,faceUrl){
+	  	// 	let fromUrl = this.$route.query.from;
+	  	// 	if(fromUrl){
+	  	// 		this.$router.push({path:'/result',query:{from:fromUrl,photoUrl:photoUrl,faceUrl:faceUrl}})
+	  	// 	}else{
+	  	// 		this.$router.push({path:'/result',query:{photoUrl:photoUrl,faceUrl:faceUrl}})
+	  	// 	}	  		
+	  	// }
 	  }
 	}
 </script>
@@ -117,9 +150,9 @@
 				margin 0 auto
 				overflow hidden
 				width 5.68rem
-				height 3.58rem
-				border-radius .12rem
-				border 1px solid #D6D6D6
+				height 3.59rem
+				// border-radius .12rem
+				// border 1px solid #D6D6D6
 				position relative
 				// i
 				// 	position absolute

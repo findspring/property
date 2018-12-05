@@ -4,16 +4,15 @@
 			<!-- infos -->
 			<div class="mine-top-infos">
 				<div class="mine-top-left">
-					<h2>我是大表姐</h2>
-					<p>爱笑的女孩运气不会差</p>
-					<div class="mine-edit">
-					<!-- <div class="mine-edit" @click="goLinks('edit')"> -->
+					<h2>{{nickName}}</h2>
+					<p>{{signature}}</p>
+					<div class="mine-edit" @click="goLinks('edit')">
 						<i class="common-icon icon-edit"></i>
 						<span>编辑</span>
 					</div>
 				</div>
 				<div class="mine-top-right">
-					<img src="./../../../assets/images/headimg01.png" alt="">
+					<img :src="avatarUrl" alt="">
 				</div>
 			</div>
 			<!-- total -->
@@ -21,25 +20,25 @@
 				<ul>
 					<li>
 						<div>
-							<p>10</p>
+							<p>{{thisMonthVisitors}}</p>
 							<span>本月访客</span>
 						</div>
 					</li>
 					<li>
 						<div>
-							<p>28</p>
+							<p>{{msgNums}}</p>
 							<span>消息通知</span>
 						</div>
 					</li>
 					<li v-if="propertyStatus">
 						<div>
-							<p>10</p>
+							<p>{{familyNums}}</p>
 							<span>家庭成员</span>
 						</div>
 					</li>
 					<li v-else-if="!propertyStatus">
 						<div>
-							<p>10</p>
+							<p>{{auditNums}}</p>
 							<span>审批数量</span>
 						</div>
 					</li>
@@ -88,18 +87,46 @@
 	  name: 'mine',
 	  data () {
 	    return {
-	    	propertyStatus:true
+	    	propertyStatus:true,	    	
+				auditNums:'',
+				avatarUrl:'',
+				familyNums:'',
+				msgNums:'',
+				nickName:'',
+				signature:'',
+				thisMonthVisitors:'',
 	    }
 	  },
 	  components:{
 	    navBar
 	  },
 	  mounted(){
-
+	  	this.getUserInfo();
 	  },
 	  methods:{
+	  	getUserInfo(){
+	  		this.$http({
+	        method: "post",
+	        url: "/wechat/officialAccount/user/userInfo",
+	        data: this.$qs.stringify({
+	        	'authToken':localStorage.getItem('authToken')
+	        })
+	      }).then((res) => {
+	      	let result = res.data.result;
+	      	this.auditNums = result.auditNums
+					this.avatarUrl = result.avatarUrl
+					this.familyNums = result.familyNums
+					this.msgNums = result.msgNums
+					this.nickName = result.nickName
+					this.signature = result.signature
+					this.thisMonthVisitors = result.thisMonthVisitors
+	    	}).catch((err) => {
+	      });	
+	  	},
 	  	goLinks(url){
 	  		if(url == 'identify'){
+	  			this.$router.push({path:''+url,query:{from:'mine'}})
+	  		}else if(url == 'edit'){
 	  			this.$dialog.alert({
 	  				message:'即将上线'
 	  			})

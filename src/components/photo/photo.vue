@@ -81,19 +81,22 @@
 	      	formData.append('file',compressFile)
 	      	formData.append('uploadImgType','identity')
 	      	formData.append('userType',1)
+	      	formData.append('familyTies','')
+	      	formData.append('owerNum','')
+	      	_this.$emit('photoBack',true,formData)
 	      	
-          _this.$http({
-		        method: "post",
-		        headers: {'content-type': 'multipart/form-data'},
-		        url: "/pub/image/identityGather",
-		        data: formData
-		      }).then(Response => {
-            let result = Response.data.result;
-            let imgUrl = result.imgUrl
-            _this.$emit('photoBack',true,imgUrl)
-          }).catch(function(err){
-              console.log(err);
-          });  
+        //   _this.$http({
+		      //   method: "post",
+		      //   headers: {'content-type': 'multipart/form-data'},
+		      //   url: "/pub/image/identityGather",
+		      //   data: formData
+		      // }).then(Response => {
+        //     let result = Response.data.result;
+        //     let imgUrl = result.imgUrl
+        //     _this.$emit('photoBack',true,imgUrl)
+        //   }).catch(function(err){
+        //       console.log(err);
+        //   });  
         }).catch(function (err){
         	// 处理失败会执行
         }).always(function () {
@@ -135,7 +138,7 @@
 				background-image url('./../../assets/images/big.png')
 			.photo-btn
 				width 5.68rem
-				height 3.58rem
+				height 3.59rem
 				position relative	
 				margin 0 auto	
 				border 1px solid #D6D6D6
@@ -143,11 +146,11 @@
 				overflow hidden	
 				.upload-bg
 					position absolute
-					left .5rem
-					top .54rem
+					left -1px
+					top -1px
 					z-index 1
-					width 4.63rem
-					height 2.5rem
+					width 5.68rem
+					height 3.59rem
 				input
 					width 100%
 					height 100%

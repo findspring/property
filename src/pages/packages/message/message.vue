@@ -6,7 +6,7 @@
 			</div>
 		</van-nav-bar>
 		<div class="message-box">
-			<div>
+			<div v-if="msgArr && msgArr.length">
 				<van-pull-refresh class="refresh" v-model="isLoading" @refresh="onRefresh">
 					<van-list
             v-model="loading"
@@ -34,7 +34,7 @@
 					</van-list>
 				</van-pull-refresh>				
 			</div>
-					
+			<no-content v-else></no-content>					
 		</div>
 		<nav-bar :page="3"></nav-bar>	
 	</div>
@@ -42,6 +42,7 @@
 
 <script>
 	import navBar from "components/navBar/navBar";
+	import noContent from "components/noContent/noContent";
 	// import {Badge} from 'vux'
 	export default {
 	  name: 'message',
@@ -56,7 +57,7 @@
 	  },
 	  components:{
 	    // Badge,
-	    navBar
+	    navBar,noContent
 	  },
 	  mounted(){
 	  	this.getMessageList(this.pageNum);

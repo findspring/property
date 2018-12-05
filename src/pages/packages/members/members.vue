@@ -68,6 +68,7 @@
 			  				<p>与业主的关系：<span>{{item.familyTiesRelation}}</span></p>
 			  			</div>
 			  		</div>
+			  		<!-- <div class="members-family-shadow"></div> -->
 			  	</div>
 			  </van-tab>
 			</van-tabs>
@@ -350,8 +351,13 @@
 								padding-bottom  .08rem
 								span
 									color #D45855
-									
-						
-			
- 
+					.members-family-shadow
+						width 7.08rem
+						height 2.7rem
+						position fixed
+						left .21rem
+						bottom 0
+						background:linear-gradient(178deg,rgba(255,255,255,0.06) 0%,rgba(254,254,254,1) 100%)
+						border-radius .14rem
+						z-index 5
 </style>

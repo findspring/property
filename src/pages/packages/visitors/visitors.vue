@@ -75,7 +75,7 @@
                 @load="onLoad(2)"
               >
                 <!-- <transition-group name="animate" tag="p"> -->
-                  <div class="visitors-none-item" v-for="(item,index) in noneArr" :key="index">
+                  <div class="visitors-none-item" v-for="(item,index) in noneArr" :key="index" @click="goInfo(item.id)">
                     <div class="visitors-none-img">
                       <img :src="item.avatarUrl" alt="">
                     </div>              
@@ -87,10 +87,10 @@
                       <p>预约时间：{{item.appointmentTime}}</p>
                       <p>拜访事由：{{item.reasons}}</p>
                       <div class="visitors-none-btns">
-                        <div class="visitors-none-refused visitors-btn" @click="auditVisitor(2,index)">
+                        <div class="visitors-none-refused visitors-btn" @click.stop="auditVisitor(2,item.id)">
                           拒绝
                         </div>
-                        <div class="visitors-none-pass visitors-btn" @click="auditVisitor(1,index)">
+                        <div class="visitors-none-pass visitors-btn" @click.stop="auditVisitor(1,item.id)">
                           通过
                         </div>
                       </div>
@@ -148,7 +148,7 @@
           }
       });
       this.getVistorsList(1,1);
-      this.getVistorsList(2,1);  
+      // this.getVistorsList(2,1);  
     },
     methods:{
       clearAll(){
@@ -279,7 +279,11 @@
             'auditSatus':auditSatus,
           })
         }).then((res) => {
-          this.noneArr.splice(index,1)
+          this.noneArr.forEach((item,k) => {
+            if(item.id == index){
+              this.noneArr.splice(k,1)
+            }
+          })
           if(auditSatus == 1){
             this.$toast({message:'审核通过！',duration:600});
           }else if(auditSatus == 2){
@@ -295,6 +299,9 @@
         this.finished = false;
         this.finished1 = false;
         this.getVistorsList(this.num+1,1);
+      },
+      goInfo(id){
+        this.$router.push({path:'/visitorsInfo',query:{personnelId:id}})
       },
       goback(){
         this.$router.go(-1);

@@ -79,20 +79,21 @@
           let formData = new window.FormData()
 	      	formData.append('file',compressFile)
 	      	formData.append('uploadImgType','headPortrait')
-	      	formData.append('userType',1)	      	
-          _this.$http({
-		        method: "post",
-		        headers: {'content-type': 'multipart/form-data'},
-		        url: "/pub/image/identityGather",
-		        data: formData
-		      }).then(Response => {
-            let result = Response.data.result;
-            let imgUrl = result.imgUrl
-            _this.$emit('faceBack',true,imgUrl)
-            // console.log(data);
-          }).catch(function(err){
-              console.log(err);
-          });   
+	      	formData.append('userType',1)	
+	      	_this.$emit('faceBack',true,formData)      	
+        //   _this.$http({
+		      //   method: "post",
+		      //   headers: {'content-type': 'multipart/form-data'},
+		      //   url: "/pub/image/identityGather",
+		      //   data: formData
+		      // }).then(Response => {
+        //     let result = Response.data.result;
+        //     let imgUrl = result.imgUrl
+        //     _this.$emit('faceBack',true,imgUrl)
+        //     // console.log(data);
+        //   }).catch(function(err){
+        //       console.log(err);
+        //   });   
         }).catch(function (err){
         	// 处理失败会执行
         }).always(function () {
@@ -134,7 +135,7 @@
 				background-image url('./../../assets/images/big.png')
 			.face-btn
 				width 5.68rem
-				height 3.58rem
+				height 3.59rem
 				position relative	
 				margin 0 auto	
 				border 1px solid #D6D6D6
@@ -142,11 +143,11 @@
 				overflow hidden	
 				.upload-bg
 					position absolute
-					left 1.03rem
-					top .33rem
+					left -1px
+					top -1px
 					z-index 1
-					width 3.62rem	
-					height 2.94rem
+					width 5.68rem	
+					height 3.59rem
 				input
 					width 100%
 					height 100%
@@ -164,6 +165,6 @@
 					z-index 3
 					img
 						width 100%
-						max-height 3.58rem
+						max-height 3.59rem
 					
 </style>

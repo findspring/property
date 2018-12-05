@@ -1,19 +1,19 @@
 <template>
-	<div class="auditInfo clearfix">
-		<van-nav-bar title="审核详情" left-arrow  @click-left="onClickLeft">
+	<div class="visitorsInfo clearfix">
+		<van-nav-bar title="访客详情" left-arrow  @click-left="onClickLeft">
 			<!-- <div slot="right" @click="show"> -->
-			<!-- <div slot="right" class="auditInfo-top-right">
+			<!-- <div slot="right" class="visitorsInfo-top-right">
 				<i class="common-icon icon-position01"></i>
 				<span>{{cityName}}</span>
 			</div> -->
 		</van-nav-bar>
-		<div class="auditInfo-wrapper clearfix">
-			<div class="auditInfo-main clearfix">
-				<div class="auditInfo-headimg">
+		<div class="visitorsInfo-wrapper clearfix">
+			<div class="visitorsInfo-main clearfix">
+				<div class="visitorsInfo-headimg">
 					<img :src="avatarUrl" alt="">
 					<h4>{{owerName}}</h4>
 				</div>
-				<div class="auditInfo-content">
+				<div class="visitorsInfo-content">
 					<p>门牌号码：{{owerNum}}</p>
 					<!-- <p>与业主的关系：<span>业主</span></p> -->
 					<p>电话号码：{{phone}}</p>
@@ -67,10 +67,10 @@
     },
 	  mounted(){
 	  	let personnelId = this.$route.query.personnelId;
-	  	this.getAuditInfo(personnelId);
+	  	this.getvisitorsInfo(personnelId);
 	  },
 	  methods:{
-	  	getAuditInfo(personnelId){
+	  	getvisitorsInfo(personnelId){
 	  		this.$http({
 	  			method:'post',
 	  			url:'/wechat/officialAccount/community/proprietorInfo',
@@ -106,7 +106,7 @@
           // }else if(auditSatus == 2){
           //   this.$toast({message:'审核拒绝！',duration:600});
           // }
-          this.$router.push({path:'/audit'});
+          this.$router.push({path:'/visitors',query:{back:1}});
         }).catch((err) => {
         });
       },
@@ -119,7 +119,7 @@
 </script>
 
 <style lang="stylus" type="text/stylus">
-	.auditInfo
+	.visitorsInfo
 		width 100%
 		padding-bottom 1rem
 		background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
@@ -130,24 +130,24 @@
 				color #fff!important			
 			.van-nav-bar__title
 				color #fff!important
-			.auditInfo-top-right
+			.visitorsInfo-top-right
 				display flex
 				align-items center
 				span
 					font-size .28rem
 					color #fff
 					margin-left .06rem
-		.auditInfo-wrapper
+		.visitorsInfo-wrapper
 			padding 50px .21rem 0 .21rem
 			width 100%
-			.auditInfo-main
+			.visitorsInfo-main
 				width 100%
 				height 9.4rem
 				background #fff
 				border-radius .14rem
 				box-shadow:0 .02rem .17rem 0 rgba(0,0,0,0.17)
 				position relative
-				.auditInfo-headimg
+				.visitorsInfo-headimg
 					position absolute
 					left 50%
 					top 0
@@ -164,7 +164,7 @@
 						font-size .43rem
 						color #4A4A4A
 						padding-top .2rem
-				.auditInfo-content
+				.visitorsInfo-content
 					width 100%
 					padding 2.5rem .6rem 0 .6rem
 					p

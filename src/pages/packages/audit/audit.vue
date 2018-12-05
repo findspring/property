@@ -77,7 +77,7 @@
                   :finished="finished1"
                   @load="onLoad(2)"
                 >
-                  <div class="audit-none-item" v-for="(item,index) in auditNoneArr" :key="index">
+                  <div class="audit-none-item" v-for="(item,index) in auditNoneArr" :key="index"  @click="goInfo(item.id)">
                     <div class="audit-none-img">
                       <img :src="item.avatarUrl" alt="">
                     </div>              
@@ -96,10 +96,10 @@
                         </li>
                       </ul>
                       <div class="audit-none-btns">
-                        <div class="audit-none-refused audit-btn" @click="proprietorAudit(2,item.id,'single')">
+                        <div class="audit-none-refused audit-btn" @click.stop="proprietorAudit(2,item.id,'single')">
                           拒绝
                         </div>
-                        <div class="audit-none-pass audit-btn" @click="proprietorAudit(1,item.id,'single')">
+                        <div class="audit-none-pass audit-btn" @click.stop="proprietorAudit(1,item.id,'single')">
                           通过
                         </div>
                       </div>
@@ -229,13 +229,13 @@
           this.date = value
         }
       });
-      let back = this.$route.query.back;
-      if(back == 1){
-        this.tab(2);
-      }
+      // let back = this.$route.query.back;
+      // if(back == 1){
+      //   this.tab(2);
+      // }
       this.getProprietorList(1,1);
-      this.getProprietorList(2,1);
-      this.getProprietorList(3,1);
+      // this.getProprietorList(2,1);
+      // this.getProprietorList(3,1);
     },
     methods:{
       isCheckedAll(){ //判断是否全选
