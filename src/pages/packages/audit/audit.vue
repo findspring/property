@@ -2,7 +2,7 @@
   <div class="audit">  
     <div class="audit-top">
       <div class="audit-header">
-        <i class="common-icon icon-back" @click="goback"></i>
+        <i class="common-icon icon-back01" @click="goback"></i>
         <div class="search-info">
           <div ref="searchIcon" class="search-icon common-icon icon-search fl" @click="keySearch"></div>
           <form  @submit.prevent="formSubmit" action="javascript:return true"> 
@@ -25,9 +25,9 @@
            </li>
           </ul>
         </div>
-        <div class="audit-tab-mid"></div>
+        <!-- <div class="audit-tab-mid"></div> -->
         <div class="audit-tab-bottom clearfix">
-          <div class="audit-tab-bg"></div>
+          <!-- <div class="audit-tab-bg"></div> -->
           <div class="audit-item audit-has" v-if="num == 0">
             <div v-if="auditHasArr.length">
               <van-pull-refresh class="refresh" v-model="isLoading" @refresh="onRefresh(1)"> 
@@ -456,30 +456,41 @@
 </script>
 <style lang="stylus" type="text/stylus">
   .audit
-    background #e8e8e8
+    background #fff
     position absolute
     left 0
     top 0
     width 100%
     height 100%
     .audit-top
-      padding-top .18rem
-      width 100%
-      height 3.9rem
-      background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
+      // padding-top .18rem
+      // width 100%
+      // height 1.1rem      
       .audit-header
+        // padding-top .18rem
+        height 1.1rem
+        width 100%
+        position fixed
+        left 0 
+        top 0
+        z-index 10
+        background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
         display flex
         justify-content: space-around
         align-items center
-        .icon-back
-          margin-left .24rem
+        .icon-back01
+          margin-left .2rem
+          margin-right .1rem
         .search-info
           width 5.87rem
           height .72rem
-          background:rgba(247,239,239,0.8)
-          border-radius .14rem
+          // background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%);
+          border 1px solid rgba(247,239,239,0.2)
+          overflow hidden
+          border-radius .36rem
           position relative
           .search-icon
+            position absolute
             margin .18rem .3rem 0 .43rem
           .icon-delete
             position absolute
@@ -487,10 +498,14 @@
             top .16rem
             z-index 2
           input
-            background none
-            font-size: .34rem
+            width 100%
+            background:rgba(247,239,239,0.2);
+            font-size: .3rem
             line-height 1
-            padding .14rem 0
+            padding .17rem 0
+            box-sizing content-box
+            border-radius .36rem
+            text-indent 1rem
             &::placeholder
               color #fff
         .top-right
@@ -509,30 +524,39 @@
         position absolute
         left 0
         width 100%
-        top 1.3rem
+        top 1.1rem
         padding-bottom 1rem
-        background #e8e8e8
+        background #fff
         .van-pull-refresh__head
-          color #fff
+          color #333
         .audit-tab-top
-          background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
+          position fixed
+          top 1.1rem
+          left 0
+          z-index 9
+          width 100%
+          background:#fff
+          // background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
           ul
             width 5.23rem
             height .65rem
             line-height .65rem
             font-size: .3rem
-            color #FFFFFF
+            background:#fff
+            color #D45855
             margin 0 auto
-            border 1px solid #F1EEEE
+            border 1px solid #D45855
             border-radius .33rem
+            margin-bottom .18rem
+            margin-top .22rem
             li
-              width 33.3%
+              width 33.3%              
               text-align center
               float left
             .active
               // transition: .5s
-              color #D45855
-              background #fff
+              color #fff
+              background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
               border-radius .33rem
               border none
         .audit-tab-mid
@@ -540,6 +564,7 @@
           height .4rem
           background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
         .audit-tab-bottom
+          padding-top 1.06rem
           width 100%
           position relative
           .audit-tab-bg
@@ -556,8 +581,11 @@
             left 0
             top 0
             width 100%
-            padding 0 .21rem
+            // padding 0 .21rem
             z-index 2
+            .van-list
+              margin-top .1rem
+              padding 0 .21rem
             .audit-nodata
               width 100%
               height 8.5rem
@@ -566,8 +594,8 @@
               align-items center
               flex-direction column
               background:rgba(254,254,254,1);
-              box-shadow:0 .02rem .17rem 0 rgba(0,0,0,0.17)
-              border-radius .14rem
+              // box-shadow:0 .02rem .17rem 0 rgba(0,0,0,0.17)
+              // border-radius .14rem
               img
                 width 100%
               p
@@ -591,7 +619,7 @@
                   overflow hidden
                   margin-right .37rem
               .audit-has-content
-                min-width 5rem
+                min-width 4.3rem
                 .audit-has-top
                   display flex
                   align-items center
@@ -625,6 +653,7 @@
                     border-color #D8D8D8
                 ul
                   width 100%
+                  overflow hidden
                   li
                     float left
                     width 50%
@@ -800,6 +829,7 @@
                   background #D45855
                   color #fff
           .audit-check
-            padding-bottom 1.2rem
+            margin-top .1rem
+            padding 0 .21rem 1.2rem .21rem
       
 </style>

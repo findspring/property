@@ -2,7 +2,7 @@
 	<div class="visitors">	
     <div class="visitors-top">
       <div class="visitors-header">
-        <i class="common-icon icon-back" @click="goback"></i>
+        <i class="common-icon icon-back01" @click="goback"></i>
         <div class="search-info">
           <div ref="searchIcon" class="search-icon common-icon icon-search fl"  @click="keySearch"></div>
           <form  @submit.prevent="formSubmit" action="javascript:return true"> 
@@ -28,9 +28,9 @@
          </li>
         </ul>
       </div>
-      <div class="visitors-tab-mid"></div>
+      <!-- <div class="visitors-tab-mid"></div> -->
       <div class="visitors-tab-bottom">
-        <div class="visitors-tab-bg"></div>
+        <!-- <div class="visitors-tab-bg"></div> -->
         <div class="visitors-item visitors-has" v-if="num == 0">
           <div v-if="hasArr.length">
             <van-pull-refresh class="refresh" v-model="isLoading" @refresh="onRefresh(1)"> 
@@ -312,7 +312,7 @@
 
 <style lang="stylus" type="text/stylus">
   .visitors
-    background #e8e8e8
+    background #fff
     position absolute
     left 0
     top 0
@@ -320,23 +320,35 @@
     height 100%
     // min-height 13rem
     .visitors-top
-      padding-top .18rem
-      width 100%
-      height 3.9rem
-      background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
+      // padding-top .18rem
+      // width 100%
+      // height 3.9rem
+      // background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
       .visitors-header
+        height 1.1rem
+        width 100%
+        position fixed
+        left 0 
+        top 0
+        z-index 10
+        background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
         display flex
         justify-content: space-around
         align-items center
-        .icon-back
-          margin-left .24rem
+        .icon-back01
+          margin-left .2rem
+          margin-right .1rem
         .search-info
           width 5.87rem
           height .72rem
           background:rgba(247,239,239,0.8)
+          border 1px solid rgba(247,239,239,0.2)
+          overflow hidden
+          border-radius .36rem
           border-radius .14rem
           position relative
           .search-icon
+            position absolute
             margin .18rem .3rem 0 .43rem
           .icon-delete
             position absolute
@@ -344,11 +356,14 @@
             top .16rem
             z-index 2
           input
-            min-width: 4rem
-            background none
-            font-size: .34rem
+            width 100%
+            background:rgba(247,239,239,0.2);
+            font-size: .3rem
             line-height 1
             padding .17rem 0
+            box-sizing content-box
+            border-radius .36rem
+            text-indent 1rem
             &::placeholder
               color #fff
         .top-right
@@ -370,37 +385,46 @@
       position absolute
       left 0
       width 100%
-      top 1.3rem
+      top 1.1rem
       padding-bottom 1rem
-      background #e8e8e8
+      background #fff
       .van-pull-refresh__head
-        color #fff
+        color #333
       .visitors-tab-top
-        background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
+        position fixed
+        top 1.1rem
+        left 0
+        z-index 9
+        width 100%
+        background:#fff
         ul
           width 4.05rem
           height .65rem
           line-height .65rem
           font-size: .3rem
-          color #FFFFFF
+          background:#fff
+          color #D45855
           margin 0 auto
           border 1px solid #F1EEEE
           border-radius .33rem
+          margin-bottom .18rem
+          margin-top .22rem
           li
             width 50%
             text-align center
             float left
           .active
             // transition: .5s
-            color #D45855
-            background #fff
+            color #fff
+            background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
             border-radius .33rem
             border none
-      .visitors-tab-mid
-        width 100%
-        height .4rem
-        background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
+      // .visitors-tab-mid
+      //   width 100%
+      //   height .4rem
+      //   background:linear-gradient(142deg,rgba(221,114,83,1) 0%,rgba(216,60,56,1) 100%)
       .visitors-tab-bottom
+        padding-top 1.06rem
         width 100%
         position relative
         .visitors-tab-bg
@@ -416,8 +440,11 @@
           left 0
           top 0
           width 100%
-          padding 0 .21rem
+          // padding 0 .21rem
           z-index 2
+          .van-list
+            margin-top .1rem
+            padding 0 .21rem
           .visitors-nodata
             width 100%
             height 8.5rem
@@ -426,8 +453,8 @@
             align-items center
             flex-direction column
             background:rgba(254,254,254,1);
-            box-shadow:0 .02rem .17rem 0 rgba(0,0,0,0.17)
-            border-radius .14rem
+            // box-shadow:0 .02rem .17rem 0 rgba(0,0,0,0.17)
+            // border-radius .14rem
             img
               width 100%
             p

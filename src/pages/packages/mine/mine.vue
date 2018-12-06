@@ -101,6 +101,12 @@
 	    navBar
 	  },
 	  mounted(){
+	  	let role = localStorage.getItem("role")
+	  	if(role == 'property'){
+	  		this.propertyStatus = false
+	  	}else if(role == 'owner'){
+	  		this.propertyStatus = true
+	  	}
 	  	this.getUserInfo();
 	  },
 	  methods:{

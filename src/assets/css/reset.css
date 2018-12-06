@@ -197,8 +197,13 @@ body{
 }
 .icon-back{
   width: .36rem;
-  height: .36rem;
+  height: .41rem;
   background-image: url(../images/back.png);
+}
+.icon-back01{
+  width: .2rem;
+  height: .36rem;
+  background-image: url(../images/back01.png);
 }
 .icon-date{
   width: .46rem;

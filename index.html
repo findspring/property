@@ -57,10 +57,16 @@
         }
         return tmp_para;
       };
+      // 角色
+      var currurl = window.location.href.toString();
+      var data = currurl.getQueryString();      
+      var role = localStorage.getItem("role") || "";
+      localStorage.setItem("role", data["role"]);
+      // authToken
       var authToken = localStorage.getItem("authToken") || "";
       if (!authToken) {
-        var currurl = window.location.href.toString();
-        var data = currurl.getQueryString();
+        // currurl = window.location.href.toString();
+        // data = currurl.getQueryString();
         if(data["removeToken"]==1){
           localStorage.removeItem("authToken");
         }

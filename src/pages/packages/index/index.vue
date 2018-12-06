@@ -34,6 +34,14 @@
 			<!-- links -->
 			<div class="index-links">
 				<ul>
+					<li v-for="(item,index) in linkArr" :key="index"  @click="goItem()">
+						<div>
+							<img :src="item.imgUrl" alt="">
+							<p>{{item.content}}</p>
+						</div>
+					</li>
+				</ul>
+				<!-- <ul>
 					<li>
 						<div>
 							<img src="./../../../assets/images/icon01.png" alt="">
@@ -64,7 +72,7 @@
 							<p>全部</p>
 						</div>
 					</li>
-				</ul>
+				</ul> -->
 			</div>
 			<!-- 通知 -->
 			<div class="index-notices">
@@ -156,6 +164,13 @@
 	        require('./../../../assets/images/banner.png'),
 	        require('./../../../assets/images/banner.png'),
 	      ],
+	      linkArr:[
+	      	{imgUrl:require('./../../../assets/images/icon01.png'),content:'访客通行'},
+	      	{imgUrl:require('./../../../assets/images/icon02.png'),content:'一键开门'},
+	      	{imgUrl:require('./../../../assets/images/icon03.png'),content:'小区头条'},
+	      	{imgUrl:require('./../../../assets/images/icon04.png'),content:'我的房屋'},
+	      	{imgUrl:require('./../../../assets/images/icon05.png'),content:'全部'},
+	      ],
 	      itemArr:[
 	      	{imgUrl:require('./../../../assets/images/item01.png'),content:'物业缴费'},
 	      	{imgUrl:require('./../../../assets/images/item02.png'),content:'访客邀请'},
@@ -163,7 +178,7 @@
 	      	{imgUrl:require('./../../../assets/images/item04.png'),content:'小区公告'},
 	      	{imgUrl:require('./../../../assets/images/item05.png'),content:'挪车服务'},
 	      	{imgUrl:require('./../../../assets/images/item06.png'),content:'投诉建议'},
-	      ]
+	      ],
 	    }
 	  },
 	  components:{
@@ -323,6 +338,7 @@
 						height .72rem
 			.index-items
 				width 100%
+				padding-bottom .3rem
 				.index-items-list
 					width 100%
 					display flex

@@ -61,7 +61,7 @@ export default {
           iconClassActive:"icon-visitors-on"
         },
         {
-          title: "物业",
+          title: "审核",
           hide:false,
           url: "/audit",
           iconClass: "icon-audit",
@@ -79,8 +79,11 @@ export default {
   },
   props:['page'],
   mounted(){
-    if(this.type == 2){
+    let role = localStorage.getItem("role")
+    if(role == 'property'){
       this.navArr = this.arr2;
+    }else if(role == 'owner'){
+      this.navArr = this.arr;
     }else{
       this.navArr = this.arr;
     }

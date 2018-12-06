@@ -75,7 +75,7 @@
 				        </div>
 				        <div slot="content" class="members-swiper-item">
 				        	<div class="members-family-img">
-					  				<img src="./../../../assets/images/headimg02.png" alt="">
+					  				<img :src="manArr" alt="">
 					  			</div>			  			
 					  			<div class="members-family-content">
 					  				<div class="members-family-top">
@@ -107,6 +107,7 @@
 	    	// cityName:localStorage.getItem('cityName') || '',
 	    	src1:require('./../../../assets/images/upidcard.png'),
 	    	src2:require('./../../../assets/images/upface.png'),
+	    	manArr:require('./../../../assets/images/man/'+Math.floor(Math.random()*10+1)+'.png'),
 	    	active:1,
 	    	realname:'',
 	    	houseNum:'',
