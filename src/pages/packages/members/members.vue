@@ -54,7 +54,7 @@
 			  </van-tab>
 			  <van-tab title="我的家庭">
 			  	<div class="members-family">
-			  		<div class="members-family-item" v-for="(item,index) in familyArr" :key="index" >
+			  		<!-- <div class="members-family-item" v-for="(item,index) in familyArr" :key="index" >
 			  			<div class="members-family-img">
 			  				<img src="./../../../assets/images/headimg02.png" alt="">
 			  			</div>			  			
@@ -67,7 +67,28 @@
 			  				<p>门牌号码：{{item.houseNumber}}</p>
 			  				<p>与业主的关系：<span>{{item.familyTies}}</span></p>
 			  			</div>
-			  		</div>
+			  		</div> -->
+			  		<swipeout>
+				      <swipeout-item  class="members-family-item" transition-mode="follow" v-for="(item,index) in familyArr" :key="index">
+				        <div slot="right-menu">
+				          <swipeout-button type="warn" class="members-delete" @click.native="deleteMember(item.familyTiesIdCard,index)">删除</swipeout-button>
+				        </div>
+				        <div slot="content" class="members-swiper-item">
+				        	<div class="members-family-img">
+					  				<img src="./../../../assets/images/headimg02.png" alt="">
+					  			</div>			  			
+					  			<div class="members-family-content">
+					  				<div class="members-family-top">
+					  					<h4>{{item.personnelName}}</h4>
+					  					<i class="common-icon icon-edit" @click="editMember(item)"></i>
+					  				</div>
+					  				<p>身份证号码：{{item.idCardNo}}</p>
+					  				<p>门牌号码：{{item.houseNumber}}</p>
+					  				<p>与业主的关系：<span>{{item.familyTies}}</span></p>
+					  			</div>
+				        </div>
+				      </swipeout-item>
+				    </swipeout>
 			  		<!-- <div class="members-family-shadow"></div> -->
 			  	</div>
 			  </van-tab>
@@ -77,7 +98,7 @@
 	</div>
 </template>
 <script>
-	import { PopupPicker } from 'vux'
+	import { PopupPicker,Swipeout, SwipeoutItem, SwipeoutButton} from 'vux'
 	import navBar from "components/navBar/navBar";
 	export default {
 	  name: 'members',
@@ -100,7 +121,7 @@
 	    }
 	  },
 	  components:{
-	  	navBar,PopupPicker
+	  	navBar,PopupPicker, Swipeout,SwipeoutItem,SwipeoutButton
 	  },
 	  mounted(){
 	  	this.getMemberList();
@@ -111,6 +132,21 @@
       next();
     },
 	  methods:{
+	  	deleteMember(idCardNo,index){
+	  		console.log(idCardNo)
+	  		this.$http({
+	        method: "post",
+	        url: "/wechat/officialAccount/user/familyDetele",
+	        data: this.$qs.stringify({
+	        	idCardNo:idCardNo
+	        })
+	      }).then((res) => {
+	  			this.familyArr.splice(index,1)
+	      	let result = res.data.result;
+	      	// this.searchArr = result.list
+	    	}).catch((err) => {
+	      });
+	  	},
 	  	editMember(item){
 	  		this.titleName = "编辑成员"
 	  		this.active = 0
@@ -306,36 +342,47 @@
 						display flex
 						background #fff
 						width 100%
+						height 2.71rem
 						padding .36rem .44rem .24rem .43rem
 						border-radius .14rem
 						box-shadow:0 .02rem .17rem 0 rgba(0,0,0,0.17);
 						margin-bottom: .2rem
-						.members-family-img
-							img
-								width 1rem
-								height 1rem
-								border-radius 50%
-								overflow hidden
-								margin-right .37rem
-						.members-family-content
-							min-width 4.8rem
-							.members-family-top
-								display flex
-								justify-content space-between
-								align-items center
-								padding-bottom .08rem
-								h4
-									font-size .43rem
-									color #4A4A4A
-									line-height .61rem
-									font-weight 400
-							p
-								font-size: .28rem
-								color #9B9B9B
-								line-height .42rem
-								padding-bottom  .08rem
-								span
-									color #D45855
+						.members-delete
+							border-radius: .14rem 0 0 .14rem
+							background #D45855
+							font-size: .34rem
+							font-weight: 400
+							letter-spacing:1px
+						.members-swiper-item
+							display flex
+							background #fff
+							width 100%
+							.members-family-img
+								img
+									width 1rem
+									height 1rem
+									border-radius 50%
+									overflow hidden
+									margin-right .37rem
+							.members-family-content
+								min-width 4.8rem
+								.members-family-top
+									display flex
+									justify-content space-between
+									align-items center
+									padding-bottom .08rem
+									h4
+										font-size .43rem
+										color #4A4A4A
+										line-height .61rem
+										font-weight 400
+								p
+									font-size: .28rem
+									color #9B9B9B
+									line-height .42rem
+									padding-bottom  .08rem
+									span
+										color #D45855
 					.members-family-shadow
 						width 7.08rem
 						height 2.7rem

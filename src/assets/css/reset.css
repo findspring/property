@@ -46,8 +46,9 @@ body{
     white-space: normal !important;
     text-overflow: ellipsis;
     word-wrap: break-word;
-    -webkit-line-clamp: 2;//限制行数
-    -webkit-box-orient: vertical;}
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
 .text-left{
   text-align: left;
 }

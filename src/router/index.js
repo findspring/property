@@ -30,9 +30,9 @@ export default new Router({
       name: 'index',
       meta:{
       	requireAuth:true,
-      	title:'首页',
+      	title:'阿尔法智汇',
       	flag:'index',
-      	belongToGroup:'首页',
+      	belongToGroup:'阿尔法智汇',
         keepAlive: true,
       },
       component:index
@@ -141,7 +141,7 @@ export default new Router({
       path: "/login",
       name:'login',
       meta: {
-        title: '欢迎使用智能门禁',
+        title: '阿尔法智汇',
         flag: 'login',
         keepAlive: true,
       },

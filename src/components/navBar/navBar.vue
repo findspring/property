@@ -64,8 +64,8 @@ export default {
           title: "物业",
           hide:false,
           url: "/audit",
-          iconClass: "icon-visitors",
-          iconClassActive:"icon-visitors-on"
+          iconClass: "icon-audit",
+          iconClassActive:"icon-audit-on"
         },
         {
           title: "我的",
