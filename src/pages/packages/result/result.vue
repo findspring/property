@@ -113,11 +113,13 @@
 	  	},
 	  	getIdentityInfo(){
 	  		let authToken = localStorage.getItem("authToken")
+	  		let familyId = this.$route.query.familyId;
 	  		this.$http({
 	        method: "post",
 	        url: "/wechat/mini/user/identityInfo",
 	        data: this.$qs.stringify({
 	        	'authToken':authToken,
+	        	familyId:familyId || ''
 	        })
 	      }).then((res) => {
 	      	let result = res.data.result;

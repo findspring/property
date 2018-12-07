@@ -54,28 +54,15 @@
 			  </van-tab>
 			  <van-tab title="我的家庭">
 			  	<div class="members-family">
-			  		<!-- <div class="members-family-item" v-for="(item,index) in familyArr" :key="index" >
-			  			<div class="members-family-img">
-			  				<img src="./../../../assets/images/headimg02.png" alt="">
-			  			</div>			  			
-			  			<div class="members-family-content">
-			  				<div class="members-family-top">
-			  					<h4>{{item.personnelName}}</h4>
-			  					<i class="common-icon icon-edit" @click="editMember(item)"></i>
-			  				</div>
-			  				<p>身份证号码：{{item.idCardNo}}</p>
-			  				<p>门牌号码：{{item.houseNumber}}</p>
-			  				<p>与业主的关系：<span>{{item.familyTies}}</span></p>
-			  			</div>
-			  		</div> -->
 			  		<swipeout>
 				      <swipeout-item  class="members-family-item" transition-mode="follow" v-for="(item,index) in familyArr" :key="index">
 				        <div slot="right-menu">
-				          <swipeout-button type="warn" class="members-delete" @click.native="deleteMember(item.familyTiesIdCard,index)">删除</swipeout-button>
+				          <swipeout-button type="warn" class="members-delete" @click.native="deleteMember(item.idCardNo,index)">删除</swipeout-button>
 				        </div>
 				        <div slot="content" class="members-swiper-item">
 				        	<div class="members-family-img">
-					  				<img :src="manArr" alt="">
+					  				<img :src="manImg" v-if="item.sex == 1" alt="">
+					  				<img :src="womenImg" v-if="item.sex == 2" alt="">
 					  			</div>			  			
 					  			<div class="members-family-content">
 					  				<div class="members-family-top">
@@ -89,6 +76,7 @@
 				        </div>
 				      </swipeout-item>
 				    </swipeout>
+				    <no-content v-if="!familyArr.length"></no-content>
 			  		<!-- <div class="members-family-shadow"></div> -->
 			  	</div>
 			  </van-tab>
@@ -99,6 +87,7 @@
 </template>
 <script>
 	import { PopupPicker,Swipeout, SwipeoutItem, SwipeoutButton} from 'vux'
+	import noContent from "components/noContent/noContent";
 	import navBar from "components/navBar/navBar";
 	export default {
 	  name: 'members',
@@ -107,7 +96,8 @@
 	    	// cityName:localStorage.getItem('cityName') || '',
 	    	src1:require('./../../../assets/images/upidcard.png'),
 	    	src2:require('./../../../assets/images/upface.png'),
-	    	manArr:require('./../../../assets/images/man/'+Math.floor(Math.random()*10+1)+'.png'),
+	    	manImg:require('./../../../assets/images/man/1.png'),
+	    	womenImg:require('./../../../assets/images/women/1.png'),
 	    	active:1,
 	    	realname:'',
 	    	houseNum:'',
@@ -118,11 +108,12 @@
 	    	value1: ['父母'], //当前选择关系
 	    	list1: [['父母', '夫妻', '子女', '亲友', '租客', '其他']],
 	    	familyArr:[],
-	    	titleName:'添加成员'
+	    	titleName:'添加成员',
+	    	familyId:'',
 	    }
 	  },
 	  components:{
-	  	navBar,PopupPicker, Swipeout,SwipeoutItem,SwipeoutButton
+	  	navBar,PopupPicker, Swipeout,SwipeoutItem,SwipeoutButton,noContent
 	  },
 	  mounted(){
 	  	this.getMemberList();
@@ -144,13 +135,15 @@
 	      }).then((res) => {
 	  			this.familyArr.splice(index,1)
 	      	let result = res.data.result;
+	      	// console.log(this.familyArr)
 	      	// this.searchArr = result.list
 	    	}).catch((err) => {
 	      });
 	  	},
 	  	editMember(item){
-	  		this.titleName = "编辑成员"
+	  		this.titleName = "编辑成员" 
 	  		this.active = 0
+	  		this.familyId = item.familyTiesId
 	  		this.realname = item.personnelName
 	  		this.houseNum = item.houseNumber
 	  		this.relationShip = item.familyTies
@@ -175,14 +168,30 @@
 			        url: "/wechat/officialAccount/user/saveFfmily",
 			        data: this.$qs.stringify({
 			        	'authToken':localStorage.getItem('authToken'),
-			        	'userType':1,
+			        	// 'userType':1,
 			        	'userName':this.realname,
 			        	'familyTies':this.relationShip,
 			        	'owerNum':this.houseNum,
 			        	'idCardNo':this.idNum,
 			        })
 			      }).then((res) => {
-			      	this.$router.push({path:'/identify',query:{from:'members'}})
+			      	if(this.titleName == "编辑成员"){
+			      		this.$http({
+					        method: "post",
+					        url: "/wechat/mini/user/identityInfo",
+					        data: this.$qs.stringify({
+					        	authToken:localStorage.getItem('authToken'),
+					        	familyId:this.familyId
+					        })
+					      }).then((res) => {
+					      	let result = res.data.result;
+					      	this.$router.push({path:'/identify',query:{from:'members',familyId:this.familyId,headPortraitUrl:result.headPortraitUrl,identityImgUrl:result.identityImgUrl}})
+					    	}).catch((err) => {
+					      });
+			      		// this.$router.push({path:'/identify',query:{from:'members',familyId:this.familyId}})
+			      	}else if(this.titleName == "添加成员"){
+			      		this.$router.push({path:'/identify',query:{from:'members'}})
+			      	}			      	
 			      	// this.$router.push({path:'/identify'});
 			    	}).catch((err) => {
 			      });	          

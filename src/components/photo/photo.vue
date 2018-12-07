@@ -9,7 +9,7 @@
 				<input type="file" name="file_head" id="file_head" @change="compressImg" accept="image/*" capture="camera" />
 				<img :src="src1" alt="" class="upload-bg">
 				<div id="localImag">
-					<img id="preview" />
+					<img :src="srcPreview" id="preview" />
 				</div>
 			</div>
 			<i class="common-icon identify-big" v-show="iconStatus"></i>
@@ -28,13 +28,34 @@
 	    }
 	  },
 	  props:{
-	  	'src1':{
+	  	src1:{
 	  		type:String,
 	  		default:''
+	  	},
+	  	srcPreview1:{
+	  		type:String,
+	  		default:''
+	  	},
+	  	iconStatus1:{
+	  		type:Boolean,
+	  		default:false,
 	  	}
 	  },
-	  created(){
-	  	// this.showCapture();
+	  watch:{
+	  	srcPreview1:{
+	  		handler(newVal){
+	  			this.srcPreview = newVal
+	  		},
+	  		immediate:true
+	  	},
+	  	iconStatus1:{
+	  		handler(newVal){
+	  			this.iconStatus = newVal
+	  		},
+	  		immediate:true
+	  	},
+	  },
+	  mounted(){
 	  },
 	  methods:{
 	  	showCapture(){

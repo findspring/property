@@ -15,14 +15,14 @@
 					<input type="file" name="file_head" id="file_head" @change="setImagePreview" />
 					<img src="./../../../assets/images/upidcard.png" alt="">
 				</div> -->
-				<v-photo :src1="src1" @photoBack="photoBack"></v-photo>
+				<v-photo :src1="src1" :iconStatus1="iconStatus1" :srcPreview1="srcPreview1" @photoBack="photoBack"></v-photo>
 				<!-- <div id="localImag">
           <img id="preview" width="-1" height="-1" style="display: none" />
       	</div> -->
 			</div>
 			<div class="identify-face">
 				<h5>人脸识别扫描</h5>
-				<v-face :src2="src2" @faceBack="faceBack"></v-face>
+				<v-face :src2="src2" :iconStatus2="iconStatus2" :srcPreview2="srcPreview2"  @faceBack="faceBack"></v-face>
 				<!-- <div class="identify-scan identify-common">
 					<img src="./../../../assets/images/upface.png"  alt="">
 				</div> -->
@@ -43,6 +43,10 @@
 	    return {
 	    	src1:require('./../../../assets/images/upidcard.png'),
 	    	src2:require('./../../../assets/images/upface.png'),
+	    	srcPreview1:'',
+	    	iconStatus1:false,
+	    	srcPreview2:'',
+	    	iconStatus2:false,
 	    	// cityName:localStorage.getItem('cityName') || '',
 	    	faceType:false,
 	    	photoType:false,
@@ -52,6 +56,8 @@
 	    	faceFormData:'',
 	    	uploadFace:false,
 	    	uploadPhoto:false,
+	    	// iconStatus:false,
+	    	// srcPreview:''
 	    	// owerNum:'',
 	    }
 	  },	  
@@ -63,6 +69,18 @@
 	  	vPhoto,vFace
 	  },
 	  mounted(){
+	  	let urlFrom = this.$route.query.from;
+	  	let familyId = this.$route.query.familyId;
+	  	if(urlFrom == 'mine' || familyId){
+	  		this.srcPreview1 = this.$route.query.identityImgUrl;
+	  		this.iconStatus1 = true;
+	  		this.srcPreview2 = this.$route.query.headPortraitUrl;
+	  		this.iconStatus2 = true;
+	  		this.faceType = true;
+	  		this.photoType = true;
+	  		this.uploadPhoto = true;
+	  		this.uploadFace = true;
+	  	}
 	  	// this.owerNum = this.$route.query.owerNum;	  	
 	  },
 	  methods:{
@@ -112,8 +130,15 @@
 	  	confirm(){
 	  		// console.log(this.photoType,this.faceType)
 	  		if(this.photoType && this.faceType){
-	  			this.uploadImg(this.photoFormData,1)
-	  			this.uploadImg(this.faceFormData,2)	  			          
+	  			if(this.photoFormData !=""){
+	  				this.uploadImg(this.photoFormData,1)
+	  			}
+	  			if(this.faceFormData != ""){
+	  				this.uploadImg(this.faceFormData,2)	
+	  			} 
+	  			if(this.photoFormData =="" && this.faceFormData ==""){
+	  				this.goResult();
+	  			}	  			  			          
 	  			// this.goResult(this.photoUrl,this.faceUrl);
 	  		}else{
 	  			this.$dialog.alert({message:'请完成全部上传'})
@@ -121,8 +146,14 @@
 	  	},
 	  	goResult(photoUrl,faceUrl){
 	  		let fromUrl = this.$route.query.from;
+	  		let familyId = this.$route.query.familyId;
 	  		if(fromUrl){
-	  			this.$router.push({path:'/result',query:{from:fromUrl}})
+	  			if(familyId){
+	  				this.$router.push({path:'/result',query:{from:fromUrl,familyId:familyId}})
+	  			}else{
+	  				this.$router.push({path:'/result',query:{from:fromUrl}})
+	  			}
+	  			
 	  		}else{
 	  			this.$router.push({path:'/result'})
 	  		}	  		

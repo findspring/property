@@ -77,11 +77,13 @@
 				</div>
 			</div>
 		</div>
+		<v-develop v-show="developStatus" @closeDevelop="closeDevelop"></v-develop>
 		<nav-bar :page="3"></nav-bar>	
 	</div>
 </template>
 
 <script>
+	import vDevelop from "components/develop/develop";
 	import navBar from "components/navBar/navBar";
 	export default {
 	  name: 'mine',
@@ -95,10 +97,11 @@
 				nickName:'',
 				signature:'',
 				thisMonthVisitors:'',
+				developStatus:false,
 	    }
 	  },
 	  components:{
-	    navBar
+	    navBar,vDevelop
 	  },
 	  mounted(){
 	  	let role = localStorage.getItem("role")
@@ -110,6 +113,9 @@
 	  	this.getUserInfo();
 	  },
 	  methods:{
+	  	closeDevelop(val){
+	  		this.developStatus = val;
+	  	},
 	  	getUserInfo(){
 	  		this.$http({
 	        method: "post",
@@ -131,11 +137,23 @@
 	  	},
 	  	goLinks(url){
 	  		if(url == 'identify'){
-	  			this.$router.push({path:''+url,query:{from:'mine'}})
+	  			this.$http({
+		        method: "post",
+		        url: "/wechat/mini/user/identityInfo",
+		        data: this.$qs.stringify({
+		        	authToken:localStorage.getItem('authToken')
+		        })
+		      }).then((res) => {
+		      	let result = res.data.result;
+		      	this.$router.push({path:''+url,query:{from:'mine',headPortraitUrl:result.headPortraitUrl,identityImgUrl:result.identityImgUrl}})
+		    	}).catch((err) => {
+		      });
+	  			// this.$router.push({path:''+url,query:{from:'mine'}})
 	  		}else if(url == 'edit'){
-	  			this.$dialog.alert({
-	  				message:'即将上线'
-	  			})
+	  			this.developStatus = true;
+	  			// this.$dialog.alert({
+	  			// 	message:'即将上线'
+	  			// })
 	  			// this.$router.push({path:''+url,query:{from:'mine'}})
 	  		}else{
 	  			this.$router.push({path:''+url})

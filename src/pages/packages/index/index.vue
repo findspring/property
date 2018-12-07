@@ -147,11 +147,13 @@
 				
 			</div> -->
 		</div>
+		<v-develop v-show="developStatus" @closeDevelop="closeDevelop"></v-develop>
 		<nav-bar :page="0"></nav-bar>		
 	</div>
 </template>
 <script>
 	import { Marquee, MarqueeItem } from 'vux'
+	import vDevelop from "components/develop/develop";
 	import navBar from "components/navBar/navBar";
 	export default {
 	  name:'index',
@@ -179,10 +181,11 @@
 	      	{imgUrl:require('./../../../assets/images/item05.png'),content:'挪车服务'},
 	      	{imgUrl:require('./../../../assets/images/item06.png'),content:'投诉建议'},
 	      ],
+	      developStatus:false,
 	    }
 	  },
 	  components:{
-	    navBar,Marquee, MarqueeItem
+	    navBar,Marquee, MarqueeItem,vDevelop
 	  },
 	  mounted(){
       // laydate.render({
@@ -192,15 +195,20 @@
 	  	this.getProprietorList();
 	  },
 	  methods:{
+	  	closeDevelop(val){
+	  		this.developStatus = val;
+	  	},
 	  	goItem(){
-	  		this.$dialog.alert({
-	  			message:'即将上线'
-	  		})
+	  		this.developStatus = true;
+	  		// this.$dialog.alert({
+	  		// 	message:'即将上线'
+	  		// })
 	  	},
 	  	goNotice(i){
-	  		this.$dialog.alert({
-	  			message:'即将上线'
-	  		})
+	  		this.developStatus = true;
+	  		// this.$dialog.alert({
+	  		// 	message:'即将上线'
+	  		// })
 	  	},
 	  	formSubmit() {
 	      return false

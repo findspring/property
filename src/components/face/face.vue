@@ -9,7 +9,7 @@
 				<input type="file" name="face" id="face" @change="compressFace" accept="image/*" capture="camera" />
 				<img :src="src2" alt="" class="upload-bg">
 				<div id="localImag">
-					<img id="faceView" />
+					<img :src="srcPreview" id="faceView" />
 				</div>
 			</div>
 			<i class="common-icon identify-big" v-show="iconStatus"></i>
@@ -28,10 +28,32 @@
 	    }
 	  },
 	  props:{
-	  	'src2':{
+	  	src2:{
 	  		type:String,
 	  		default:''
+	  	},
+	  	srcPreview2:{
+	  		type:String,
+	  		default:''
+	  	},
+	  	iconStatus2:{
+	  		type:Boolean,
+	  		default:false,
 	  	}
+	  },
+	  watch:{
+	  	srcPreview2:{
+	  		handler(newVal){
+	  			this.srcPreview = newVal
+	  		},
+	  		immediate:true
+	  	},
+	  	iconStatus2:{
+	  		handler(newVal){
+	  			this.iconStatus = newVal
+	  		},
+	  		immediate:true
+	  	},
 	  },
 	  created(){
 	  	// this.showCapture();
@@ -56,7 +78,7 @@
 	  		faceView.src = '';
 	  		this.srcPreview ='';
 	  		this.iconStatus = false;
-	  		console.log(1,face.value)
+	  		// console.log(1,face.value)
 	  		this.$emit('faceBack',false,'')
 	  	},
 	  	compressFace(){
