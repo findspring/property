@@ -129,6 +129,7 @@
 			.van-icon
 				color #fff!important			
 			.van-nav-bar__title
+				font-weight 400!important
 				color #fff!important
 			.auditInfo-top-right
 				display flex
@@ -138,7 +139,7 @@
 					color #fff
 					margin-left .06rem
 		.auditInfo-wrapper
-			padding 50px .21rem 0 .21rem
+			padding 40px .21rem 0 .21rem
 			width 100%
 			.auditInfo-main
 				width 100%
@@ -152,7 +153,7 @@
 					left 50%
 					top 0
 					margin-left -.7rem
-					margin-top: -.7rem
+					margin-top: -.45rem
 					overflow hidden
 					text-align center
 					img
@@ -161,6 +162,7 @@
 						border-radius 50%
 						overflow hidden
 					h4
+						font-weight 400
 						font-size .43rem
 						color #4A4A4A
 						padding-top .2rem

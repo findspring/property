@@ -781,6 +781,7 @@
                         display: block
                         font-size: .2rem
                         line-height .28rem
+                        margin .04rem 0 .02rem 0
                       b
                         font-size: .3rem
                         line-height .42rem     

@@ -51,7 +51,7 @@ export default new Router({
       path: "/visitorsInfo",
       name:'visitorsInfo',
       meta: {
-        title: '审核详情',
+        title: '访客详情',
         flag: 'visitorsInfo',
         keepAlive: false,
       },

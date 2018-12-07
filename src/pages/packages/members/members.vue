@@ -1,13 +1,13 @@
 <template>
 	<div class="members">
-		<van-nav-bar title="家庭成员添加" left-arrow :fixed="true" :z-index="100" @click-left="onClickLeft">
-			<!-- <div slot="right" class="members-top-right">
+		<!-- <van-nav-bar title="家庭成员添加" left-arrow :fixed="true" :z-index="100" @click-left="onClickLeft">
+			<div slot="right" class="members-top-right">
 				<i class="common-icon icon-position02"></i>
 				<span>{{cityName}}</span>
-			</div> -->
-		</van-nav-bar>
+			</div>
+		</van-nav-bar> -->
 		<div class="members-tab">
-			<van-tabs v-model="active" color="#D45855" :line-width="64" sticky :offset-top="46" @change="changeTab">
+			<van-tabs v-model="active" color="#D45855" :line-width="64" sticky  @change="changeTab">
 			  <van-tab :title="titleName">
 			  	<div class="members-add">
 			  		<form>
@@ -252,7 +252,7 @@
 				margin-left .06rem
 		.members-tab
 			width 100%
-			padding-top 46px
+			// padding-top 46px
 			.van-hairline--top-bottom
 				&::after
 					border:none
