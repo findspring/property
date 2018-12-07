@@ -1,11 +1,11 @@
 <template>
 	<div class="identify clearfix">
-		<van-nav-bar title="身份认证" left-arrow :fixed="true" @click-left="onClickLeft">
-			<!-- <div slot="right" class="identify-top-right">
+		<!-- <van-nav-bar title="身份认证" left-arrow :fixed="true" @click-left="onClickLeft">
+			<div slot="right" class="identify-top-right">
 				<i class="common-icon icon-position02"></i>
 				<span>{{cityName}}</span>
-			</div> -->
-		</van-nav-bar>
+			</div>
+		</van-nav-bar> -->
 		<div class="identify-main">			
 			<div class="identify-idcard">
 				<h5>拍摄/上传身份证正面照</h5>
@@ -173,7 +173,7 @@
 				margin-left .06rem
 		.identify-main
 			width 100%
-			padding-top 50px
+			padding-top .34rem
 			text-align center
 			.identify-idcard
 				margin-bottom .34rem
