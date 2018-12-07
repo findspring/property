@@ -335,7 +335,7 @@
 					.red
 						color #D45855
 				.index-notices-right
-					width 4.86rem
+					width 4.8rem
 					margin-left .11rem
 					height .72rem
 					p

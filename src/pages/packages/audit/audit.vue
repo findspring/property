@@ -656,8 +656,10 @@
                   overflow hidden
                   li
                     float left
-                    width 50%
+                    width 60%
                     color #9B9B9B
+                    &:last-child
+                      width 40%
                     small
                       display: block
                       font-size: .2rem
@@ -682,7 +684,7 @@
                   overflow hidden
                   margin-right .37rem
               .audit-none-content
-                min-width 5rem
+                min-width 4.3rem
                 .audit-none-top
                   display flex
                   align-items center
@@ -698,8 +700,10 @@
                   width 100%
                   li
                     float left
-                    width 50%
+                    width 60%
                     color #9B9B9B
+                    &:last-child
+                      width 40%
                     small
                       display: block
                       font-size: .2rem
