@@ -325,7 +325,7 @@
           method: "post",
           url: "/wechat/officialAccount/community/proprietorList",
           data: _this.$qs.stringify({
-            'authToken':localStorage.getItem('authToken'),
+            // 'authToken':localStorage.getItem('authToken'),
             'pageNum':pageNum,
             'operateStatus':operateStatus,
             'pageSize':pageSize,
@@ -396,7 +396,7 @@
           method: "post",
           url: "/wechat/officialAccount/community/proprietorAudit",
           data: this.$qs.stringify({
-            'authToken':localStorage.getItem('authToken'),
+            // 'authToken':localStorage.getItem('authToken'),
             'auditSatus':auditSatus,
             'personnelIds':personnelIds
           })

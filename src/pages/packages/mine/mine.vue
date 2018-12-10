@@ -121,7 +121,7 @@
 	        method: "post",
 	        url: "/wechat/officialAccount/user/userInfo",
 	        data: this.$qs.stringify({
-	        	'authToken':localStorage.getItem('authToken')
+	        	// 'authToken':localStorage.getItem('authToken')
 	        })
 	      }).then((res) => {
 	      	let result = res.data.result;

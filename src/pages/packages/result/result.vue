@@ -1,11 +1,11 @@
 <template>
 	<div class="result clearfix">
-		<van-nav-bar title="身份认证" left-arrow :fixed="true" @click-left="onClickLeft">
-			<!-- <div slot="right" class="result-top-right">
+		<!-- <van-nav-bar title="身份认证" left-arrow :fixed="true" @click-left="onClickLeft">
+			<div slot="right" class="result-top-right">
 				<i class="common-icon icon-position02"></i>
 				<span>{{cityName}}</span>
-			</div> -->
-		</van-nav-bar>
+			</div>
+		</van-nav-bar> -->
 		<div class="result-main">
 			<!-- top -->
 			<div class="result-top">
@@ -89,14 +89,14 @@
 	  components:{
 	  	PopupPicker
 	  },	  
-	  beforeRouteLeave(to, from, next) {
-	  	if(this.keepStatus == true){
-	  		to.meta.keepAlive = true;  
-	  	}else{
-	  		to.meta.keepAlive = false;   
-	  	}         
-      next();
-    },
+	  // beforeRouteLeave(to, from, next) {
+	  // 	if(this.keepStatus == true){
+	  // 		to.meta.keepAlive = true;  
+	  // 	}else{
+	  // 		to.meta.keepAlive = false;   
+	  // 	}         
+   //    next();
+   //  },
 	  mounted(){
 	  	this.getIdentityInfo();
 	  	// this.faceUrl = this.$route.query.faceUrl
@@ -112,14 +112,14 @@
 	  		this.sex = val[0];
 	  	},
 	  	getIdentityInfo(){
-	  		let authToken = localStorage.getItem("authToken")
+	  		// let authToken = localStorage.getItem("authToken")
 	  		let familyId = this.$route.query.familyId;
 	  		this.$http({
 	        method: "post",
-	        url: "/wechat/mini/user/identityInfo",
+	        url: "/wechat/officialAccount/user/userInfo",
 	        data: this.$qs.stringify({
-	        	'authToken':authToken,
-	        	familyId:familyId || ''
+	        	// 'authToken':authToken,
+	        	// familyId:familyId || ''
 	        })
 	      }).then((res) => {
 	      	let result = res.data.result;
@@ -133,19 +133,19 @@
 	    	}).catch((err) => {
 	      });
 	  	},
-	  	onClickLeft(){
-	  		this.keepStatus = true
-	  		this.$router.go(-1);
-	  	},
+	  	// onClickLeft(){
+	  	// 	this.keepStatus = true
+	  	// 	this.$router.go(-1);
+	  	// },
 	  	submit(){
 	  		this.$validator.validateAll().then((result) => {
         if (result) {
-        	let authToken = localStorage.getItem("authToken")
+        	// let authToken = localStorage.getItem("authToken")
         	this.$http({
 		        method: "post",
 		        url: "/wechat/mini/user/identityConfirm",
 		        data: this.$qs.stringify({
-		        	'authToken':authToken,
+		        	// 'authToken':authToken,
 		        	'cardNum':this.idNum,
 		        	'address':this.address,
 		        	'gender':this.sex,
@@ -189,7 +189,7 @@
 				color #A6A0A0
 				margin-left .06rem
 		.result-main
-			padding 50px .36rem 0 .36rem 
+			padding .34rem .36rem 0 .36rem 
 			width 100%
 			.result-top
 				p

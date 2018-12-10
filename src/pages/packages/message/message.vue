@@ -70,7 +70,7 @@
           method: "post",
           url: "/wechat/officialAccount/user/msgList",
           data: _this.$qs.stringify({
-            'authToken':localStorage.getItem('authToken'),
+            // 'authToken':localStorage.getItem('authToken'),
             'pageNum':pageNum,
             // 'operateStatus':operateStatus,
             'pageSize':pageSize,

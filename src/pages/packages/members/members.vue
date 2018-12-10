@@ -167,7 +167,7 @@
 			        method: "post",
 			        url: "/wechat/officialAccount/user/saveFfmily",
 			        data: this.$qs.stringify({
-			        	'authToken':localStorage.getItem('authToken'),
+			        	// 'authToken':localStorage.getItem('authToken'),
 			        	// 'userType':1,
 			        	'userName':this.realname,
 			        	'familyTies':this.relationShip,
@@ -180,7 +180,7 @@
 					        method: "post",
 					        url: "/wechat/mini/user/identityInfo",
 					        data: this.$qs.stringify({
-					        	authToken:localStorage.getItem('authToken'),
+					        	// authToken:localStorage.getItem('authToken'),
 					        	familyId:this.familyId
 					        })
 					      }).then((res) => {

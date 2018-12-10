@@ -16,7 +16,7 @@ export default {
     }
   },
   created(){
-    this.getAccountLogin();
+    // this.getAccountLogin();
   },
   methods:{
     getAccountLogin(){
@@ -34,7 +34,7 @@ export default {
       }).then((res) => {
         if(res.data.result && res.data.result.authToken){
           let authToken = res.data.result.authToken;
-          localStorage.setItem("authToken", authToken)
+          // localStorage.setItem("authToken", authToken)
         }
       }).catch((err) => {
       });

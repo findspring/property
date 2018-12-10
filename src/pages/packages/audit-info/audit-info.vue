@@ -94,7 +94,7 @@
           method: "post",
           url: "/wechat/officialAccount/community/proprietorAudit",
           data: this.$qs.stringify({
-            'authToken':localStorage.getItem('authToken'),
+            // 'authToken':localStorage.getItem('authToken'),
             'auditSatus':auditSatus,
             'personnelIds':personnelIds,
             'auditOpinion':this.auditOpinion

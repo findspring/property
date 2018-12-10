@@ -223,7 +223,7 @@
           method: "post",
           url: "/wechat/officialAccount/appointment/appointmentList",
           data: _this.$qs.stringify({
-            'authToken':localStorage.getItem('authToken'),
+            // 'authToken':localStorage.getItem('authToken'),
             'pageNum':pageNum,
             'operateStatus':operateStatus,
             'pageSize':pageSize,
@@ -275,7 +275,7 @@
           method: "post",
           url: "/wechat/officialAccount/appointment/appointmentAudit",
           data: this.$qs.stringify({
-            'authToken':localStorage.getItem('authToken'),
+            // 'authToken':localStorage.getItem('authToken'),
             'auditSatus':auditSatus,
           })
         }).then((res) => {

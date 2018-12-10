@@ -33,7 +33,7 @@ export default new Router({
       	title:'阿尔法智汇',
       	flag:'index',
       	belongToGroup:'阿尔法智汇',
-        keepAlive: true,
+        keepAlive: false,
       },
       component:index
     },
@@ -93,7 +93,7 @@ export default new Router({
       meta: {
         title: '我的',
         flag: 'mine',
-        keepAlive: true,
+        keepAlive: false,
       },
       component: mine
     },
@@ -163,7 +163,7 @@ export default new Router({
       meta: {
         title: '身份认证',
         flag: 'result',
-        keepAlive: true,
+        keepAlive: false,
       },
       component: result
     },
