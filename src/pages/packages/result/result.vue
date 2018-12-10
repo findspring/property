@@ -116,7 +116,7 @@
 	  		let familyId = this.$route.query.familyId;
 	  		this.$http({
 	        method: "post",
-	        url: "/wechat/officialAccount/user/userInfo",
+	        url: "/wechat/officialAccount/user/info",
 	        data: this.$qs.stringify({
 	        	// 'authToken':authToken,
 	        	// familyId:familyId || ''
