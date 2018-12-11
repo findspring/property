@@ -192,7 +192,7 @@
       //     elem: '#test1',
       //     range: true
       // });
-	  	this.getProprietorList();
+	  	this.getAccountLogin();
 	  },
 	  methods:{
 	  	closeDevelop(val){
@@ -220,6 +220,22 @@
 	    search(){
 
 	    }, 
+	    getAccountLogin(){
+	      this.$http({
+	        method: "post",
+	        url: "/wechat/officialAccount/user/accountLogin",
+	        data: this.$qs.stringify({
+	        })
+	      }).then((res) => {
+	        let isRegister = res.data.result.isRegister;
+	        if(isRegister == 1){
+	          return
+	        }else if(isRegister == 2){
+	          location.href = "https://www.alfyun.cn/login";
+	        }
+	      }).catch((err) => {
+	      });
+	    },
 	  	getProprietorList(){ //业主列表接口
 	  		let day = new Date();
 	  		let cityCode = this.cityCode;

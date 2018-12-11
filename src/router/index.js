@@ -53,7 +53,7 @@ export default new Router({
       name:'manage',
       meta: {
         title: '访客预约',
-        flag: 'visitors',
+        flag: 'manage',
         keepAlive: true,
       },
       component: manage
