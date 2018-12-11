@@ -89,14 +89,14 @@
 	  components:{
 	  	PopupPicker
 	  },	  
-	  // beforeRouteLeave(to, from, next) {
-	  // 	if(this.keepStatus == true){
-	  // 		to.meta.keepAlive = true;  
-	  // 	}else{
-	  // 		to.meta.keepAlive = false;   
-	  // 	}         
-   //    next();
-   //  },
+	  beforeRouteLeave(to, from, next) {
+	  	if(this.keepStatus == true){
+	  		to.meta.keepAlive = true;  
+	  	}else{
+	  		to.meta.keepAlive = false;   
+	  	}         
+      next();
+    },
 	  mounted(){
 	  	this.getIdentityInfo();
 	  	// this.faceUrl = this.$route.query.faceUrl
@@ -167,6 +167,7 @@
 	  	},
 	  	goIndex(){
 	  		if(this.$route.query.from == 'members'){
+	  			this.keepStatus = false
 	  			this.$router.push({path:'/members',query:{from:'members'}})
 	  		}else if(this.$route.query.from == 'mine'){
 	  			this.$router.push({path:'/mine'})

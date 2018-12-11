@@ -16,7 +16,7 @@ export default {
     }
   },
   created(){
-    // this.getAccountLogin();
+    this.getAccountLogin();
   },
   methods:{
     getAccountLogin(){
@@ -24,18 +24,24 @@ export default {
       this.$http({
         method: "post",
         // url: "/pub/pubBase/communityList",
-        headers:{
-        'Content-type': 'text/plain'
-      },
+        // headers:{
+        //   'Content-type': 'text/plain'
+        // },
         url: "/wechat/officialAccount/user/accountLogin",
         data: this.$qs.stringify({
           // 'code':code
         })
       }).then((res) => {
-        if(res.data.result && res.data.result.authToken){
-          let authToken = res.data.result.authToken;
-          // localStorage.setItem("authToken", authToken)
+        let isRegister = res.data.result.isRegister;
+        if(isRegister == 1){
+          location.href = "https://www.alfyun.cn/index";
+        }else if(isRegister == 2){
+          location.href = "https://www.alfyun.cn/login";
         }
+        // if(res.data.result && res.data.result.authToken){
+        //   let authToken = res.data.result.authToken;
+        //   // localStorage.setItem("authToken", authToken)
+        // }
       }).catch((err) => {
       });
     },

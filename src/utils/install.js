@@ -20,12 +20,15 @@ axios.interceptors.response.use((res) => {
 		case '8888':
 			location.href = res.data.errMsg;
 			return 
+		case '8889':
+			location.href = res.data.errMsg;
+			return 
 		case '0':
 			return res
 		case '9000':
 			return _this.$vux.toast.text(res.data.errMsg,'middle')
 		default:
-			// statements_def
+			return _this.$vux.toast.text(res.data.errMsg,'middle')
 			break;
 	}
 },(err) => {

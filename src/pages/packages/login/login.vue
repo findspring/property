@@ -209,7 +209,11 @@ export default {
 		        	'owerNum':this.house,
 		        })
 		      }).then((res) => {
-		      	this.$router.push({path:'/identify'});
+		      	if(res.data.errCode == '0'){
+		      		this.$router.push({path:'/identify'});
+		      	}else{
+		      		return false
+		      	}		      	
 		      	// this.$router.push({path:'/identify',query:{owerNum:this.house}});
 		    	}).catch((err) => {
 		      });

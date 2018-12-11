@@ -94,8 +94,8 @@
 	  data () {
 	    return {
 	    	// cityName:localStorage.getItem('cityName') || '',
-	    	src1:require('./../../../assets/images/upidcard.png'),
-	    	src2:require('./../../../assets/images/upface.png'),
+	    	// src1:require('./../../../assets/images/upidcard.png'),
+	    	// src2:require('./../../../assets/images/upface.png'),
 	    	manImg:require('./../../../assets/images/man/1.png'),
 	    	womenImg:require('./../../../assets/images/women/1.png'),
 	    	active:1,
@@ -110,6 +110,7 @@
 	    	familyArr:[],
 	    	titleName:'添加成员',
 	    	familyId:'',
+	    	keepStatus:false,
 	    }
 	  },
 	  components:{
@@ -119,13 +120,21 @@
 	  	this.getMemberList();
 	  },
 	  beforeRouteLeave(to, from, next) {
-      // 设置下一个路由的 meta
-      to.meta.keepAlive = false; // 跳转到 A 时让 A 不缓存，即刷新
+	  	if(this.keepStatus == true){
+	  		to.meta.keepAlive = true;  
+	  	}else{
+	  		to.meta.keepAlive = false;   
+	  	}         
       next();
     },
+	  // beforeRouteLeave(to, from, next) {
+   //    // 设置下一个路由的 meta
+   //    to.meta.keepAlive = false; // 跳转到 A 时让 A 不缓存，即刷新
+   //    next();
+   //  },
 	  methods:{
 	  	deleteMember(idCardNo,index){
-	  		console.log(idCardNo)
+	  		// console.log(idCardNo)
 	  		this.$http({
 	        method: "post",
 	        url: "/wechat/officialAccount/user/familyDetele",
@@ -188,11 +197,13 @@
 					        })
 					      }).then((res) => {
 					      	let result = res.data.result;
+					      	this.keepStatus == false;
 					      	this.$router.push({path:'/identify',query:{from:'members',familyId:this.familyId,headPortraitUrl:result.headPortraitUrl,identityImgUrl:result.identityImgUrl}})
 					    	}).catch((err) => {
 					      });
 			      		// this.$router.push({path:'/identify',query:{from:'members',familyId:this.familyId}})
 			      	}else if(this.titleName == "添加成员"){
+			      		this.keepStatus == false;
 			      		this.$router.push({path:'/identify',query:{from:'members'}})
 			      	}			      	
 			      	// this.$router.push({path:'/identify'});

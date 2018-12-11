@@ -56,15 +56,16 @@
 	    	faceFormData:'',
 	    	uploadFace:false,
 	    	uploadPhoto:false,
+	    	keepStatus:false,
 	    	// iconStatus:false,
 	    	// srcPreview:''
 	    	// owerNum:'',
 	    }
 	  },	  
-	  beforeRouteLeave(to, from, next) {
-      to.meta.keepAlive = true;      
-      next();
-    },
+	  // beforeRouteLeave(to, from, next) {
+   //    to.meta.keepAlive = true;      
+   //    next();
+   //  },
 	  components:{
 	  	vPhoto,vFace
 	  },
@@ -114,9 +115,19 @@
 	        data:formData 
 	      }).then(Response => {
 	      	if(type == 1){
-	      		this.uploadPhoto = true;
+
+	      		if(Response.data.errCode == '0'){
+	      			this.uploadPhoto = true;
+	      		}else{
+	      			this.uploadPhoto = false;
+	      		}
 	      	}else if(type == 2){
-	      		this.uploadFace = true;
+	      		if(Response.data.errCode == '0'){
+	      			this.uploadFace = true;
+	      		}else{
+	      			this.uploadFace = false;
+	      		}
+	      		// this.uploadFace = true;
 	      	}
 	      	if(this.uploadFace && this.uploadPhoto){
 	  				this.goResult();
