@@ -54,7 +54,7 @@
                     </div>
                     <p>预约电话：{{val.phone}}</p>
                     <p>预约时间：{{val.appointmentTime}}</p>
-                    <p>拜访事由：{{val.reasons}}</p>
+                    <p>拜访小区：{{val.reasons}}</p>
                   </div>
                 </div>
               </van-list>
@@ -75,7 +75,7 @@
                 @load="onLoad(2)"
               >
                 <!-- <transition-group name="animate" tag="p"> -->
-                  <div class="manage-none-item" v-for="(item,index) in noneArr" :key="index" @click="goInfo(item.id)">
+                  <div class="manage-none-item" v-for="(item,index) in noneArr" :key="index">
                     <div class="manage-none-img">
                       <img :src="item.avatarUrl" alt="">
                     </div>              
@@ -89,7 +89,7 @@
                       </div>
                       <p>预约电话：{{item.phone}}</p>
                       <p>预约时间：{{item.appointmentTime}}</p>
-                      <p>拜访事由：{{item.reasons}}</p>
+                      <p>拜访小区：{{item.reasons}}</p>
                     </div>
                   </div> 
                 <!-- </transition-group> -->
@@ -111,7 +111,7 @@
                 @load="onLoad(3)"
               >
                 <!-- <transition-group name="animate" tag="p"> -->
-                  <div class="manage-month-item" v-for="(item,index) in monthArr" :key="index" @click="goInfo(item.id)">
+                  <div class="manage-month-item" v-for="(item,index) in monthArr" :key="index">
                     <div class="manage-month-img">
                       <img :src="item.avatarUrl" alt="">
                     </div>              
@@ -125,7 +125,7 @@
                       </div>
                       <p>预约电话：{{item.phone}}</p>
                       <p>预约时间：{{item.appointmentTime}}</p>
-                      <p>拜访事由：{{item.reasons}}</p>
+                      <p>拜访小区：{{item.reasons}}</p>
                     </div>
                   </div> 
                 <!-- </transition-group> -->
@@ -139,7 +139,7 @@
         </div>       
       </div>
     </div>
-    <nav-bar :page="2"></nav-bar>
+    <nav-bar :page="1"></nav-bar>
   </div>
 </template>
 
@@ -186,15 +186,14 @@
             this.keySearch()
           }
       });
-      this.tab(0); 
+      this.getVistorsList(1,1)
+      // this.tab(0); 
     },
     methods:{
       formSubmit() {
         return false
       },
       clearAll(){
-        // console.log(this.date.substring(0,10))
-        // console.log(this.date.substring(this.date.length - 10))
         this.clearStatus = false;
         this.searchVal = '';
         this.date = '';
@@ -344,7 +343,7 @@
       tab(index) {
         let time = new Date().toLocaleDateString();
         let test = this.dateFormat(time)
-        console.log(test);
+        // console.log(test);
         this.num = index;
         this.pageNum = 1;
         this.pageNum1 = 1;

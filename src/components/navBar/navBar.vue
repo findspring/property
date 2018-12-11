@@ -55,8 +55,8 @@ export default {
         },
         {
           title: "访客",
-          hide:true,
-          url: "/visitors",
+          hide:false,
+          url: "/manage",
           iconClass: "icon-visitors",
           iconClassActive:"icon-visitors-on"
         },

@@ -220,19 +220,35 @@
 	    search(){
 
 	    }, 
+	    // getAccountLogin(){
+	    //   this.$http({
+	    //     method: "post",
+	    //     url: "/wechat/officialAccount/user/accountLogin",
+	    //     data: this.$qs.stringify({
+	    //     })
+	    //   }).then((res) => {
+	    //     let isRegister = res.data.result.isRegister;
+	    //     if(isRegister == 1){
+	    //       return
+	    //     }else if(isRegister == 2){
+	    //       location.href = "https://www.alfyun.cn/login";
+	    //     }
+	    //   }).catch((err) => {
+	    //   });
+	    // },
 	    getAccountLogin(){
 	      this.$http({
 	        method: "post",
-	        url: "/wechat/officialAccount/user/accountLogin",
+	        url: "/wechat/officialAccount/user/familyTiesList",
 	        data: this.$qs.stringify({
 	        })
 	      }).then((res) => {
-	        let isRegister = res.data.result.isRegister;
-	        if(isRegister == 1){
-	          return
-	        }else if(isRegister == 2){
-	          location.href = "https://www.alfyun.cn/login";
-	        }
+	        // let isRegister = res.data.result.isRegister;
+	        // if(isRegister == 1){
+	        //   return
+	        // }else if(isRegister == 2){
+	        //   location.href = "https://www.alfyun.cn/login";
+	        // }
 	      }).catch((err) => {
 	      });
 	    },
