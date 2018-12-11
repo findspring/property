@@ -76,11 +76,11 @@
 			</div>
 			<!-- 通知 -->
 			<div class="index-notices">
-				<div class="index-notices-left fl">
+				<div class="index-notices-left">
 					<h2>小区</h2>
 					<h2 class="red">头条</h2>
 				</div>
-				<div class="index-notices-right fl">
+				<div class="index-notices-right">
 					<marquee>
 	          <marquee-item v-for="i in 3" :key="i" @click.native="goNotice(i)">
 	          	<p class="line-ellipsis02">{{(i)}}.大家好！由于节能施工改造，二期地源热泵机房于明天（12月4日）上午8点30分到8点30分到……</p>
@@ -323,12 +323,20 @@
 				border 1px solid #D8D8D8
 				margin .32rem 0 .26rem 0
 				padding .42rem .41rem .29rem .47rem
-				// display flex
-				// align-items center
+				display flex
+				align-items center
+				justify-content space-between
 				.index-notices-left
+					min-width .72rem
+					height .72rem
 					padding-right .2rem
 					border-right 1px solid #D8D8D8
+					// display flex
+					// align-items center
+					// justify-content center
+					// flex-direction column
 					h2
+						min-width .72rem
 						font-size .32rem
 						color #333
 						line-height .36rem

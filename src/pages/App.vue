@@ -20,7 +20,7 @@ export default {
   },
   methods:{
     getAccountLogin(){
-      let code = new Date().getTime();
+      // let code = new Date().getTime();
       this.$http({
         method: "post",
         // url: "/pub/pubBase/communityList",
@@ -29,7 +29,7 @@ export default {
       },
         url: "/wechat/officialAccount/user/accountLogin",
         data: this.$qs.stringify({
-          'code':code
+          // 'code':code
         })
       }).then((res) => {
         if(res.data.result && res.data.result.authToken){

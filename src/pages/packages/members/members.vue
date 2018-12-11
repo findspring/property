@@ -54,7 +54,7 @@
 			  </van-tab>
 			  <van-tab title="我的家庭">
 			  	<div class="members-family">
-			  		<swipeout>
+			  		<swipeout v-if="familyArr&&familyArr.length">
 				      <swipeout-item  class="members-family-item" transition-mode="follow" v-for="(item,index) in familyArr" :key="index">
 				        <div slot="right-menu">
 				          <swipeout-button type="warn" class="members-delete" @click.native="deleteMember(item.idCardNo,index)">删除</swipeout-button>
@@ -76,7 +76,7 @@
 				        </div>
 				      </swipeout-item>
 				    </swipeout>
-				    <no-content v-if="!familyArr.length"></no-content>
+				    <no-content v-else></no-content>
 			  		<!-- <div class="members-family-shadow"></div> -->
 			  	</div>
 			  </van-tab>
@@ -151,13 +151,16 @@
 	  		this.idNum = item.idCardNo
 	  	},
 	  	changeTab(index){
-	  		if(index == 1 && this.titleName == "编辑成员"){
-	  			this.titleName = "添加成员"
-	  			this.realname = ''
-		  		this.houseNum = ''
-		  		this.relationShip = ''
-		  		this.value1 = ['父母']
-		  		this.idNum = ''
+	  		if(index == 1){
+	  			// this.getMemberList();
+	  			if(this.titleName == "编辑成员"){
+	  				this.titleName = "添加成员"
+		  			this.realname = ''
+			  		this.houseNum = ''
+			  		this.relationShip = ''
+			  		this.value1 = ['父母']
+			  		this.idNum = ''
+	  			}		  			
 	  		}
 	  	},
 	  	nextStep(){

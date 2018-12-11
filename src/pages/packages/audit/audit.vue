@@ -238,6 +238,9 @@
       // this.getProprietorList(3,1);
     },
     methods:{
+      formSubmit() {
+        return false
+      },
       isCheckedAll(){ //判断是否全选
         if(this.checkedAll == false){
           Object.keys(this.checkedObj).forEach((item,index) => {

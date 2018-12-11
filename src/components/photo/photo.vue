@@ -7,7 +7,7 @@
 			<i class="common-icon identify-delete" @click="clearAll" v-show="iconStatus"></i>
 			<div class="photo-btn">
 				<input type="file" name="file_head" id="file_head" @change="compressImg" accept="image/*" capture="camera" />
-				<img :src="src1" alt="" class="upload-bg">
+				<img src="../../assets/images/upidcard.png" alt="" class="upload-bg">
 				<div id="localImag">
 					<img :src="srcPreview" id="preview" />
 				</div>
@@ -25,13 +25,14 @@
 	    	srcPreview:'',
 	    	previewStatus:true,
 	    	iconStatus:false,
+	    	// src1:require('../../assets/images/upidcard.png'),
 	    }
 	  },
 	  props:{
-	  	src1:{
-	  		type:String,
-	  		default:''
-	  	},
+	  	// src1:{
+	  	// 	type:String,
+	  	// 	default:''
+	  	// },
 	  	srcPreview1:{
 	  		type:String,
 	  		default:''

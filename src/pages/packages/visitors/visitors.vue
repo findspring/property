@@ -151,6 +151,9 @@
       // this.getVistorsList(2,1);  
     },
     methods:{
+      formSubmit() {
+        return false
+      },
       clearAll(){
         // console.log(this.date.substring(0,10))
         // console.log(this.date.substring(this.date.length - 10))

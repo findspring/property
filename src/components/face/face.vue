@@ -7,7 +7,7 @@
 			<i class="common-icon identify-delete" @click="clearAll" v-show="iconStatus"></i>
 			<div class="face-btn">
 				<input type="file" name="face" id="face" @change="compressFace" accept="image/*" capture="camera" />
-				<img :src="src2" alt="" class="upload-bg">
+				<img src="../../assets/images/upface.png" alt="" class="upload-bg">
 				<div id="localImag">
 					<img :src="srcPreview" id="faceView" />
 				</div>
@@ -25,13 +25,14 @@
 	    	srcPreview:'',
 	    	previewStatus:true,
 	    	iconStatus:false,
+	    	// src2:require('../../assets/images/upface.png'),
 	    }
 	  },
 	  props:{
-	  	src2:{
-	  		type:String,
-	  		default:''
-	  	},
+	  	// src2:{
+	  	// 	type:String,
+	  	// 	default:''
+	  	// },
 	  	srcPreview2:{
 	  		type:String,
 	  		default:''
