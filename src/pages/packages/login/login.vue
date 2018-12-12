@@ -27,8 +27,8 @@
 		      <i class="icon login-icon icon-code"></i>
 		      <input v-validate ="'required|valcode'" type="number" id="valcode" name="验证码" placeholder="验证码" readonly="readonly" v-if="disabled" v-model="valcode"  @click="canInput">
 		      <input v-validate ="'required|valcode'" type="text" id="valcode" name="验证码" placeholder="验证码" v-else v-model="valcode">
-		      <div class="login-code fr" v-if="codeStatus"  @click="sendCode">获取验证码</div>
-					<div class="login-code fr" v-else>{{time}}s后重新获取</div>	
+		      <div class="login-code fr" v-if="codeStatus"  @click="sendCode">发送验证码</div>
+					<div class="login-code fr" v-else>{{time}}s</div>	
 		    </div>
 		    <span v-show="errors.has('验证码')">{{ errors.first('验证码')}}</span>
 			</div>			
@@ -44,12 +44,19 @@
 		    </div>
 		    <span v-show="errors.has('社区地址')">{{ errors.first('社区地址')}}</span>
 			</div>
-			<div class="login-item">
+			<div class="login-item" v-if="!propertyStatus">
 				<div class="login-top">
 		      <i class="icon login-icon icon-house"></i>
 		      <input v-validate ="'required|house'" type="text" id="house" name="门牌号码" placeholder="门牌号码" v-model="house" >
 		    </div>
 		    <span v-show="errors.has('门牌号码')">{{ errors.first('门牌号码')}}</span>
+			</div>
+			<div class="login-item" v-else>
+				<div class="login-top">
+		      <i class="icon login-icon icon-house"></i>
+		      <input v-validate ="'required|house'" type="text" id="house" name="员工工号" placeholder="员工工号" v-model="house" >
+		    </div>
+		    <span v-show="errors.has('员工工号')">{{ errors.first('员工工号')}}</span>
 			</div>	
 			<div class="login-btn bg-gray" v-if="loginStatus" @click="validateBeforeSubmit">下一步</div>
 			<div class="login-btn" v-else>下一步</div>
@@ -76,13 +83,20 @@ export default {
     	value1: [],
     	addressList: [],
     	disabled:true,
-    	select:''
+    	select:'',
+    	propertyStatus:false
     }
   },
   components:{
   	PopupPicker
   },
   mounted(){
+  	let role = localStorage.getItem("role")
+    if(role == 'property'){
+      this.propertyStatus = true
+    }else if(role == 'owner'){
+      this.propertyStatus = false
+    }
   	this.getCommunityList();
   },
   methods:{
@@ -108,7 +122,7 @@ export default {
   		this.addressStatus = false
   	},
   	chooseCommunity(val){
-  		console.log(val);
+  		// console.log(val);
   		this.address = val;
   		this.addressStatus = false
   	},
@@ -197,16 +211,17 @@ export default {
     },
     validateBeforeSubmit () {
       this.$validator.validateAll().then((result) => {
-        if (result) {
+        if (result) { 
         	this.$http({
 		        method: "post",
 		        url: "/wechat/officialAccount/user/phoneRegister",
 		        data: this.$qs.stringify({
-		        	'userType':1,
+		        	'userType':this.propertyStatus?5:1,
 		        	'verCode':this.valcode,
 		        	'communityId':this.select,
 		        	'phone':this.phone,
-		        	'owerNum':this.house,
+		        	'owerNum':this.propertyStatus?'':this.house,
+		        	'jobNum':this.propertyStatus?this.house:'',
 		        })
 		      }).then((res) => {
 		      	if(res.data.errCode == '0'){
@@ -339,10 +354,13 @@ export default {
 						top 0
 						z-index 10
 						font-size: .28rem
-						width 2.24rem
+						width 2.6rem
 						text-align center
-						background #D45855
-						color #FBFBFB
+						// margin-right .5rem
+						// background #D45855
+						color #D45855
+						// background #D45855
+						// color #FBFBFB
 						cursor pointer
 				span
 					font-size .24rem

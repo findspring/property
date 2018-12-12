@@ -90,8 +90,8 @@
           return;
         }
         lrz(compressFile,{
-        	"quality":1,
-          "width": 600
+        	"quality":0.7,
+          "width": 300
         }).then(function(rst){
         	// console.log(rst)
         	// rst.attachType = picType;

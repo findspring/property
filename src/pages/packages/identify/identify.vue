@@ -114,22 +114,25 @@
 	        url: "/pub/image/identityGather",
 	        data:formData 
 	      }).then(Response => {
+	      	this.$vux.loading.show()
 	      	if(type == 1){
-
 	      		if(Response.data.errCode == '0'){
 	      			this.uploadPhoto = true;
 	      		}else{
+	      			this.$vux.loading.hide()
 	      			this.uploadPhoto = false;
 	      		}
 	      	}else if(type == 2){
 	      		if(Response.data.errCode == '0'){
 	      			this.uploadFace = true;
 	      		}else{
+	      			this.$vux.loading.hide()
 	      			this.uploadFace = false;
 	      		}
 	      		// this.uploadFace = true;
 	      	}
 	      	if(this.uploadFace && this.uploadPhoto){
+	      		this.$vux.loading.hide()
 	  				this.goResult();
 	  			}
           let result = Response.data.result;

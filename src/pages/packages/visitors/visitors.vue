@@ -17,7 +17,7 @@
         </div>          
       </div>    
     </div>
-    <div class="visitors-gray"></div>
+    <!-- <div class="visitors-gray"></div> -->
     <div class="visitors-tab">
       <div class="visitors-tab-top">
         <ul>
@@ -214,7 +214,7 @@
       //获取访客审核数据
       getVistorsList(operateStatus,pageNum,val,time){
         let _this = this;
-        let pageSize = 5;
+        let pageSize = 10;
         let startDate,endDate;
         if(time){
           startDate = this.dateFormat(_this.date.substring(0,10));
