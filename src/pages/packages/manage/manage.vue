@@ -186,7 +186,7 @@
             this.keySearch()
           }
       });
-      this.getVistorsList(1,1)
+      this.getVistorsList(1,1,'today')
       // this.tab(0); 
     },
     methods:{
@@ -199,7 +199,7 @@
         this.date = '';
       },
       keySearch(){
-        this.getVistorsList((this.num+1),1,this.searchVal,this.date);
+        this.getVistorsList((this.num+1),1,'all',this.searchVal,this.date);
       },
       searchFocus(){
         this.clearStatus = true;
@@ -211,19 +211,19 @@
         if(type == 1){
           // 异步更新数据
           setTimeout(() => {
-            this.getVistorsList(1,this.pageNum);
+            this.getVistorsList(1,this.pageNum,'today');
             // 加载状态结束
             this.loading = false;
           }, 1000);
         }else if(type == 2){
           setTimeout(() => {
-            this.getVistorsList(2,this.pageNum1);
+            this.getVistorsList(2,this.pageNum1,'week');
             // 加载状态结束
             this.loading1 = false;
           }, 1000);
         }else if(type == 3){
           setTimeout(() => {
-            this.getVistorsList(3,this.pageNum2);
+            this.getVistorsList(3,this.pageNum2,'month');
             // 加载状态结束
             this.loading2 = false;
           }, 1000);
@@ -233,7 +233,7 @@
         if(type == 1){
           setTimeout(() => { 
             this.pageNum = 1;
-            this.getVistorsList(1,this.pageNum);
+            this.getVistorsList(1,this.pageNum,'today');
             this.loading = false;
             this.finished = false;
             this.$toast({message:'刷新成功',duration:600});
@@ -242,7 +242,7 @@
         }else if(type == 2){
           setTimeout(() => { 
             this.pageNum1 = 1;
-            this.getVistorsList(2,this.pageNum1);
+            this.getVistorsList(2,this.pageNum1,'week');
             this.loading1 = false;
             this.finished1 = false;
             this.$toast({message:'刷新成功',duration:600});
@@ -251,7 +251,7 @@
         }else if(type == 3){
           setTimeout(() => { 
             this.pageNum2 = 1;
-            this.getVistorsList(3,this.pageNum2);
+            this.getVistorsList(3,this.pageNum2,'month');
             this.loading2 = false;
             this.finished2 = false;
             this.$toast({message:'刷新成功',duration:600});
@@ -260,17 +260,18 @@
         }
       },
       //获取访客审核数据
-      getVistorsList(operateStatus,pageNum,val,time){
+      getVistorsList(operateStatus,pageNum,key,val,time){
         let _this = this;
         let pageSize = 5;
         let startDate,endDate;
         if(time){
-          startDate = _this.date.substring(0,10);
-          endDate = _this.date.substring(_this.date.length - 10);
+          startDate = this.dateFormat(_this.date.substring(0,10));
+          endDate = this.dateFormat(_this.date.substring(_this.date.length - 10));
         }else{
           startDate = '';
           endDate = ''
         }
+        // console.log(11,startDate)
         _this.$http({
           method: "post",
           url: "/wechat/officialAccount/appointment/appointmentList",
@@ -281,7 +282,8 @@
             'pageSize':pageSize,
             'startDate':startDate,
             'endDate':endDate,
-            'searchTxt':val
+            'searchTxt':val,
+            search:key
           })
         }).then((res) => {
           let result = res.data.result;
@@ -338,12 +340,13 @@
         }); 
       },
       dateFormat(date) {
-        return init.dateFormat(new Date(date.replace(/-/g,'/')),"yyyy-MM-dd");
+        return init.dateFormat(new Date(date.replace(/-/g,'/')),"yyyyMMdd");
       },
       tab(index) {
-        let time = new Date().toLocaleDateString();
-        let test = this.dateFormat(time)
-        // console.log(test);
+        // let time = new Date().toLocaleDateString();
+        // let nowDay = this.dateFormat(time);
+        // let starDay = nowDay.substring(0,nowDay.length-2)+'01';
+        // console.log(starDay);
         this.num = index;
         this.pageNum = 1;
         this.pageNum1 = 1;
@@ -351,7 +354,14 @@
         this.finished = false;
         this.finished1 = false;
         this.finished2 = false;
-        this.getVistorsList(this.num+1,1);
+        if(index == 0){
+          this.getVistorsList(1,1,'today')
+        }else if(index == 1){
+          this.getVistorsList(2,1,'week')
+        }else if(index == 2){
+          this.getVistorsList(3,1,'month')
+        }
+        ;
       },
       goback(){
         this.$router.go(-1);

@@ -167,6 +167,7 @@
 </template>
 
 <script>
+  import init from 'utils/index'
   import navBar from "components/navBar/navBar";
   export default {
     name: 'audit',
@@ -227,6 +228,7 @@
         range: true,
         done: (value) => {
           this.date = value
+          this.keySearch();
         }
       });
       // let back = this.$route.query.back;
@@ -318,8 +320,8 @@
         let pageSize = 10;
         let startDate,endDate;
         if(time){
-          startDate = _this.date.substring(0,10);
-          endDate = _this.date.substring(_this.date.length - 10);
+          startDate = this.dateFormat(_this.date.substring(0,10));
+          endDate = this.dateFormat(_this.date.substring(_this.date.length - 10));
         }else{
           startDate = '';
           endDate = ''
@@ -434,6 +436,9 @@
           
         }).catch((err) => {
         });
+      },
+      dateFormat(date) {
+        return init.dateFormat(new Date(date.replace(/-/g,'/')),"yyyyMMdd");
       },
       tab(index) {
         this.num = index;

@@ -125,13 +125,13 @@
 	        })
 	      }).then((res) => {
 	      	let result = res.data.result;
-	      	this.auditNums = result.auditNums
+	      	this.auditNums = result.auditNums || 0
 					this.avatarUrl = result.avatarUrl
-					this.familyNums = result.familyNums
-					this.msgNums = result.msgNums
+					this.familyNums = result.familyNums || 0
+					this.msgNums = result.msgNums || 0
 					this.nickName = result.nickName
 					this.signature = result.signature
-					this.thisMonthVisitors = result.thisMonthVisitors
+					this.thisMonthVisitors = result.thisMonthVisitors || 0
 	    	}).catch((err) => {
 	      });	
 	  	},
