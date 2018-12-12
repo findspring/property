@@ -127,8 +127,10 @@
 	        data:formData 
 	      }).then(Response => {
 	      	this.$vux.loading.show()
+	      	let idCardNo;
 	      	if(type == 1){
 	      		if(Response.data.errCode == '0'){
+	      			idCardNo = Response.data.result.idCardNo
 	      			this.uploadPhoto = true;
 	      		}else{
 	      			this.$vux.loading.hide()
@@ -145,7 +147,7 @@
 	      	}
 	      	if(this.uploadFace && this.uploadPhoto){
 	      		this.$vux.loading.hide()
-	  				this.goResult();
+	  				this.goResult(idCardNo);
 	  			}
           let result = Response.data.result;
           // let imgUrl = result.imgUrl
@@ -170,14 +172,14 @@
 	  			this.$dialog.alert({message:'请完成全部上传'})
 	  		}
 	  	},
-	  	goResult(){
+	  	goResult(idCardNo){
 	  		let fromUrl = this.$route.query.from;
 	  		let familyId = this.$route.query.familyId;
 	  		if(fromUrl){
 	  			if(familyId){
 	  				this.$router.push({path:'/result',query:{from:fromUrl,familyId:familyId}})
 	  			}else{
-	  				this.$router.push({path:'/result',query:{from:fromUrl}})
+	  				this.$router.push({path:'/result',query:{from:fromUrl,idCardNo:idCardNo}})
 	  			}
 	  			
 	  		}else{

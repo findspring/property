@@ -59,7 +59,7 @@ Validator.extend('house', {  //社区地址、门牌号码
 
 Validator.extend('realname', {  //姓名
   messages: {
-    zh_CN:field => field + '汉字、字母且范围为2-10个',
+    zh_CN:field => field + '2-10个汉字、字母',
   },
   validate: value => {
     // return /^[\u2E80-\u9FFF-Za-z0-9]{10}$/

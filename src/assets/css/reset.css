@@ -10,7 +10,7 @@ img{border:0;-ms-interpolation-mode:bicubic;vertical-align:middle;}
 ol,ul,li{list-style:none outside none}
 button,input,select,textarea{margin:0;font-size:100%;vertical-align:middle;}
 button,input{*overflow:visible;line-height:normal;}
-input{outline:none; border:none;}
+input{outline:none; border:none;-webkit-user-select:auto;}
 button::-moz-focus-inner,input::-moz-focus-inner{padding:0;border:0;}
 button, html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer;}
 label, select,button,input[type="button"],input[type="reset"],input[type="submit"],input[type="radio"],input[type="checkbox"]{cursor:pointer;}

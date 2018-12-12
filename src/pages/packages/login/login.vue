@@ -26,7 +26,7 @@
 				<div class="login-top">
 		      <i class="icon login-icon icon-code"></i>
 		      <input v-validate ="'required|valcode'" type="number" id="valcode" name="验证码" placeholder="验证码" readonly="readonly" v-if="disabled" v-model="valcode"  @click="canInput">
-		      <input v-validate ="'required|valcode'" type="text" id="valcode" name="验证码" placeholder="验证码" v-else v-model="valcode">
+		      <input v-validate ="'required|valcode'" type="number" id="valcode" name="验证码" placeholder="验证码" v-else v-model="valcode">
 		      <div class="login-code fr" v-if="codeStatus"  @click="sendCode">发送验证码</div>
 					<div class="login-code fr" v-else>{{time}}s</div>	
 		    </div>
