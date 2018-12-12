@@ -187,6 +187,13 @@
 			        	'idCardNo':this.idNum,
 			        })
 			      }).then((res) => {
+			      	//判断userType
+			      	let userType;
+			      	if(this.relationShip == "租客"){
+			      		userType = 3;
+			      	}else{
+			      		userType = 4;
+			      	}
 			      	if(this.titleName == "编辑成员"){
 			      		this.$http({
 					        method: "post",
@@ -198,13 +205,13 @@
 					      }).then((res) => {
 					      	let result = res.data.result;
 					      	this.keepStatus == false;
-					      	this.$router.push({path:'/identify',query:{from:'members',familyId:this.familyId,headPortraitUrl:result.headPortraitUrl,identityImgUrl:result.identityImgUrl}})
+					      	this.$router.push({path:'/identify',query:{from:'members',familyId:this.familyId,headPortraitUrl:result.headPortraitUrl,identityImgUrl:result.identityImgUrl,userType:userType}})
 					    	}).catch((err) => {
 					      });
 			      		// this.$router.push({path:'/identify',query:{from:'members',familyId:this.familyId}})
 			      	}else if(this.titleName == "添加成员"){
 			      		this.keepStatus == false;
-			      		this.$router.push({path:'/identify',query:{from:'members'}})
+			      		this.$router.push({path:'/identify',query:{from:'members',userType:userType}})
 			      	}			      	
 			      	// this.$router.push({path:'/identify'});
 			    	}).catch((err) => {

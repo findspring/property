@@ -37,6 +37,8 @@
 	  		type:String,
 	  		default:''
 	  	},
+	  	userType:{
+	  	},
 	  	iconStatus2:{
 	  		type:Boolean,
 	  		default:false,
@@ -102,7 +104,7 @@
           let formData = new window.FormData()
 	      	formData.append('file',compressFile)
 	      	formData.append('uploadImgType','headPortrait')
-	      	formData.append('userType',1)	
+	      	formData.append('userType',_this.userType)	
 	      	_this.$emit('faceBack',true,formData)      	
         //   _this.$http({
 		      //   method: "post",

@@ -37,6 +37,8 @@
 	  		type:String,
 	  		default:''
 	  	},
+	  	userType:{
+	  	},
 	  	iconStatus1:{
 	  		type:Boolean,
 	  		default:false,
@@ -102,9 +104,9 @@
 	      	let formData = new window.FormData()
 	      	formData.append('file',compressFile)
 	      	formData.append('uploadImgType','identity')
-	      	formData.append('userType',1)
-	      	formData.append('familyTies','')
-	      	formData.append('owerNum','')
+	      	formData.append('userType',_this.userType)
+	      	// formData.append('familyTies','')
+	      	// formData.append('owerNum','')
 	      	_this.$emit('photoBack',true,formData)
 	      	
         //   _this.$http({

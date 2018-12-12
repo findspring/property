@@ -118,7 +118,7 @@
 	        method: "post",
 	        url: "/wechat/officialAccount/user/info",
 	        data: this.$qs.stringify({
-	        	// 'authToken':authToken,
+	        	// 'userType':userType,
 	        	// familyId:familyId || ''
 	        })
 	      }).then((res) => {

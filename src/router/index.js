@@ -164,7 +164,7 @@ export default new Router({
       meta: {
         title: '身份认证',
         flag: 'identify',
-        keepAlive: true,
+        keepAlive: false,
       },
       component: identify
     },

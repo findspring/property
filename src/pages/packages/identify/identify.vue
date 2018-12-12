@@ -15,14 +15,14 @@
 					<input type="file" name="file_head" id="file_head" @change="setImagePreview" />
 					<img src="./../../../assets/images/upidcard.png" alt="">
 				</div> -->
-				<v-photo :src1="src1" :iconStatus1="iconStatus1" :srcPreview1="srcPreview1" @photoBack="photoBack"></v-photo>
+				<v-photo :src1="src1" :iconStatus1="iconStatus1" :srcPreview1="srcPreview1" :userType="userType" @photoBack="photoBack"></v-photo>
 				<!-- <div id="localImag">
           <img id="preview" width="-1" height="-1" style="display: none" />
       	</div> -->
 			</div>
 			<div class="identify-face">
 				<h5>人脸识别扫描</h5>
-				<v-face :src2="src2" :iconStatus2="iconStatus2" :srcPreview2="srcPreview2"  @faceBack="faceBack"></v-face>
+				<v-face :src2="src2" :iconStatus2="iconStatus2" :srcPreview2="srcPreview2" :userType="userType" @faceBack="faceBack"></v-face>
 				<!-- <div class="identify-scan identify-common">
 					<img src="./../../../assets/images/upface.png"  alt="">
 				</div> -->
@@ -56,7 +56,8 @@
 	    	faceFormData:'',
 	    	uploadFace:false,
 	    	uploadPhoto:false,
-	    	keepStatus:false,
+	    	userType:1,
+	    	// keepStatus:false,
 	    	// iconStatus:false,
 	    	// srcPreview:''
 	    	// owerNum:'',
@@ -72,6 +73,17 @@
 	  mounted(){
 	  	let urlFrom = this.$route.query.from;
 	  	let familyId = this.$route.query.familyId;
+	  	let urlType = this.$route.query.userType;
+	  	let role = localStorage.getItem("role")
+	    if(role == 'property'){
+	      this.userType = 5
+	    }else if(role == 'owner'){
+	      this.userType = 1
+	    }
+	    if(urlType){
+	    	this.userType = urlType;
+	    }
+	  	let userType = this.$route.query.userType;
 	  	if(urlFrom == 'mine' || familyId){
 	  		this.srcPreview1 = this.$route.query.identityImgUrl;
 	  		this.iconStatus1 = true;
@@ -158,7 +170,7 @@
 	  			this.$dialog.alert({message:'请完成全部上传'})
 	  		}
 	  	},
-	  	goResult(photoUrl,faceUrl){
+	  	goResult(){
 	  		let fromUrl = this.$route.query.from;
 	  		let familyId = this.$route.query.familyId;
 	  		if(fromUrl){
