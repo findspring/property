@@ -99,13 +99,11 @@
 	        url: "/pub/image/identityGather",
 	        data:formData 
 	      }).then(Response => {
-	      	this.$vux.loading.show()
 	      	if(type == 1){
 	      		if(Response.data.errCode == '0'){
 	      			this.idCardNo = Response.data.result.idCardNo
 	      			this.uploadPhoto = true;
 	      		}else{
-	      			this.$vux.loading.hide()
 	      			this.uploadPhoto = false;
 	      		}
 	      	}else if(type == 2){
@@ -117,16 +115,15 @@
 	      		}
 	      	}
 	      	if(this.uploadFace && this.uploadPhoto){
-	      		this.$vux.loading.hide()
 	  				this.goResult(this.idCardNo);
 	  			}
-          let result = Response.data.result;
         }).catch(function(err){
           return
         });  
 	  	},
 	  	//下一步
 	  	confirm(){
+	  		this.$vux.loading.show()
   			if(this.photoFormData !=""){
   				this.uploadImg(this.photoFormData,1)
   			}
@@ -139,6 +136,7 @@
 	  	},
 	  	//跳转到result
 	  	goResult(idCardNo){
+	  		this.$vux.loading.hide()
 	  		let fromUrl = this.$route.query.from;
 	  		if(fromUrl){
 	  			this.$router.push({path:'/result',query:{from:fromUrl,idCardNo:idCardNo}}) 			

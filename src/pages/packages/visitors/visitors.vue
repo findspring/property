@@ -133,6 +133,7 @@
         pageNum1:1,
         clearStatus: false,
         searchVal:'',
+        operateStatusNum:2,
 
       }
     },
@@ -148,7 +149,7 @@
             this.keySearch()
           }
       });
-      this.getVistorsList(1,1);
+      this.getVistorsList(2,1);
       // this.getVistorsList(2,1);  
     },
     methods:{
@@ -164,7 +165,7 @@
       },
       keySearch(){
         console.log(1)
-        this.getVistorsList((this.num+1),1,this.searchVal,this.date);
+        this.getVistorsList(this.operateStatusNum,1,this.searchVal,this.date);
       },
       searchFocus(){
         this.clearStatus = true;
@@ -176,13 +177,13 @@
         if(type == 1){
           // 异步更新数据
           setTimeout(() => {
-            this.getVistorsList(1,this.pageNum);
+            this.getVistorsList(2,this.pageNum);
             // 加载状态结束
             this.loading = false;
           }, 1000);
         }else if(type == 2){
           setTimeout(() => {
-            this.getVistorsList(2,this.pageNum1);
+            this.getVistorsList(1,this.pageNum1);
             // 加载状态结束
             this.loading1 = false;
           }, 1000);
@@ -192,7 +193,7 @@
         if(type == 1){
           setTimeout(() => { 
             this.pageNum = 1;
-            this.getVistorsList(1,this.pageNum);
+            this.getVistorsList(2,this.pageNum);
             this.loading = false;
             this.finished = false;
             this.$toast({message:'刷新成功',duration:600});
@@ -202,7 +203,7 @@
         }else if(type == 2){
           setTimeout(() => { 
             this.pageNum1 = 1;
-            this.getVistorsList(2,this.pageNum1);
+            this.getVistorsList(1,this.pageNum1);
             this.loading1 = false;
             this.finished1 = false;
             this.$toast({message:'刷新成功',duration:600});
@@ -237,7 +238,7 @@
           })
         }).then((res) => {
           let result = res.data.result;
-          if(operateStatus == 1){
+          if(operateStatus == 2){
             let list = result.list;
             let pages = result.pages;
             if(_this.pageNum == 1){
@@ -253,7 +254,7 @@
                 }   
               } 
             }              
-          }else if(operateStatus == 2){
+          }else if(operateStatus == 1){
             let list = result.list;
             let pages = result.pages;
             if(_this.pageNum1 == 1){
@@ -305,7 +306,14 @@
         this.pageNum1 = 1;
         this.finished = false;
         this.finished1 = false;
-        this.getVistorsList(this.num+1,1);
+        if(index == 0){
+          this.operateStatusNum = 2;
+          this.getVistorsList(this.operateStatusNum,1);
+        }else if(index == 1){
+          this.operateStatusNum = 1;
+          this.getVistorsList(this.operateStatusNum,1);
+        }
+        
       },
       goInfo(id){
         this.$router.push({path:'/visitorsInfo',query:{personnelId:id}})

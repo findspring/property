@@ -60,8 +60,10 @@
       // 角色
       var currurl = window.location.href.toString();
       var data = currurl.getQueryString();      
-      var role = localStorage.getItem("role") || "";
-      localStorage.setItem("role", data["role"]);
+      var role = localStorage.getItem("role") || "owner";
+      if(data && data["role"]){
+        localStorage.setItem("role", data["role"]);
+      }      
       //是否注册
       // var isRegister = data["isRegister"]
       // if(isRegister == 1){

@@ -10,7 +10,6 @@ axios.interceptors.request.use(config => {
 })
 axios.interceptors.response.use((res) => {
 	const _this = new Vue();
-	_this.$vux.loading.hide()
 	// 根据返回的code值做不同处理（和后台约定）
 	switch (res.data.errCode) {
 		case '0':
@@ -24,11 +23,10 @@ axios.interceptors.response.use((res) => {
 		case '8889':
 			location.href = res.data.errMsg;
 			return 
-		case '0':
-			return res
 		case '9000':
 			return _this.$vux.toast.text(res.data.errMsg,'middle')
 		default:
+			_this.$vux.loading.hide()
 			return _this.$vux.toast.text(res.data.errMsg,'middle')
 			break;
 	}
