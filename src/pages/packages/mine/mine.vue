@@ -145,16 +145,11 @@
 		        })
 		      }).then((res) => {
 		      	let result = res.data.result;
-		      	this.$router.push({path:''+url,query:{from:'mine',headPortraitUrl:result.headPortraitUrl,identityImgUrl:result.identityImgUrl}})
+		      	this.$router.push({path:''+url,query:{from:'mine',headPortraitUrl:result.headPortraitUrl,identityImgUrl:result.identityImgUrl,idCardNo:result.idCardNo}})
 		    	}).catch((err) => {
 		      });
-	  			// this.$router.push({path:''+url,query:{from:'mine'}})
 	  		}else if(url == 'edit'){
 	  			this.developStatus = true;
-	  			// this.$dialog.alert({
-	  			// 	message:'即将上线'
-	  			// })
-	  			// this.$router.push({path:''+url,query:{from:'mine'}})
 	  		}else{
 	  			this.$router.push({path:''+url})
 	  		}	  		

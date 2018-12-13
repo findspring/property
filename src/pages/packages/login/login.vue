@@ -15,7 +15,7 @@
 				<div class="login-top">
 					<div class="login-phone fl">
 						<i class="icon login-icon icon-phone"></i>
-		      	<input v-validate ="'required|phone'" type="number" id="phone" name="手机号" placeholder="我的手机" v-model="phone">
+		      	<input v-validate ="'required|phone'" type="tel" id="phone" name="手机号" placeholder="我的手机" v-model="phone">
 					</div>
 					<!-- <div class="login-code fr" v-if="codeStatus"  @click="sendCode">获取验证码</div>
 					<div class="login-code fr" v-else>{{time}}s后重新获取</div>	 -->	      
@@ -143,7 +143,7 @@ export default {
       	this.searchArr = result.list
     	}).catch((err) => {
       });
-  		console.log(this.address)
+  		// console.log(this.address)
   	},
   	getCommunityList(){
   		let pageNum = 1;
@@ -161,7 +161,7 @@ export default {
       	  this.addressList.push({name:item.communityName,value:item.id})
       	})
       	// this.addressList = listArr;
-      	console.log(this.addressList)
+      	// console.log(this.addressList)
     	}).catch((err) => {
       });
   	},
@@ -205,7 +205,7 @@ export default {
 		      });
           return
         }
-        console.log('验证失败')
+        // console.log('验证失败')
         return
       }); 		  				    	
     },

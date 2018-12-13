@@ -96,6 +96,10 @@ body{
 .fade-enter, .fade-leave {
   opacity: 0;
 }
+.vux-loading{
+  position:fixed!important;
+  z-index: 1000!important;
+}
 /*去除头部下划线*/
 .van-hairline--bottom::after{
   border-bottom:none!important;

@@ -1,31 +1,13 @@
 <template>
 	<div class="identify clearfix">
-		<!-- <van-nav-bar title="身份认证" left-arrow :fixed="true" @click-left="onClickLeft">
-			<div slot="right" class="identify-top-right">
-				<i class="common-icon icon-position02"></i>
-				<span>{{cityName}}</span>
-			</div>
-		</van-nav-bar> -->
 		<div class="identify-main">			
 			<div class="identify-idcard">
 				<h5>拍摄/上传身份证正面照</h5>
-				<!-- <div class="identify-upload identify-common">
-					<i class="common-icon identify-delete"></i>
-					<i class="common-icon identify-big"></i>
-					<input type="file" name="file_head" id="file_head" @change="setImagePreview" />
-					<img src="./../../../assets/images/upidcard.png" alt="">
-				</div> -->
 				<v-photo :src1="src1" :iconStatus1="iconStatus1" :srcPreview1="srcPreview1" :userType="userType" @photoBack="photoBack"></v-photo>
-				<!-- <div id="localImag">
-          <img id="preview" width="-1" height="-1" style="display: none" />
-      	</div> -->
 			</div>
 			<div class="identify-face">
 				<h5>人脸识别扫描</h5>
 				<v-face :src2="src2" :iconStatus2="iconStatus2" :srcPreview2="srcPreview2" :userType="userType" @faceBack="faceBack"></v-face>
-				<!-- <div class="identify-scan identify-common">
-					<img src="./../../../assets/images/upface.png"  alt="">
-				</div> -->
 			</div>
 			<div class="identify-btn">
 				<div @click="confirm" v-show="faceType&&photoType">下一步</div>
@@ -47,7 +29,6 @@
 	    	iconStatus1:false,
 	    	srcPreview2:'',
 	    	iconStatus2:false,
-	    	// cityName:localStorage.getItem('cityName') || '',
 	    	faceType:false,
 	    	photoType:false,
 	    	faceUrl:'',
@@ -57,10 +38,7 @@
 	    	uploadFace:false,
 	    	uploadPhoto:false,
 	    	userType:1,
-	    	// keepStatus:false,
-	    	// iconStatus:false,
-	    	// srcPreview:''
-	    	// owerNum:'',
+	    	idCardNo:'',
 	    }
 	  },	  
 	  // beforeRouteLeave(to, from, next) {
@@ -71,8 +49,8 @@
 	  	vPhoto,vFace
 	  },
 	  mounted(){
+	    this.idCardNo = this.$route.query.idCardNo || '';
 	  	let urlFrom = this.$route.query.from;
-	  	let familyId = this.$route.query.familyId;
 	  	let urlType = this.$route.query.userType;
 	  	let role = localStorage.getItem("role")
 	    if(role == 'property'){
@@ -83,8 +61,7 @@
 	    if(urlType){
 	    	this.userType = urlType;
 	    }
-	  	let userType = this.$route.query.userType;
-	  	if(urlFrom == 'mine' || familyId){
+	  	if(urlFrom == 'mine' || this.idCardNo){
 	  		this.srcPreview1 = this.$route.query.identityImgUrl;
 	  		this.iconStatus1 = true;
 	  		this.srcPreview2 = this.$route.query.headPortraitUrl;
@@ -93,8 +70,7 @@
 	  		this.photoType = true;
 	  		this.uploadPhoto = true;
 	  		this.uploadFace = true;
-	  	}
-	  	// this.owerNum = this.$route.query.owerNum;	  	
+	  	}	  	
 	  },
 	  methods:{
 	  	faceBack(val,formData){
@@ -105,7 +81,6 @@
 	  			this.faceType = false
 	  		}
 	  		this.faceFormData = formData;
-	  		// this.faceUrl = url;
 	  	},
 	  	photoBack(val,formData){
 	  		console.log('1',val)
@@ -116,9 +91,7 @@
 	  		}
 	  		this.photoFormData = formData;
 	  	},
-	  	onClickLeft(){
-	  		this.$router.go(-1);
-	  	},
+	  	//上传图片
 	  	uploadImg(formData,type){
 	  		this.$http({
 	        method: "post",
@@ -127,10 +100,9 @@
 	        data:formData 
 	      }).then(Response => {
 	      	this.$vux.loading.show()
-	      	let idCardNo;
 	      	if(type == 1){
 	      		if(Response.data.errCode == '0'){
-	      			idCardNo = Response.data.result.idCardNo
+	      			this.idCardNo = Response.data.result.idCardNo
 	      			this.uploadPhoto = true;
 	      		}else{
 	      			this.$vux.loading.hide()
@@ -143,45 +115,33 @@
 	      			this.$vux.loading.hide()
 	      			this.uploadFace = false;
 	      		}
-	      		// this.uploadFace = true;
 	      	}
 	      	if(this.uploadFace && this.uploadPhoto){
 	      		this.$vux.loading.hide()
-	  				this.goResult(idCardNo);
+	  				this.goResult(this.idCardNo);
 	  			}
           let result = Response.data.result;
-          // let imgUrl = result.imgUrl
         }).catch(function(err){
           return
         });  
 	  	},
+	  	//下一步
 	  	confirm(){
-	  		// console.log(this.photoType,this.faceType)
-	  		if(this.photoType && this.faceType){
-	  			if(this.photoFormData !=""){
-	  				this.uploadImg(this.photoFormData,1)
-	  			}
-	  			if(this.faceFormData != ""){
-	  				this.uploadImg(this.faceFormData,2)	
-	  			} 
-	  			if(this.photoFormData =="" && this.faceFormData ==""){
-	  				this.goResult();
-	  			}	  			  			          
-	  			// this.goResult(this.photoUrl,this.faceUrl);
-	  		}else{
-	  			this.$dialog.alert({message:'请完成全部上传'})
-	  		}
+  			if(this.photoFormData !=""){
+  				this.uploadImg(this.photoFormData,1)
+  			}
+  			if(this.faceFormData != ""){
+  				this.uploadImg(this.faceFormData,2)	
+  			} 
+  			if(this.photoFormData =="" && this.faceFormData ==""){
+  				this.goResult(this.idCardNo);
+  			}	
 	  	},
+	  	//跳转到result
 	  	goResult(idCardNo){
 	  		let fromUrl = this.$route.query.from;
-	  		let familyId = this.$route.query.familyId;
 	  		if(fromUrl){
-	  			if(familyId){
-	  				this.$router.push({path:'/result',query:{from:fromUrl,familyId:familyId}})
-	  			}else{
-	  				this.$router.push({path:'/result',query:{from:fromUrl,idCardNo:idCardNo}})
-	  			}
-	  			
+	  			this.$router.push({path:'/result',query:{from:fromUrl,idCardNo:idCardNo}}) 			
 	  		}else{
 	  			this.$router.push({path:'/result'})
 	  		}	  		

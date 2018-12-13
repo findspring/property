@@ -205,7 +205,7 @@
 					      }).then((res) => {
 					      	let result = res.data.result;
 					      	this.keepStatus == false;
-					      	this.$router.push({path:'/identify',query:{from:'members',familyId:this.familyId,headPortraitUrl:result.headPortraitUrl,identityImgUrl:result.identityImgUrl,userType:userType}})
+					      	this.$router.push({path:'/identify',query:{from:'members',familyId:this.familyId,headPortraitUrl:result.headPortraitUrl,identityImgUrl:result.identityImgUrl,userType:userType,idCardNo:result.idCardNo}})
 					    	}).catch((err) => {
 					      });
 			      		// this.$router.push({path:'/identify',query:{from:'members',familyId:this.familyId}})

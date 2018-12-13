@@ -113,12 +113,13 @@
 	  	},
 	  	getIdentityInfo(){
 	  		// let authToken = localStorage.getItem("authToken")
-	  		let familyId = this.$route.query.familyId;
+	  		// let familyId = this.$route.query.familyId;
+	  		let idCardNo = this.$route.query.idCardNo;
 	  		this.$http({
 	        method: "post",
 	        url: "/wechat/officialAccount/user/info",
 	        data: this.$qs.stringify({
-	        	// 'userType':userType,
+	        	idCardNo:idCardNo || '',
 	        	// familyId:familyId || ''
 	        })
 	      }).then((res) => {
@@ -126,8 +127,8 @@
 	      	this.idNum = result.idCardNo
 	      	this.address = result.address
 	      	this.realname = result.userName
-	      	this.sex = result.gender
-	      	this.sexVal = [''+result.gender+'']
+	      	this.sex = result.gender || "男";
+	      	this.sexVal = [''+this.sex+'']
 	      	this.faceUrl = result.headPortraitUrl
 	      	this.photoUrl = result.identityImgUrl
 	    	}).catch((err) => {
@@ -139,31 +140,32 @@
 	  	// },
 	  	submit(){
 	  		this.$validator.validateAll().then((result) => {
-        if (result) {
-        	// let authToken = localStorage.getItem("authToken")
-        	this.$http({
-		        method: "post",
-		        url: "/wechat/mini/user/identityConfirm",
-		        data: this.$qs.stringify({
-		        	// 'authToken':authToken,
-		        	'cardNum':this.idNum,
-		        	'address':this.address,
-		        	'gender':this.sex,
-		        	'userName':this.realname,
-		        })
-		      }).then((res) => {
-		      	this.$toast({message:'您的申请已提交审批',duration:600});
-		      	setTimeout(() =>{
-		      		this.goIndex();
-		      	},600);		      	
-		    	}).catch((err) => {
-		      });
-          return
-        }else{
-        	// this.$router.push({path:'/identify'});
-        	this.$dialog.alert({message:'信息输入有误！'});
-        }        
-      })
+	        if (result) {
+	        	// let authToken = localStorage.getItem("authToken")
+	        	this.$http({
+			        method: "post",
+			        url: "/wechat/mini/user/identityConfirm",
+			        data: this.$qs.stringify({
+			        	// 'authToken':authToken,
+			        	'cardNum':this.idNum,
+			        	'address':this.address,
+			        	'gender':this.sex,
+			        	'userName':this.realname,
+			        })
+			      }).then((res) => {
+			      	if(res.data.errCode == 0){
+			      		this.$toast({message:'您的申请已提交审批',duration:600});
+				      	setTimeout(() =>{
+				      		this.goIndex();
+				      	},600);
+			      	}				      			      	
+			    	}).catch((err) => {
+			      });
+	          return
+	        }else{
+	        	this.$dialog.alert({message:'信息输入有误！'});
+	        }        
+	      })
 	  	},
 	  	goIndex(){
 	  		if(this.$route.query.from == 'members'){
