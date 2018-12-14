@@ -142,8 +142,12 @@
 	        	idCardNo:idCardNo
 	        })
 	      }).then((res) => {
-	  			this.familyArr.splice(index,1)
-	      	let result = res.data.result;
+	      	if(res.data.errCode == '0'){
+	      		this.familyArr.splice(index,1)
+	      	}else{
+	      		return
+	      	}
+	  			
 	      	// console.log(this.familyArr)
 	      	// this.searchArr = result.list
 	    	}).catch((err) => {

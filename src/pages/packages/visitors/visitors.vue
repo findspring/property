@@ -149,7 +149,7 @@
             this.keySearch()
           }
       });
-      this.getVistorsList(2,1);
+      this.getVistorsList(2,1); //已操作
       // this.getVistorsList(2,1);  
     },
     methods:{
@@ -157,14 +157,11 @@
         return false
       },
       clearAll(){
-        // console.log(this.date.substring(0,10))
-        // console.log(this.date.substring(this.date.length - 10))
         this.clearStatus = false;
         this.searchVal = '';
         this.date = '';
       },
       keySearch(){
-        console.log(1)
         this.getVistorsList(this.operateStatusNum,1,this.searchVal,this.date);
       },
       searchFocus(){
@@ -173,8 +170,8 @@
       searchBlur(){
         this.clearStatus = false;
       },
-      onLoad(type){ //已操作 
-        if(type == 1){
+      onLoad(type){ 
+        if(type == 1){ //已操作 
           // 异步更新数据
           setTimeout(() => {
             this.getVistorsList(2,this.pageNum);
@@ -190,7 +187,7 @@
         }             
       },
       onRefresh(type) {
-        if(type == 1){
+        if(type == 1){ //已操作
           setTimeout(() => { 
             this.pageNum = 1;
             this.getVistorsList(2,this.pageNum);
@@ -306,7 +303,7 @@
         this.pageNum1 = 1;
         this.finished = false;
         this.finished1 = false;
-        if(index == 0){
+        if(index == 0){  //已操作
           this.operateStatusNum = 2;
           this.getVistorsList(this.operateStatusNum,1);
         }else if(index == 1){

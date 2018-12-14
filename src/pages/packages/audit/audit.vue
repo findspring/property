@@ -193,7 +193,8 @@
         pageNum1:1,
         clearStatus: false,
         searchVal:'',
-        removeArr:[]
+        removeArr:[],
+        operateStatusNum:2,
       }
     },
     components:{
@@ -235,7 +236,7 @@
       // if(back == 1){
       //   this.tab(2);
       // }
-      this.getProprietorList(1,1);
+      this.getProprietorList(2,1); //已审核
       // this.getProprietorList(2,1);
       // this.getProprietorList(3,1);
     },
@@ -261,7 +262,7 @@
       },
       keySearch(){ //搜索
         // console.log(this.checkedArr)
-        this.getProprietorList((this.num+1),1,this.searchVal,this.date);
+        this.getProprietorList(this.operateStatusNum,1,this.searchVal,this.date);
       },
       searchFocus(){
         this.clearStatus = true;
@@ -270,27 +271,27 @@
         this.clearStatus = false;
       },
       onLoad(type){ 
-        if(type == 1){ //已操作 
+        if(type == 1){ //已审核 
           // 异步更新数据
           setTimeout(() => {
-            this.getProprietorList(1,this.pageNum);
+            this.getProprietorList(2,this.pageNum);
             // 加载状态结束
             this.loading = false;
           }, 1000);
         }else if(type == 2){ //未操作
           setTimeout(() => {
-            this.getProprietorList(2,this.pageNum1);
+            this.getProprietorList(1,this.pageNum1);
             // 加载状态结束
             this.loading1 = false;
           }, 1000);
         }             
       },
       onRefresh(type) {
-        if(type == 1){ //已操作
-          setTimeout(() => { 
+        if(type == 1){ 
+          setTimeout(() => { //已审核
             this.pageNum = 1;
             // this.auditHasArr = [];
-            this.getProprietorList(1,this.pageNum);
+            this.getProprietorList(2,this.pageNum);
             this.loading = false;
             this.finished = false;
             this.$toast({message:'刷新成功',duration:600});
@@ -300,7 +301,7 @@
           setTimeout(() => { 
             this.pageNum1 = 1;
             // this.auditNoneArr = [];
-            this.getProprietorList(2,this.pageNum1);
+            this.getProprietorList(1,this.pageNum1);
             this.loading1 = false;
             this.finished1 = false;
             this.$toast({message:'刷新成功',duration:600});
@@ -340,7 +341,7 @@
           })
         }).then((res) => {
           let result = res.data.result;
-          if(operateStatus == 1){
+          if(operateStatus == 2){ //已审核
             let list = result.list;
             let pages = result.pages;
             if(_this.pageNum == 1){
@@ -356,7 +357,7 @@
                 }   
               } 
             }              
-          }else if(operateStatus == 2){
+          }else if(operateStatus == 1){ //未操作
             let list = result.list;
             let pages = result.pages;
             if(_this.pageNum1 == 1){
@@ -372,7 +373,7 @@
                 }   
               }   
             }                                           
-          }else if(operateStatus == 3){
+          }else if(operateStatus == 3){ //批量审核
             let list = result.list;
             // let pages = result.pages;
             _this.auditCheckArr = list;
@@ -446,7 +447,17 @@
         this.pageNum1 = 1;
         this.finished = false;
         this.finished1 = false;
-        this.getProprietorList(this.num+1,1);
+        if(index == 0){  //已操作
+          this.operateStatusNum = 2;
+          this.getProprietorList(this.operateStatusNum,1);
+        }else if(index == 1){
+          this.operateStatusNum = 1;
+          this.getProprietorList(this.operateStatusNum,1);
+        }else if(index == 2){
+          this.operateStatusNum = 3;
+          this.getProprietorList(this.operateStatusNum,1);
+        }
+        // this.getProprietorList(this.num+1,1);
       },
       goInfo(id){
         this.$router.push({path:'/auditInfo',query:{personnelId:id}})
