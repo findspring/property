@@ -102,7 +102,7 @@
           _this.srcPreview = faceView.src;
 	      	_this.iconStatus = true;
           let formData = new window.FormData()
-	      	formData.append('file',compressFile)
+	      	formData.append('fileBase64',rst.base64)
 	      	formData.append('uploadImgType','headPortrait')
 	      	formData.append('userType',_this.userType)	
 	      	_this.$emit('faceBack',true,formData)      	

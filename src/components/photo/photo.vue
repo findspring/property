@@ -102,7 +102,7 @@
           _this.srcPreview = preview.src;
 	      	_this.iconStatus = true;
 	      	let formData = new window.FormData()
-	      	formData.append('file',compressFile)
+	      	formData.append('fileBase64',rst.base64)
 	      	formData.append('uploadImgType','identity')
 	      	formData.append('userType',_this.userType)
 	      	// formData.append('familyTies','')
