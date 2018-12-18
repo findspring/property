@@ -44,9 +44,9 @@
                     <div class="audit-has-content">
                       <div class="audit-has-top">
                         <h4>{{val.owerName}}</h4>
-                        <i class="audit-has-type pass" v-if="val.auditStatus == 1">已审核</i>
-                        <i class="audit-has-type refused" v-else-if="val.auditStatus == 2">已拒绝</i>
-                        <i class="audit-has-type expire" v-else-if="val.auditStatus == 3">已过期</i>
+                        <i class="audit-has-type pass" v-if="val.auditStatus == 2">已审核</i>
+                        <i class="audit-has-type refused" v-else-if="val.auditStatus == 3">已拒绝</i>
+                        <!-- <i class="audit-has-type expire" v-else-if="val.auditStatus == 3">已过期</i> -->
                       </div>
                       <ul>
                         <li>
@@ -261,6 +261,10 @@
         this.date = '';
       },
       keySearch(){ //搜索
+        this.pageNum = 1;
+        this.pageNum1 = 1;
+        this.finished = false;
+        this.finished1 = false;
         // console.log(this.checkedArr)
         this.getProprietorList(this.operateStatusNum,1,this.searchVal,this.date);
       },
@@ -391,8 +395,9 @@
        * @param  {[string]} personnelIds [选中项]
        * @param  {[string]} type         [单选还是多选]
        */
-      proprietorAudit(auditSatus,personnelIds,type){
-        if(!personnelIds){
+      proprietorAudit(auditStatus,personnelIds,type){
+        console.log(personnelIds);
+        if(!personnelIds && type == 'more'){
           this.$dialog.alert({
             message:'请选择要审核的选项！'
           })
@@ -403,38 +408,39 @@
           url: "/wechat/officialAccount/community/proprietorAudit",
           data: this.$qs.stringify({
             // 'authToken':localStorage.getItem('authToken'),
-            'auditSatus':auditSatus,
+            'auditStatus':auditStatus,
             'personnelIds':personnelIds
           })
         }).then((res) => {
-          //审核状态
-          if(auditSatus == 1){
-            this.$toast({message:'审核通过！',duration:600});
-          }else if(auditSatus == 2){
-            this.$toast({message:'审核拒绝！',duration:600});
-          }
-          if(type == 'single'){  //单个审核
-            this.auditNoneArr.forEach((item,index) => {
-              if(item.id == personnelIds){
-                this.auditNoneArr.splice(index,1);
-              }
-            })
-          }else if(type == 'more'){  //遍历移除审核项
-            this.removeArr.forEach((item,index) => {
-              this.auditCheckArr.forEach((val,k) => {
-                if(item == val.id){
-                  this.auditCheckArr.splice(k,1);
+          if(res.data.errCode == 0){
+            //审核状态
+            if(auditSatus == 1){
+              this.$toast({message:'审核通过！',duration:600});
+            }else if(auditSatus == 2){
+              this.$toast({message:'审核拒绝！',duration:600});
+            }
+            if(type == 'single'){  //单个审核
+              this.auditNoneArr.forEach((item,index) => {
+                if(item.id == personnelIds){
+                  this.auditNoneArr.splice(index,1);
                 }
               })
-            })
-            // 重置checkedObj
-            this.checkedObj = {};
-            this.auditCheckArr.forEach((item,index) => {
-              this.$set(
-                this.checkedObj,item.id,false)
-            })
+            }else if(type == 'more'){  //遍历移除审核项
+              this.removeArr.forEach((item,index) => {
+                this.auditCheckArr.forEach((val,k) => {
+                  if(item == val.id){
+                    this.auditCheckArr.splice(k,1);
+                  }
+                })
+              })
+              // 重置checkedObj
+              this.checkedObj = {};
+              this.auditCheckArr.forEach((item,index) => {
+                this.$set(
+                  this.checkedObj,item.id,false)
+              })
+            }
           }
-          
         }).catch((err) => {
         });
       },

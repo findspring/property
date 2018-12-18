@@ -1,5 +1,5 @@
 <template>
-	<div class="visitors">	
+  <div class="visitors">  
     <div class="visitors-top">
       <div class="visitors-header">
         <i class="common-icon icon-back01" @click="goback"></i>
@@ -108,7 +108,7 @@
       </div>
     </div>
     <nav-bar :page="2"></nav-bar>
-	</div>
+  </div>
 </template>
 
 <script>
@@ -162,6 +162,10 @@
         this.date = '';
       },
       keySearch(){
+        this.pageNum = 1;
+        this.pageNum1 = 1;
+        this.finished = false;
+        this.finished1 = false;
         this.getVistorsList(this.operateStatusNum,1,this.searchVal,this.date);
       },
       searchFocus(){
@@ -279,25 +283,28 @@
           data: this.$qs.stringify({
             // 'authToken':localStorage.getItem('authToken'),
             'auditSatus':auditSatus,
+            appointmentId:index
           })
         }).then((res) => {
-          this.noneArr.forEach((item,k) => {
-            if(item.id == index){
-              this.noneArr.splice(k,1)
+          if(res.data.errCode == 0){
+            this.noneArr.forEach((item,k) => {
+              if(item.id == index){
+                this.noneArr.splice(k,1)
+              }
+            })
+            if(auditSatus == 1){
+              this.$toast({message:'审核通过！',duration:600});
+            }else if(auditSatus == 2){
+              this.$toast({message:'审核拒绝！',duration:600});
             }
-          })
-          if(auditSatus == 1){
-            this.$toast({message:'审核通过！',duration:600});
-          }else if(auditSatus == 2){
-            this.$toast({message:'审核拒绝！',duration:600});
-          }
+          }            
         }).catch((err) => {
         });
       },
       dateFormat(date) {
         return init.dateFormat(new Date(date.replace(/-/g,'/')),"yyyyMMdd");
       },
-    	tab(index) {
+      tab(index) {
         this.num = index;
         this.pageNum = 1;
         this.pageNum1 = 1;

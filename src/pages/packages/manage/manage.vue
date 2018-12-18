@@ -199,6 +199,12 @@
         this.date = '';
       },
       keySearch(){
+        this.pageNum = 1;
+        this.pageNum1 = 1;
+        this.pageNum2 = 1;
+        this.finished = false;
+        this.finished1 = false;
+        this.finished2 = false;
         this.getVistorsList((this.num+1),1,'all',this.searchVal,this.date);
       },
       searchFocus(){

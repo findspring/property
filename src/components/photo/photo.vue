@@ -97,12 +97,13 @@
         }).then(function(rst){
         	// console.log(rst)
         	// rst.attachType = picType;
-          //rst.srcName = compressFile.name;
+          rst.srcName = compressFile.name;
           preview.src = rst.base64
           _this.srcPreview = preview.src;
 	      	_this.iconStatus = true;
 	      	let formData = new window.FormData()
 	      	formData.append('fileBase64',rst.base64)
+	      	formData.append('fileName',rst.srcName)
 	      	formData.append('uploadImgType','identity')
 	      	formData.append('userType',_this.userType)
 	      	// formData.append('familyTies','')
