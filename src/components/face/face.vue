@@ -8,7 +8,7 @@
 			<div class="face-btn">
 				<input type="file" name="face" id="face" @change="compressFace" accept="image/*" capture="camera" />
 				<img src="../../assets/images/upface.png" alt="" class="upload-bg">
-				<div id="localImag">
+				<div id="localImage">
 					<img :src="srcPreview" id="faceView" />
 				</div>
 			</div>
@@ -77,6 +77,8 @@
 	  	},
 	  	clearAll(){
 	  		let face = document.getElementById("face"),faceView = document.getElementById("faceView");
+	  		let localImage = document.getElementById("localImage");
+	  		localImage.style.display = 'none';
 	  		face.value = '';
 	  		faceView.src = '';
 	  		this.srcPreview ='';
@@ -87,6 +89,7 @@
 	  	compressFace(){
 	  		let compressFile = document.getElementById("face").files[0];
 	  		let faceView = document.getElementById("faceView");
+	  		let localImage = document.getElementById("localImage");
 	  		let _this = this;
         if(compressFile.length <= 0){
           return;
@@ -96,6 +99,7 @@
           "width": 300
         }).then(function(rst){
         	// rst.attachType = picType;
+        	localImage.style.display = 'block';
           rst.srcName = compressFile.name;
           console.log(rst.srcName)
           faceView.src = rst.base64;
@@ -182,15 +186,20 @@
 					top 0
 					z-index 5
 					opacity 0
-				#localImag
+				#localImage
+					display none
+					align-items center
+					justify-content center
 					width 100%
 					height 100%
+					background #fff
 					position absolute
 					left 0
 					top 0
 					z-index 3
 					img
-						width 100%
-						max-height 3.59rem
+						max-width 5.68rem
+						max-height 3.58rem
+						line-height 3.58rem
 					
 </style>

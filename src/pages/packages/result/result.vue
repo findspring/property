@@ -123,14 +123,16 @@
 	        	// familyId:familyId || ''
 	        })
 	      }).then((res) => {
-	      	let result = res.data.result;
-	      	this.idNum = result.idCardNo
-	      	this.address = result.address
-	      	this.realname = result.userName
-	      	this.sex = result.gender || "男";
-	      	this.sexVal = [''+this.sex+'']
-	      	this.faceUrl = result.headPortraitUrl
-	      	this.photoUrl = result.identityImgUrl
+	      	if(res.data.errCode == 0){
+	      		let result = res.data.result;
+		      	this.idNum = result.idCardNo
+		      	this.address = result.address
+		      	this.realname = result.userName
+		      	this.sex = result.gender || "男";
+		      	this.sexVal = [''+this.sex+'']
+		      	this.faceUrl = result.headPortraitUrl
+		      	this.photoUrl = result.identityImgUrl
+	      	}		      	
 	    	}).catch((err) => {
 	      });
 	  	},

@@ -237,12 +237,26 @@
 	    //   });
 	    // },
 	    getAccountLogin(){
+	    	let role = localStorage.getItem('role') || '';
 	      this.$http({
 	        method: "post",
-	        url: "/wechat/officialAccount/user/familyTiesList",
+	        url: "/wechat/officialAccount/user/stepStatus",
 	        data: this.$qs.stringify({
+	        	role:role
 	        })
 	      }).then((res) => {
+	      	if(res.data.errCode == 0){
+	      		let stepStatus = res.data.result.stepStatus;
+		      	if(stepStatus == 1){
+		      		this.$router.push({path:'/login'});
+		      	}else if(stepStatus == 2){
+		      		this.$router.push({path:'/identify'});
+		      	}else if(stepStatus == 3){
+		      		this.$router.push({path:'/result'});
+		      	}else if(stepStatus == 4){
+		      		return
+		      	}
+	      	}		      	
 	        // let isRegister = res.data.result.isRegister;
 	        // if(isRegister == 1){
 	        //   return
@@ -252,27 +266,6 @@
 	      }).catch((err) => {
 	      });
 	    },
-	  	getProprietorList(){ //业主列表接口
-	  		let day = new Date();
-	  		let cityCode = this.cityCode;
-	  		let pageNum = 1;
-	  		let pageSize = 100;
-	  		let auditStatus = 1;
-	  		let search = '';
-	  		this.$http({
-	  			method:'post',
-	  			url:'/wechat/officialAccount/community/proprietorList',
-	  			data:this.$qs.stringify({
-	  				'auditStatus':auditStatus,
-        		'pageNum':pageNum,
-        		'pageSize':pageSize,
-        		'search':search
-	  			})
-	  		}).then((res) => {
-
-	    	}).catch((err) => {
-	      });
-	  	}
 	  }
 	}
 </script>

@@ -8,7 +8,7 @@
 			<div class="photo-btn">
 				<input type="file" name="file_head" id="file_head" @change="compressImg" accept="image/*" capture="camera" />
 				<img src="../../assets/images/upidcard.png" alt="" class="upload-bg">
-				<div id="localImag">
+				<div id="nowImage">
 					<img :src="srcPreview" id="preview" />
 				</div>
 			</div>
@@ -76,6 +76,8 @@
 	  	},
 	  	clearAll(){
 	  		let file_head = document.getElementById("file_head"),preview = document.getElementById("preview");
+	  		let nowImage = document.getElementById("nowImage");
+	  		nowImage.style.display = 'none';
 	  		file_head.value = '';
 	  		preview.src = '';
 	  		this.srcPreview ='';
@@ -86,6 +88,7 @@
 	  	compressImg(){
 	  		let compressFile = document.getElementById("file_head").files[0];
 	  		let preview = document.getElementById("preview");
+	  		let nowImage = document.getElementById("nowImage");
 	  		let _this = this;
 	  		// console.log(compressFile)
         if(compressFile.length <= 0){
@@ -96,7 +99,8 @@
           "width": 300
         }).then(function(rst){
         	// console.log(rst)
-        	// rst.attachType = picType;
+        	// rst.attachType = picType;        	
+	  			nowImage.style.display = 'block';
           rst.srcName = compressFile.name;
           preview.src = rst.base64
           _this.srcPreview = preview.src;
@@ -184,15 +188,21 @@
 					top 0
 					z-index 5
 					opacity 0
-				#localImag
+				#nowImage
+					display none
+					align-items center
+					justify-content center
 					width 100%
 					height 100%
+					background #fff
 					position absolute
 					left 0
 					top 0
 					z-index 3
 					img
-						width 100%
+						// width 100%
+						max-width 5.68rem
 						max-height 3.58rem
+						line-height 3.58rem
 					
 </style>

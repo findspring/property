@@ -38,6 +38,7 @@
 		      <input v-validate ="'required|house'" type="text" id="community" name="社区地址" placeholder="社区地址" readonly="readonly" v-model="address" onfocus="this.blur()" >	      
 		      <i class="common-icon icon-more"></i>
 		      <select v-model="select" @change="changeSelect" id="selectAdd">
+		      	<option value="" disabled>选择社区地址</option>
             <option v-for="(item,index) in addressList" :key="index" :value="item.value">{{item.name}}</option>
        	 	</select>
 		      <!-- <popup-picker v-if="addressList&&addressList.length" :data="addressList" v-model="value1" :columns="1" show-name @on-change="changePicker"></popup-picker> -->
@@ -92,6 +93,7 @@ export default {
   },
   mounted(){
   	let role = localStorage.getItem("role")
+  	console.log(role)
     if(role == 'property'){
       this.propertyStatus = true
     }else if(role == 'owner'){
@@ -156,10 +158,12 @@ export default {
         	'pageSize':pageSize
         })
       }).then((res) => {
-      	let list = res.data.result.list;
-      	list.forEach((item,index) => {
-      	  this.addressList.push({name:item.communityName,value:item.id})
-      	})
+      	if(res.data.errCode == 0){
+      		let list = res.data.result.list;
+	      	list.forEach((item,index) => {
+	      	  this.addressList.push({name:item.communityName,value:item.id})
+	      	})      		
+      	}      	
       	// this.addressList = listArr;
       	// console.log(this.addressList)
     	}).catch((err) => {
@@ -224,8 +228,14 @@ export default {
 		        	'jobNum':this.propertyStatus?this.house:'',
 		        })
 		      }).then((res) => {
-		      	if(res.data.errCode == '0'){
-		      		this.$router.push({path:'/identify'});
+		      	if(res.data.errCode == 0){
+		      		let step = res.data.result.step;
+		      		if(step == 1){
+		      			this.$router.push({path:'/identify'});
+		      		}else if(step == 2){
+		      			this.$router.push({path:'/index'});
+		      		}
+		      		
 		      	}else{
 		      		return false
 		      	}		      	
