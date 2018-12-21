@@ -15,9 +15,16 @@ export default {
     }
   },
   created(){
-    // this.getAccountLogin();
+    this.stopBack();
   },
   methods:{
+    stopBack(){
+      //防止页面后退
+      history.pushState(null, null, document.URL);
+      window.addEventListener('popstate', function() {
+        history.pushState(null, null, document.URL);
+      }); 
+    }
     // getAccountLogin(){
     //   this.$http({
     //     method: "post",

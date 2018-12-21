@@ -192,6 +192,10 @@
       //     elem: '#test1',
       //     range: true
       // });
+      let authToken =  localStorage.getItem("authToken");
+      if(!authToken){
+      	return;
+      }
 	  	this.getAccountLogin();
 	  },
 	  methods:{
@@ -220,23 +224,12 @@
 	    search(){
 
 	    }, 
-	    // getAccountLogin(){
-	    //   this.$http({
-	    //     method: "post",
-	    //     url: "/wechat/officialAccount/user/accountLogin",
-	    //     data: this.$qs.stringify({
-	    //     })
-	    //   }).then((res) => {
-	    //     let isRegister = res.data.result.isRegister;
-	    //     if(isRegister == 1){
-	    //       return
-	    //     }else if(isRegister == 2){
-	    //       location.href = "https://www.alfyun.cn/login";
-	    //     }
-	    //   }).catch((err) => {
-	    //   });
-	    // },
 	    getAccountLogin(){
+	    	//防止页面后退
+	      history.pushState(null, null, document.URL);
+	      window.addEventListener('popstate', function() {
+	      	history.pushState(null, null, document.URL);
+	      }); 
 	    	let role = localStorage.getItem('role') || '';
 	      this.$http({
 	        method: "post",

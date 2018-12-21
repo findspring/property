@@ -23,7 +23,7 @@
         if (!doc.addEventListener) return;   
         win.addEventListener(resizeEvt, recalc, false);   
         doc.addEventListener('DOMContentLoaded', recalc, false);   
-        })(document, window);  
+        })(document, window); 
     </script>
     <!-- <script>
         function myFun(result){
@@ -63,25 +63,18 @@
       var role = localStorage.getItem("role") || "owner";
       if(data && data["role"]){
         localStorage.setItem("role", data["role"]);
-      }      
-      //是否注册
-      // var isRegister = data["isRegister"]
-      // if(isRegister == 1){
-      //   location.href = "https://www.alfyun.cn/index";
-      // }else if(isRegister == 2){
-      //   location.href = "https://www.alfyun.cn/login";
-      // }
+      }
       // authToken
       var authToken = localStorage.getItem("authToken") || "";
-      if (!authToken) {
+      if (!authToken){
         // currurl = window.location.href.toString();
         // data = currurl.getQueryString();
-        if(data["removeToken"]==1){
-          localStorage.removeItem("authToken");
-        }
         if (data["authToken"]) {
           localStorage.setItem("authToken", data["authToken"]);
         }
+      }
+      if(location.href.indexOf('/login') < 0 && !authToken){
+        location.href = "https://www.alfyun.cn/login";
       }
     </script>
   </body>
