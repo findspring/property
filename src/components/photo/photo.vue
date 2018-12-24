@@ -8,7 +8,7 @@
 			<div class="photo-btn">
 				<input type="file" name="file_head" id="file_head" @change="compressImg" accept="image/*" capture="camera" />
 				<img src="../../assets/images/upidcard.png" alt="" class="upload-bg">
-				<div id="nowImage">
+				<div id="nowImage" v-show="iconStatus">
 					<img :src="srcPreview" id="preview" />
 				</div>
 			</div>
@@ -76,8 +76,8 @@
 	  	},
 	  	clearAll(){
 	  		let file_head = document.getElementById("file_head"),preview = document.getElementById("preview");
-	  		let nowImage = document.getElementById("nowImage");
-	  		nowImage.style.display = 'none';
+	  		// let nowImage = document.getElementById("nowImage");
+	  		// nowImage.style.display = 'none';
 	  		file_head.value = '';
 	  		preview.src = '';
 	  		this.srcPreview ='';
@@ -88,7 +88,7 @@
 	  	compressImg(){
 	  		let compressFile = document.getElementById("file_head").files[0];
 	  		let preview = document.getElementById("preview");
-	  		let nowImage = document.getElementById("nowImage");
+	  		// let nowImage = document.getElementById("nowImage");
 	  		let _this = this;
 	  		// console.log(compressFile)
         if(compressFile.length <= 0){
@@ -100,7 +100,7 @@
         }).then(function(rst){
         	// console.log(rst)
         	// rst.attachType = picType;        	
-	  			nowImage.style.display = 'block';
+	  			// nowImage.style.display = 'block';
           rst.srcName = compressFile.name;
           preview.src = rst.base64
           _this.srcPreview = preview.src;
@@ -189,7 +189,7 @@
 					z-index 5
 					opacity 0
 				#nowImage
-					display none
+					display flex
 					align-items center
 					justify-content center
 					width 100%

@@ -8,7 +8,7 @@
 			<div class="face-btn">
 				<input type="file" name="face" id="face" @change="compressFace" accept="image/*" capture="camera" />
 				<img src="../../assets/images/upface.png" alt="" class="upload-bg">
-				<div id="localImage">
+				<div id="localImage" v-show="iconStatus">
 					<img :src="srcPreview" id="faceView" />
 				</div>
 			</div>
@@ -47,12 +47,14 @@
 	  watch:{
 	  	srcPreview2:{
 	  		handler(newVal){
+	  			console.log(newVal);
 	  			this.srcPreview = newVal
 	  		},
 	  		immediate:true
 	  	},
 	  	iconStatus2:{
 	  		handler(newVal){
+	  			console.log('test',newVal);
 	  			this.iconStatus = newVal
 	  		},
 	  		immediate:true
@@ -77,8 +79,8 @@
 	  	},
 	  	clearAll(){
 	  		let face = document.getElementById("face"),faceView = document.getElementById("faceView");
-	  		let localImage = document.getElementById("localImage");
-	  		localImage.style.display = 'none';
+	  		// let localImage = document.getElementById("localImage");
+	  		// localImage.style.display = 'none';
 	  		face.value = '';
 	  		faceView.src = '';
 	  		this.srcPreview ='';
@@ -89,7 +91,7 @@
 	  	compressFace(){
 	  		let compressFile = document.getElementById("face").files[0];
 	  		let faceView = document.getElementById("faceView");
-	  		let localImage = document.getElementById("localImage");
+	  		// let localImage = document.getElementById("localImage");
 	  		let _this = this;
         if(compressFile.length <= 0){
           return;
@@ -99,7 +101,7 @@
           "width": 300
         }).then(function(rst){
         	// rst.attachType = picType;
-        	localImage.style.display = 'block';
+        	// localImage.style.display = 'block';
           rst.srcName = compressFile.name;
           console.log(rst.srcName)
           faceView.src = rst.base64;
@@ -187,7 +189,7 @@
 					z-index 5
 					opacity 0
 				#localImage
-					display none
+					display flex
 					align-items center
 					justify-content center
 					width 100%

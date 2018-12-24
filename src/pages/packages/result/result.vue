@@ -54,7 +54,7 @@
 						<div class="result-item">
 							<p>身份证号码</p>
 							<div class="result-item-input">
-								<input v-validate ="'required|idNum'" type="text" id="idNum" name="身份证号码" v-model="idNum" disabled="disabled">
+								<input v-validate ="'required|idNum'" type="text" id="idNum" name="身份证号码" v-model="idNum" readonly="readonly">
 							</div>
 							<span v-show="errors.has('身份证号码')">{{ errors.first('身份证号码')}}</span>
 						</div>
