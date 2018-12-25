@@ -114,28 +114,30 @@
             </div>
           </div> 
           <div class="audit-item audit-check" v-else-if="num == 2">
-            <div v-if="auditCheckArr.length" class="audit-check-item" v-for="(value,k) in auditCheckArr" :key="value.id">
-              <div class="audit-check-box">
-                <van-checkbox v-model="checkedObj[value.id]" checked-color="#D45855"></van-checkbox>
-              </div>
-              <div class="audit-check-click" @click="goInfo(value.id)">
-                <div class="audit-check-img">
-                  <img :src="value.avatarUrl" alt="">
-                </div>              
-                <div class="audit-check-content">
-                  <div class="audit-check-top">
-                    <h4>{{value.owerName}}</h4>
+            <div class="audit-check-items" v-if="auditCheckArr.length">
+              <div class="audit-check-item" v-for="(value,k) in auditCheckArr" :key="value.id">
+                <div class="audit-check-box">
+                  <van-checkbox v-model="checkedObj[value.id]" checked-color="#D45855"></van-checkbox>
+                </div>
+                <div class="audit-check-click" @click="goInfo(value.id)">
+                  <div class="audit-check-img">
+                    <img :src="value.avatarUrl" alt="">
+                  </div>              
+                  <div class="audit-check-content">
+                    <div class="audit-check-top">
+                      <h4>{{value.owerName}}</h4>
+                    </div>
+                    <ul class="clearfix">
+                      <li>
+                        <small>业主电话</small>
+                        <b>{{value.phone}}</b>
+                      </li>
+                      <li>
+                        <small>门牌号</small>
+                        <b>{{value.owerNum}}</b>
+                      </li>
+                    </ul>
                   </div>
-                  <ul class="clearfix">
-                    <li>
-                      <small>业主电话</small>
-                      <b>{{value.phone}}</b>
-                    </li>
-                    <li>
-                      <small>门牌号</small>
-                      <b>{{value.owerNum}}</b>
-                    </li>
-                  </ul>
                 </div>
               </div>
             </div>
@@ -754,66 +756,69 @@
                   .audit-none-pass
                     background #D45855
                     color #fff
-            .audit-check-item
-              margin-bottom .2rem
-              display flex
-              align-items center
-              // padding .36rem .44rem .24rem .43rem
-              width 100%
-              height 2.01rem
-              background:rgba(254,254,254,1);
-              box-shadow:0 .02rem .17rem 0 rgba(0,0,0,0.17)
-              border-radius .14rem
-              .audit-check-box
-                margin-left .21rem
-                margin-right .24rem
-                .van-checkbox__icon, .van-checkbox__label
-                  height .59rem
-                  width .59rem
-                  line-height .59rem
-                  .van-icon
+            .audit-check-items
+              margin-top .1rem
+              padding 0 .21rem 1.2rem .21rem
+              .audit-check-item
+                margin-bottom .2rem
+                display flex
+                align-items center
+                // padding .36rem .44rem .24rem .43rem
+                width 100%
+                height 2.01rem
+                background:rgba(254,254,254,1);
+                box-shadow:0 .02rem .17rem 0 rgba(0,0,0,0.17)
+                border-radius .14rem
+                .audit-check-box
+                  margin-left .21rem
+                  margin-right .24rem
+                  .van-checkbox__icon, .van-checkbox__label
                     height .59rem
                     width .59rem
                     line-height .59rem
-              .audit-check-click
-                display flex
-                align-items center
-                .audit-check-img
-                  img
-                    width 1.41rem
-                    height 1.41
-                    border-radius 50%
-                    overflow hidden
-                    margin-right .37rem
-                .audit-check-content
-                  min-width 4.3rem
-                  .audit-check-top
-                    display flex
-                    align-items center
-                    padding-bottom .08rem
-                    h4
-                      font-size .43rem
-                      color #4A4A4A
-                      line-height .61rem
-                      font-weight 400
-                      margin-right .26rem
-                  ul
-                    overflow hidden
-                    width 100%
-                    li
-                      float left
-                      width 60%
-                      color #9B9B9B
-                      &:last-child
-                        width 40%
-                      small
-                        display: block
-                        font-size: .2rem
-                        line-height .28rem
-                        margin .04rem 0 .02rem 0
-                      b
-                        font-size: .3rem
-                        line-height .42rem     
+                    .van-icon
+                      height .59rem
+                      width .59rem
+                      line-height .59rem
+                .audit-check-click
+                  display flex
+                  align-items center
+                  .audit-check-img
+                    img
+                      width 1.41rem
+                      height 1.41
+                      border-radius 50%
+                      overflow hidden
+                      margin-right .37rem
+                  .audit-check-content
+                    min-width 4.3rem
+                    .audit-check-top
+                      display flex
+                      align-items center
+                      padding-bottom .08rem
+                      h4
+                        font-size .43rem
+                        color #4A4A4A
+                        line-height .61rem
+                        font-weight 400
+                        margin-right .26rem
+                    ul
+                      overflow hidden
+                      width 100%
+                      li
+                        float left
+                        width 60%
+                        color #9B9B9B
+                        &:last-child
+                          width 40%
+                        small
+                          display: block
+                          font-size: .2rem
+                          line-height .28rem
+                          margin .04rem 0 .02rem 0
+                        b
+                          font-size: .3rem
+                          line-height .42rem     
             .audit-check-all
               width 100%
               height 1.2rem
@@ -858,8 +863,8 @@
                 .audit-check-pass
                   background #D45855
                   color #fff
-          .audit-check
-            margin-top .1rem
-            padding 0 .21rem 1.2rem .21rem
+          // .audit-check
+          //   margin-top .1rem
+          //   padding 0 .21rem 1.2rem .21rem
       
 </style>
