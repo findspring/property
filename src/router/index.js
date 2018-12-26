@@ -74,7 +74,7 @@ export default new Router({
       meta: {
         title: '家庭成员添加',
         flag: 'members',
-        keepAlive: true,
+        keepAlive: false,
       },
       component: members
     },

@@ -168,12 +168,12 @@
 	  			// this.getMemberList();
 	  			if(this.titleName == "编辑成员"){
 	  				this.titleName = "添加成员"
-		  			this.realname = ''
-			  		this.houseNum = ''
-			  		this.relationShip = ''
-			  		this.value1 = ['父母']
-			  		this.idNum = ''
 	  			}		  			
+	  			this.realname = ''
+		  		this.houseNum = ''
+		  		this.relationShip = ''
+		  		this.value1 = ['父母']
+		  		this.idNum = ''	  			
 	  		}
 	  	},
 	  	nextStep(){
