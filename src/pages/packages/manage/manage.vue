@@ -17,7 +17,7 @@
         </div>          
       </div>    
     </div>
-    <div class="manage-gray"></div>
+    <!-- <div class="manage-gray"></div> -->
     <div class="manage-tab">
       <div class="manage-tab-top">
         <ul>
@@ -445,8 +445,8 @@
           .icon-date
             margin-right .24rem
     .manage-gray
-      background #e8e8e8
-      min-height 7rem
+      // background #e8e8e8
+      // min-height 7rem
     .manage-tab    
       position absolute
       left 0
