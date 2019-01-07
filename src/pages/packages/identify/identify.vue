@@ -93,6 +93,7 @@
 	  	},
 	  	//上传图片
 	  	uploadImg(formData,type){
+	  		formData.append('cardNo',this.idCardNo);
 	  		this.$http({
 	        method: "post",
 	        headers: {'content-type': 'multipart/form-data'},

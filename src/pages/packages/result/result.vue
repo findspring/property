@@ -153,6 +153,7 @@
 			        	'address':this.address,
 			        	'gender':this.sex,
 			        	'userName':this.realname,
+			        	'cardNo':this.idNum,
 			        })
 			      }).then((res) => {
 			      	if(res.data.errCode == 0){
